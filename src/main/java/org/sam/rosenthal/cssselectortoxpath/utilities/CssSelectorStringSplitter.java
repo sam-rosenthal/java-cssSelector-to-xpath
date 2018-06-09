@@ -2,13 +2,18 @@ package org.sam.rosenthal.cssselectortoxpath.utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.sam.rosenthal.cssselectortoxpath.model.CssRelationship;
-import org.sam.rosenthal.cssselectortoxpath.model.CssType;
+import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
+import org.sam.rosenthal.cssselectortoxpath.model.CssCombinatorType;
 
 public class CssSelectorStringSplitter 
 {
 	
+	public static final String ERROR_INVALID_CLASS_CSS_SELECTOR = "invalid class css selector";
+	public static final String ERROR_INVALID_ID_CSS_SELECTOR = "invalid id css selector";
+	public static final String ERROR_SELECTOR_STRING_IS_NULL = "Selector string is null";
 	private static final String WHITESPACE_PLACE_HOLDER = "~#_placeHolder_#";
 
 	protected String removeNonCssSelectorWhiteSpaces(String selectorString) throws CssSelectorStringSplitterException
@@ -33,7 +38,7 @@ public class CssSelectorStringSplitter
 //	4.	Replace “~+_placeHolder_+” with “ “
 		if(selectorString==null)
 		{
-			throw new CssSelectorStringSplitterException("Selector string is null");
+			throw new CssSelectorStringSplitterException(ERROR_SELECTOR_STRING_IS_NULL);
 		}
 		else
 		{
@@ -41,7 +46,28 @@ public class CssSelectorStringSplitter
 			selectorString=selectorString.replaceAll("[ \\t]+", WHITESPACE_PLACE_HOLDER);
 			selectorString=selectorString.replaceAll("\\s+","");
 			selectorString=selectorString.replaceAll("("+WHITESPACE_PLACE_HOLDER+")+", " ");
+			invalClassIdPairCheck(selectorString);
+			selectorString=selectorString.replaceAll("#([^.#\\[]+)","[id=\"$1\"]");
+			selectorString=selectorString.replaceAll("[.]([^.#\\[]+)","[class~=\"$1\"]");
+//			System.out.println(selectorString);
 			return selectorString;
+		}
+	}
+
+	protected void invalClassIdPairCheck(String selectorString) throws CssSelectorStringSplitterException 
+	{
+		String nextSelectorIdentifier="[.#\\[]";
+		Pattern pattern = Pattern.compile("#"+nextSelectorIdentifier);
+		Matcher match = pattern.matcher(selectorString);
+		if (match.find())
+		{
+			throw new CssSelectorStringSplitterException(ERROR_INVALID_ID_CSS_SELECTOR);
+		}
+		pattern= Pattern.compile("[.]"+nextSelectorIdentifier);
+		match = pattern.matcher(selectorString);
+		if (match.find())
+		{
+			throw new CssSelectorStringSplitterException(ERROR_INVALID_CLASS_CSS_SELECTOR);
 		}
 	}
 	
@@ -73,17 +99,17 @@ public class CssSelectorStringSplitter
 		}
 		return selectorList;
 	}
-	public List<CssRelationship> splitSelectorsIntoRelationships(String processedSelector) throws CssSelectorStringSplitterException
+	public List<CssElementCombinatorPair> splitSelectorsIntoElementCombinatorPairs(String processedSelector) throws CssSelectorStringSplitterException
 	{
-		List<CssRelationship> selectorList=new ArrayList<>();
+		List<CssElementCombinatorPair> selectorList=new ArrayList<>();
 		recursiveSelectorSplit(null,processedSelector,selectorList);
 		return selectorList;
 	}
-	public void recursiveSelectorSplit(CssType previousType, String cssSelector,List<CssRelationship> selectorList) throws CssSelectorStringSplitterException
+	public void recursiveSelectorSplit(CssCombinatorType previousCombinatorType, String cssSelector,List<CssElementCombinatorPair> selectorList) throws CssSelectorStringSplitterException
 	{
-		for(CssType type:CssType.values())
+		for(CssCombinatorType type:CssCombinatorType.values())
 		{
-			int splitIndex=cssSelector.indexOf(type.getTypeChar());
+			int splitIndex=cssSelector.indexOf(type.getCombinatorChar());
 			if(splitIndex>-1)
 			{
 				//found
@@ -92,7 +118,7 @@ public class CssSelectorStringSplitter
 				{
 					throw new CssSelectorStringSplitterException("Empty Selector");
 				}
-				selectorList.add(new CssRelationship(previousType,firstCssSelector));
+				selectorList.add(new CssElementCombinatorPair(previousCombinatorType,firstCssSelector));
 				
 				String nextCssSelector=cssSelector.substring(splitIndex+1);
 				recursiveSelectorSplit(type,nextCssSelector,selectorList);
@@ -103,16 +129,16 @@ public class CssSelectorStringSplitter
 		{
 			throw new CssSelectorStringSplitterException("Empty Selector");
 		}
-		selectorList.add(new CssRelationship(previousType,cssSelector));
+		selectorList.add(new CssElementCombinatorPair(previousCombinatorType,cssSelector));
 	}
-	public List<List<CssRelationship>> listSplitSelectorsIntoRelationships(String selectorString) throws CssSelectorStringSplitterException
+	public List<List<CssElementCombinatorPair>> listSplitSelectorsIntoElementCombinatorPairs(String selectorString) throws CssSelectorStringSplitterException
 	{
-		List<List<CssRelationship>> listList=new ArrayList<>();
+		List<List<CssElementCombinatorPair>> listList=new ArrayList<>();
 		List<String> selectorList=splitSelectors(selectorString);
 		for(String selector:selectorList)
 		{
-			List<CssRelationship> cssRelationList= splitSelectorsIntoRelationships(selector);
-			listList.add(cssRelationList);
+			List<CssElementCombinatorPair> cssElementCombinatorPairList= splitSelectorsIntoElementCombinatorPairs(selector);
+			listList.add(cssElementCombinatorPairList);
 		}
 		return listList;
 	}
