@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
-import org.sam.rosenthal.cssselectortoxpath.model.CssRelationship;
-import org.sam.rosenthal.cssselectortoxpath.model.CssType;
+import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
+import org.sam.rosenthal.cssselectortoxpath.model.CssCombinatorType;
 
 public class CssSelectorStringSplitterTest {
 	
@@ -121,34 +121,34 @@ public class CssSelectorStringSplitterTest {
 		assertEquals("selectorInput="+whitespacesInput,expectedOutput,whitespaces);
 	}
 	@Test
-	public void splitSelectorsIntoRelationshipsExceptionTester()
+	public void splitSelectorsIntoElementCombinatorPairsExceptionTester()
 	{
-		testSplitSelectorsIntoRelationships(" ");
-		testSplitSelectorsIntoRelationships("X ");
-		testSplitSelectorsIntoRelationships(" y");
+		testSplitSelectorsIntoElementCombinatorPairs(" ");
+		testSplitSelectorsIntoElementCombinatorPairs("X ");
+		testSplitSelectorsIntoElementCombinatorPairs(" y");
 	
-		testSplitSelectorsIntoRelationships("+");
-		testSplitSelectorsIntoRelationships("X+");
-		testSplitSelectorsIntoRelationships("+y");
+		testSplitSelectorsIntoElementCombinatorPairs("+");
+		testSplitSelectorsIntoElementCombinatorPairs("X+");
+		testSplitSelectorsIntoElementCombinatorPairs("+y");
 		
-		testSplitSelectorsIntoRelationships(">");
-		testSplitSelectorsIntoRelationships("X>");
-		testSplitSelectorsIntoRelationships(">y");
+		testSplitSelectorsIntoElementCombinatorPairs(">");
+		testSplitSelectorsIntoElementCombinatorPairs("X>");
+		testSplitSelectorsIntoElementCombinatorPairs(">y");
 
-		testSplitSelectorsIntoRelationships("~");
-		testSplitSelectorsIntoRelationships("X~");
-		testSplitSelectorsIntoRelationships("~y");
+		testSplitSelectorsIntoElementCombinatorPairs("~");
+		testSplitSelectorsIntoElementCombinatorPairs("X~");
+		testSplitSelectorsIntoElementCombinatorPairs("~y");
 		
-		testSplitSelectorsIntoRelationships("X+Y ");
-		testSplitSelectorsIntoRelationships(">X~Y");
-		testSplitSelectorsIntoRelationships("+~");
+		testSplitSelectorsIntoElementCombinatorPairs("X+Y ");
+		testSplitSelectorsIntoElementCombinatorPairs(">X~Y");
+		testSplitSelectorsIntoElementCombinatorPairs("+~");
 	}
 	
-	private void testSplitSelectorsIntoRelationships(String processedSelector) 
+	private void testSplitSelectorsIntoElementCombinatorPairs(String processedSelector) 
 	{
 		try {
-			List<CssRelationship> relationships=splitter.splitSelectorsIntoRelationships(processedSelector);
-			fail("CssSelectorStringSplitterException not thrown for: "+processedSelector+" relationships="+relationships);
+			List<CssElementCombinatorPair> elementCombinatorPair=splitter.splitSelectorsIntoElementCombinatorPairs(processedSelector);
+			fail("CssSelectorStringSplitterException not thrown for: "+processedSelector+" ElementCombinatorPair="+elementCombinatorPair);
 		} 
 		catch (CssSelectorStringSplitterException e) {
 			//success
@@ -156,44 +156,44 @@ public class CssSelectorStringSplitterTest {
 	}
 	
 	@Test
-	public void splitSelectorsIntoRelationshipsTester() throws CssSelectorStringSplitterException
+	public void splitSelectorsIntoElementCombinatorPairsTester() throws CssSelectorStringSplitterException
 	{
-		testSplitSelectorsIntoRelationships("X",new CssRelationship(null, "X"));
-		testSplitSelectorsIntoRelationships("X Y",new CssRelationship(null, "X"),new CssRelationship(CssType.SPACE, "Y"));
-		testSplitSelectorsIntoRelationships("X+Y",new CssRelationship(null, "X"),new CssRelationship(CssType.PLUS, "Y"));
-		testSplitSelectorsIntoRelationships("X>Y",new CssRelationship(null, "X"),new CssRelationship(CssType.GREATER_THAN, "Y"));
-		testSplitSelectorsIntoRelationships("X~Y",new CssRelationship(null, "X"),new CssRelationship(CssType.TILDA, "Y"));
+		testSplitSelectorsIntoElementCombinatorPairs("X",new CssElementCombinatorPair(null, "X"));
+		testSplitSelectorsIntoElementCombinatorPairs("X Y",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"));
+		testSplitSelectorsIntoElementCombinatorPairs("X+Y",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Y"));
+		testSplitSelectorsIntoElementCombinatorPairs("X>Y",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "Y"));
+		testSplitSelectorsIntoElementCombinatorPairs("X~Y",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "Y"));
 		
-		testSplitSelectorsIntoRelationships("X Y Z",new CssRelationship(null, "X"),new CssRelationship(CssType.SPACE, "Y"),new CssRelationship(CssType.SPACE, "Z"));
-		testSplitSelectorsIntoRelationships("X+Y+Z+A",new CssRelationship(null, "X"),new CssRelationship(CssType.PLUS, "Y"),new CssRelationship(CssType.PLUS, "Z"),new CssRelationship(CssType.PLUS, "A"));
-		testSplitSelectorsIntoRelationships("X>Y>Z",new CssRelationship(null, "X"),new CssRelationship(CssType.GREATER_THAN, "Y"),new CssRelationship(CssType.GREATER_THAN, "Z"));
-		testSplitSelectorsIntoRelationships("X~Y~Z~A~B",new CssRelationship(null, "X"),new CssRelationship(CssType.TILDA, "Y"),new CssRelationship(CssType.TILDA, "Z"),new CssRelationship(CssType.TILDA, "A"),new CssRelationship(CssType.TILDA, "B"));
+		testSplitSelectorsIntoElementCombinatorPairs("X Y Z",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Z"));
+		testSplitSelectorsIntoElementCombinatorPairs("X+Y+Z+A",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Y"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Z"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "A"));
+		testSplitSelectorsIntoElementCombinatorPairs("X>Y>Z",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "Y"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "Z"));
+		testSplitSelectorsIntoElementCombinatorPairs("X~Y~Z~A~B",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "Y"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "Z"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "A"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "B"));
 		
-		testSplitSelectorsIntoRelationships("X Y+Z",new CssRelationship(null, "X"),new CssRelationship(CssType.SPACE, "Y"),new CssRelationship(CssType.PLUS, "Z"));
-		testSplitSelectorsIntoRelationships("X Y+Z>A~B",new CssRelationship(null, "X"),new CssRelationship(CssType.SPACE, "Y"),new CssRelationship(CssType.PLUS, "Z"),new CssRelationship(CssType.GREATER_THAN, "A"),new CssRelationship(CssType.TILDA, "B"));
+		testSplitSelectorsIntoElementCombinatorPairs("X Y+Z",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Z"));
+		testSplitSelectorsIntoElementCombinatorPairs("X Y+Z>A~B",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Z"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "A"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "B"));
 	}
 
-	public void testSplitSelectorsIntoRelationships(String processedSelector,CssRelationship... expectedOutput) throws CssSelectorStringSplitterException {
-		List<CssRelationship> relationships=splitter.splitSelectorsIntoRelationships(processedSelector);
-		assertEquals("processedString="+processedSelector+"; relationships="+relationships.toString(),asList(expectedOutput),relationships);
+	public void testSplitSelectorsIntoElementCombinatorPairs(String processedSelector,CssElementCombinatorPair... expectedOutput) throws CssSelectorStringSplitterException {
+		List<CssElementCombinatorPair> elementCombinatorPairs=splitter.splitSelectorsIntoElementCombinatorPairs(processedSelector);
+		assertEquals("processedString="+processedSelector+"; elementCombinatorPairs="+elementCombinatorPairs.toString(),asList(expectedOutput),elementCombinatorPairs);
 	}
 	
 	
 	@Test
-	public void listSplitSelectorsIntoRelationshipsTester() throws CssSelectorStringSplitterException
+	public void listSplitSelectorsIntoElementCombinatorPairsTester() throws CssSelectorStringSplitterException
 	{
-		testListSplitSelectorsIntoRelationships("X",asList(asList(new CssRelationship(null, "X"))));
-		testListSplitSelectorsIntoRelationships("X,Y,Z,1",asList(asList(new CssRelationship(null, "X")),asList(new CssRelationship(null, "Y")),asList(new CssRelationship(null, "Z")),asList(new CssRelationship(null, "1"))));
-		testListSplitSelectorsIntoRelationships("X+Y",asList(asList(new CssRelationship(null, "X"),new CssRelationship(CssType.PLUS, "Y"))));
-		testListSplitSelectorsIntoRelationships("X+Y,A>B",asList(asList(new CssRelationship(null, "X"),new CssRelationship(CssType.PLUS, "Y")),asList(new CssRelationship(null, "A"),new CssRelationship(CssType.GREATER_THAN, "B"))));
-		testListSplitSelectorsIntoRelationships("X Y+Z>A~B,C,D E",asList(asList(new CssRelationship(null, "X"),new CssRelationship(CssType.SPACE, "Y"),new CssRelationship(CssType.PLUS, "Z"),new CssRelationship(CssType.GREATER_THAN, "A"),new CssRelationship(CssType.TILDA, "B")),
-				asList(new CssRelationship(null, "C")),asList(new CssRelationship(null, "D"),new CssRelationship(CssType.SPACE, "E"))));
+		testListSplitSelectorsIntoElementCombinatorPairs("X",asList(asList(new CssElementCombinatorPair(null, "X"))));
+		testListSplitSelectorsIntoElementCombinatorPairs("X,Y,Z,1",asList(asList(new CssElementCombinatorPair(null, "X")),asList(new CssElementCombinatorPair(null, "Y")),asList(new CssElementCombinatorPair(null, "Z")),asList(new CssElementCombinatorPair(null, "1"))));
+		testListSplitSelectorsIntoElementCombinatorPairs("X+Y",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Y"))));
+		testListSplitSelectorsIntoElementCombinatorPairs("X+Y,A>B",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Y")),asList(new CssElementCombinatorPair(null, "A"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "B"))));
+		testListSplitSelectorsIntoElementCombinatorPairs("X Y+Z>A~B,C,D E",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Z"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "A"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "B")),
+				asList(new CssElementCombinatorPair(null, "C")),asList(new CssElementCombinatorPair(null, "D"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "E"))));
 		
 	}
 
-	public void testListSplitSelectorsIntoRelationships(String selector,List<List<CssRelationship>> expectedOutput) throws CssSelectorStringSplitterException {
-		List<List<CssRelationship>> relationships=splitter.listSplitSelectorsIntoRelationships(selector);
-		assertEquals("selectorString="+selector+"; relationships="+relationships.toString(),expectedOutput,relationships);
+	public void testListSplitSelectorsIntoElementCombinatorPairs(String selector,List<List<CssElementCombinatorPair>> expectedOutput) throws CssSelectorStringSplitterException {
+		List<List<CssElementCombinatorPair>> elementCombinatorPairs=splitter.listSplitSelectorsIntoElementCombinatorPairs(selector);
+		assertEquals("selectorString="+selector+"; elementCombinatorPairs="+elementCombinatorPairs.toString(),expectedOutput,elementCombinatorPairs);
 	}
 
 }

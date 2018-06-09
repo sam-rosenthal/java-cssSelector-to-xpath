@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.sam.rosenthal.cssselectortoxpath.model.CssRelationship;
-import org.sam.rosenthal.cssselectortoxpath.model.CssType;
+import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
+import org.sam.rosenthal.cssselectortoxpath.model.CssCombinatorType;
 
 public class CssSelectorStringSplitter 
 {
@@ -49,7 +49,7 @@ public class CssSelectorStringSplitter
 			invalClassIdPairCheck(selectorString);
 			selectorString=selectorString.replaceAll("#([^.#\\[]+)","[id=\"$1\"]");
 			selectorString=selectorString.replaceAll("[.]([^.#\\[]+)","[class~=\"$1\"]");
-			System.out.println(selectorString);
+//			System.out.println(selectorString);
 			return selectorString;
 		}
 	}
@@ -99,17 +99,17 @@ public class CssSelectorStringSplitter
 		}
 		return selectorList;
 	}
-	public List<CssRelationship> splitSelectorsIntoRelationships(String processedSelector) throws CssSelectorStringSplitterException
+	public List<CssElementCombinatorPair> splitSelectorsIntoElementCombinatorPairs(String processedSelector) throws CssSelectorStringSplitterException
 	{
-		List<CssRelationship> selectorList=new ArrayList<>();
+		List<CssElementCombinatorPair> selectorList=new ArrayList<>();
 		recursiveSelectorSplit(null,processedSelector,selectorList);
 		return selectorList;
 	}
-	public void recursiveSelectorSplit(CssType previousType, String cssSelector,List<CssRelationship> selectorList) throws CssSelectorStringSplitterException
+	public void recursiveSelectorSplit(CssCombinatorType previousCombinatorType, String cssSelector,List<CssElementCombinatorPair> selectorList) throws CssSelectorStringSplitterException
 	{
-		for(CssType type:CssType.values())
+		for(CssCombinatorType type:CssCombinatorType.values())
 		{
-			int splitIndex=cssSelector.indexOf(type.getTypeChar());
+			int splitIndex=cssSelector.indexOf(type.getCombinatorChar());
 			if(splitIndex>-1)
 			{
 				//found
@@ -118,7 +118,7 @@ public class CssSelectorStringSplitter
 				{
 					throw new CssSelectorStringSplitterException("Empty Selector");
 				}
-				selectorList.add(new CssRelationship(previousType,firstCssSelector));
+				selectorList.add(new CssElementCombinatorPair(previousCombinatorType,firstCssSelector));
 				
 				String nextCssSelector=cssSelector.substring(splitIndex+1);
 				recursiveSelectorSplit(type,nextCssSelector,selectorList);
@@ -129,16 +129,16 @@ public class CssSelectorStringSplitter
 		{
 			throw new CssSelectorStringSplitterException("Empty Selector");
 		}
-		selectorList.add(new CssRelationship(previousType,cssSelector));
+		selectorList.add(new CssElementCombinatorPair(previousCombinatorType,cssSelector));
 	}
-	public List<List<CssRelationship>> listSplitSelectorsIntoRelationships(String selectorString) throws CssSelectorStringSplitterException
+	public List<List<CssElementCombinatorPair>> listSplitSelectorsIntoElementCombinatorPairs(String selectorString) throws CssSelectorStringSplitterException
 	{
-		List<List<CssRelationship>> listList=new ArrayList<>();
+		List<List<CssElementCombinatorPair>> listList=new ArrayList<>();
 		List<String> selectorList=splitSelectors(selectorString);
 		for(String selector:selectorList)
 		{
-			List<CssRelationship> cssRelationList= splitSelectorsIntoRelationships(selector);
-			listList.add(cssRelationList);
+			List<CssElementCombinatorPair> cssElementCombinatorPairList= splitSelectorsIntoElementCombinatorPairs(selector);
+			listList.add(cssElementCombinatorPairList);
 		}
 		return listList;
 	}

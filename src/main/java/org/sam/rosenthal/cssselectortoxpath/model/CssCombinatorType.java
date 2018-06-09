@@ -1,6 +1,6 @@
 package org.sam.rosenthal.cssselectortoxpath.model;
 
-public enum CssType {
+public enum CssCombinatorType {
 	SPACE(' ',"//"), 
 	PLUS('+',"/following-sibling::*[1]/self::"),
 	GREATER_THAN('>',"/"),
@@ -9,13 +9,14 @@ public enum CssType {
 	private char typeChar;
 	private String xpath;
 
-	private CssType(char typeCharIn, String xpathIn)
+	private CssCombinatorType(char typeCharIn, String xpathIn)
 	{
 		this.typeChar=typeCharIn;
 		this.xpath=xpathIn;
 	}
 
-	public char getTypeChar() {
+	public char getCombinatorChar() 
+	{
 		return typeChar;
 	}
 	
