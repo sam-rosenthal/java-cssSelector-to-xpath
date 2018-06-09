@@ -2,6 +2,8 @@ package org.sam.rosenthal.cssselectortoxpath.utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.sam.rosenthal.cssselectortoxpath.model.CssRelationship;
 import org.sam.rosenthal.cssselectortoxpath.model.CssType;
@@ -9,6 +11,9 @@ import org.sam.rosenthal.cssselectortoxpath.model.CssType;
 public class CssSelectorStringSplitter 
 {
 	
+	public static final String ERROR_INVALID_CLASS_CSS_SELECTOR = "invalid class css selector";
+	public static final String ERROR_INVALID_ID_CSS_SELECTOR = "invalid id css selector";
+	public static final String ERROR_SELECTOR_STRING_IS_NULL = "Selector string is null";
 	private static final String WHITESPACE_PLACE_HOLDER = "~#_placeHolder_#";
 
 	protected String removeNonCssSelectorWhiteSpaces(String selectorString) throws CssSelectorStringSplitterException
@@ -33,7 +38,7 @@ public class CssSelectorStringSplitter
 //	4.	Replace “~+_placeHolder_+” with “ “
 		if(selectorString==null)
 		{
-			throw new CssSelectorStringSplitterException("Selector string is null");
+			throw new CssSelectorStringSplitterException(ERROR_SELECTOR_STRING_IS_NULL);
 		}
 		else
 		{
@@ -41,7 +46,28 @@ public class CssSelectorStringSplitter
 			selectorString=selectorString.replaceAll("[ \\t]+", WHITESPACE_PLACE_HOLDER);
 			selectorString=selectorString.replaceAll("\\s+","");
 			selectorString=selectorString.replaceAll("("+WHITESPACE_PLACE_HOLDER+")+", " ");
+			invalClassIdPairCheck(selectorString);
+			selectorString=selectorString.replaceAll("#([^.#\\[]+)","[id=\"$1\"]");
+			selectorString=selectorString.replaceAll("[.]([^.#\\[]+)","[class~=\"$1\"]");
+			System.out.println(selectorString);
 			return selectorString;
+		}
+	}
+
+	protected void invalClassIdPairCheck(String selectorString) throws CssSelectorStringSplitterException 
+	{
+		String nextSelectorIdentifier="[.#\\[]";
+		Pattern pattern = Pattern.compile("#"+nextSelectorIdentifier);
+		Matcher match = pattern.matcher(selectorString);
+		if (match.find())
+		{
+			throw new CssSelectorStringSplitterException(ERROR_INVALID_ID_CSS_SELECTOR);
+		}
+		pattern= Pattern.compile("[.]"+nextSelectorIdentifier);
+		match = pattern.matcher(selectorString);
+		if (match.find())
+		{
+			throw new CssSelectorStringSplitterException(ERROR_INVALID_CLASS_CSS_SELECTOR);
 		}
 	}
 	

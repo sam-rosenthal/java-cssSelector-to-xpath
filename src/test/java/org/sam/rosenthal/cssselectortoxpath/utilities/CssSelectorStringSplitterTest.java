@@ -50,7 +50,7 @@ public class CssSelectorStringSplitterTest {
 		testSelector("ABCD","ABCD"); //No commas, only letters
 		testSelector("1","1"); //No commas, single number
 		testSelector("123","123"); //No commas, multiple numbers
-		testSelector("~`!@#$%^&*()_+-=}{|:<>/?[];'.","~`!@#$%^&*()_+-=}{|:<>/?[];'."); //No commas, only characters
+		testSelector("~`!@$%^&*()_+-=}{|:<>/?[];'","~`!@$%^&*()_+-=}{|:<>/?[];'"); //No commas, only characters
 		testSelector("A1B2C3","A1B2C3"); //No commas, letters+numbers
 		testSelector("A$B%C^","A$B%C^"); //No commas, letters+characters
 		testSelector("1$2%3^4","1$2%3^4"); //No commas, numbers+characters
@@ -58,8 +58,8 @@ public class CssSelectorStringSplitterTest {
 		testSelector("A,B","A","B"); //Single letters, one comma
 		testSelector("A,B,C,D","A","B","C","D"); //Single letters, multiple commas
 		testSelector("ABC,DEF,GHI,JKL,MNO,PQR,STU,VWX,YZ","ABC","DEF","GHI","JKL","MNO","PQR","STU","VWX","YZ"); //Multiple letters, single comma
-		testSelector("A#1			", "A#1"); //No comma, letter+multiple tabs
-		testSelector("   1#A", "1#A"); //No comma, multiple spaces+characharacters+numbers+letters
+		testSelector("A@1			", "A@1"); //No comma, letter+multiple tabs
+		testSelector("   1@A", "1@A"); //No comma, multiple spaces+characharacters+numbers+letters
 	}
 
 	public void testSelector(String selectorInput,String... expectedOutput) throws CssSelectorStringSplitterException 
@@ -74,20 +74,30 @@ public class CssSelectorStringSplitterTest {
 		return Arrays.asList(expectedOutput);
 	}
 	
-	@Test (expected=CssSelectorStringSplitterException.class)
-	public void whitespacesErrorTester() throws CssSelectorStringSplitterException
-	{
-		String whitespaces=splitter.removeNonCssSelectorWhiteSpaces(null);
-		System.out.println("this should never be reached, whitespaces="+whitespaces);
+	@Test //(expected=CssSelectorStringSplitterException.class)
+	public void whitespacesErrorTester() 
+	{	
+		testWhitespacesException(null,CssSelectorStringSplitter.ERROR_SELECTOR_STRING_IS_NULL);
+
+		testWhitespacesException("#[",CssSelectorStringSplitter.ERROR_INVALID_ID_CSS_SELECTOR);
+		testWhitespacesException("#.",CssSelectorStringSplitter.ERROR_INVALID_ID_CSS_SELECTOR);
+		testWhitespacesException("##",CssSelectorStringSplitter.ERROR_INVALID_ID_CSS_SELECTOR);
+
+		testWhitespacesException(".[",CssSelectorStringSplitter.ERROR_INVALID_CLASS_CSS_SELECTOR);
+		testWhitespacesException(".#",CssSelectorStringSplitter.ERROR_INVALID_CLASS_CSS_SELECTOR);
+		testWhitespacesException("..",CssSelectorStringSplitter.ERROR_INVALID_CLASS_CSS_SELECTOR);
+//		String whitespaces=splitter.removeNonCssSelectorWhiteSpaces(null);
+//		System.out.println("this should never be reached, whitespaces="+whitespaces);
 	}
-//	private void testWhitespacesException(String whitespacesInput) {
-//		try {
-//			splitter.removeNonCssSelectorWhiteSpaces(whitespacesInput);
-//			fail("CssSelectorStringSplitterException not thrown for: "+whitespacesInput);
-//		} catch (CssSelectorStringSplitterException e) {
-//			//success
-//		}
-//	}
+	
+	private void testWhitespacesException(String whitespacesInput, String expectedErrorMessage) {
+		try {
+			splitter.removeNonCssSelectorWhiteSpaces(whitespacesInput);
+			fail("CssSelectorStringSplitterException not thrown for: "+whitespacesInput);
+		} catch (CssSelectorStringSplitterException e) {
+			assertEquals(expectedErrorMessage, e.getMessage());
+		}
+	}
 	
 	@Test
 	public void removeNonCssSelectorWhiteSpacesTester() throws CssSelectorStringSplitterException
@@ -98,7 +108,11 @@ public class CssSelectorStringSplitterTest {
 		testWhitespaces("123   ", "123"); //spaces after 
 		testWhitespaces("	123	", "123"); 
 		testWhitespaces(" 123	", "123"); 
-		testWhitespaces("1     2  3", "1 2 3"); 		
+		testWhitespaces("1     2  3", "1 2 3"); 
+		testWhitespaces("a#b ", "a[id=\"b\"]"); 
+		testWhitespaces("a#b[c]","a[id=\"b\"][c]"); 
+		testWhitespaces("a#bbb.ccc", "a[id=\"bbb\"][class~=\"ccc\"]"); 
+
 	}
 
 	public void testWhitespaces(String whitespacesInput, String expectedOutput) throws CssSelectorStringSplitterException 
@@ -166,7 +180,7 @@ public class CssSelectorStringSplitterTest {
 	
 	
 	@Test
-	public void listDplitSelectorsIntoRelationshipsTester() throws CssSelectorStringSplitterException
+	public void listSplitSelectorsIntoRelationshipsTester() throws CssSelectorStringSplitterException
 	{
 		testListSplitSelectorsIntoRelationships("X",asList(asList(new CssRelationship(null, "X"))));
 		testListSplitSelectorsIntoRelationships("X,Y,Z,1",asList(asList(new CssRelationship(null, "X")),asList(new CssRelationship(null, "Y")),asList(new CssRelationship(null, "Z")),asList(new CssRelationship(null, "1"))));
