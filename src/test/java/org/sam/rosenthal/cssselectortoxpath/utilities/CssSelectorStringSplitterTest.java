@@ -3,6 +3,7 @@ package org.sam.rosenthal.cssselectortoxpath.utilities;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -201,21 +202,27 @@ public class CssSelectorStringSplitterTest {
 	@Test
 	public void cssElementAttributeParserTester() throws CssSelectorStringSplitterException
 	{
-		testCssElementAttributeParser("X",new CssElementAttribute("X",asList("X")));
-		testCssElementAttributeParser("XX[YY]",new CssElementAttribute("XX[YY]",asList("XX","[YY]")));
-		testCssElementAttributeParser("XXX[YYY][ZZZ]",new CssElementAttribute("XXX[YYY][ZZZ]",asList("XXX","[YYY]","[ZZZ]")));
-		testCssElementAttributeParser("[Z]",new CssElementAttribute("[Z]",asList(null,"[Z]")));
-		testCssElementAttributeParser("[Y][Z]",new CssElementAttribute("[Y][Z]",asList(null,"[Y]","[Z]")));
+		testCssElementAttributeParser("X",new CssElementAttribute("X",new ArrayList<>()));
+		testCssElementAttributeParser("*",new CssElementAttribute("*",new ArrayList<>()));
+
+		testCssElementAttributeParser("*[X]",new CssElementAttribute("*",asList("[X]")));
+		testCssElementAttributeParser("XX[YY]",new CssElementAttribute("XX",asList("[YY]")));
+		testCssElementAttributeParser("XXX[YYY][ZZZ]",new CssElementAttribute("XXX",asList("[YYY]","[ZZZ]")));
+		testCssElementAttributeParser("[Z]",new CssElementAttribute(null,asList("[Z]")));
+		testCssElementAttributeParser("[Y][Z]",new CssElementAttribute(null,asList("[Y]","[Z]")));
 
 	}
 
 	public void testCssElementAttributeParser(String elementAttributeString,CssElementAttribute expectedOutput ) throws CssSelectorStringSplitterException {
-		CssElementAttribute elementAttributeList=attribute.stringToCssElementAttribute(elementAttributeString);
+		CssElementAttribute elementAttributeList=attribute.createElementAttribute(elementAttributeString);
 		assertEquals("elementstringWithattributes="+elementAttributeString,expectedOutput,elementAttributeList);
 	}
 	@Test
 	public void checkValidElementAttributeTester()
 	{
+		//testCheckValidElementAttribute("****");
+		
+		
 		testCheckValidElementAttribute("xx[");
 		testCheckValidElementAttribute("xx[y]zz");
 		testCheckValidElementAttribute("xx[yy][qq");
@@ -234,7 +241,7 @@ public class CssSelectorStringSplitterTest {
 	private void testCheckValidElementAttribute(String elementAttributeString) 
 	{
 		try {
-			CssElementAttribute elementAttributeList=attribute.stringToCssElementAttribute(elementAttributeString);
+			CssElementAttribute elementAttributeList=attribute.createElementAttribute(elementAttributeString);
 			fail("CssSelectorStringSplitterException not thrown for: "+elementAttributeString);
 		} catch (CssSelectorStringSplitterException e) {
 			//success

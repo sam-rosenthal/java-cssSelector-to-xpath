@@ -14,11 +14,11 @@ public class CssElementAttributeParser
 
 	public void checkValid(String elementWithAttributesString) throws CssSelectorStringSplitterException
 	{
-		Pattern pattern1 = Pattern.compile(STARTING_ELEMENT_REGULAR_EXPRESSION+ATTRIBUTE_REGULAR_EXPRESSION+"*$");
-		Matcher match = pattern1.matcher(elementWithAttributesString);
+		Pattern cssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_REGULAR_EXPRESSION+ATTRIBUTE_REGULAR_EXPRESSION+"*$");
+		Matcher match = cssElementAtributePattern.matcher(elementWithAttributesString);
 		if (match.find()==false)
 		{
-			throw new CssSelectorStringSplitterException("invalid elementInput");
+			throw new CssSelectorStringSplitterException("invalid elementWithAttributesStringInput");
 		}
 		else
 		{
@@ -26,39 +26,46 @@ public class CssElementAttributeParser
 		}
 	}
 	
-	public List<String> createAttributeList(String elementWithAttributesString) 
+	public CssElementAttribute createElementAttribute(String elementWithAttributesString) throws CssSelectorStringSplitterException 
 	{
-		Pattern pattern2 = Pattern.compile(STARTING_ELEMENT_REGULAR_EXPRESSION);
-		Matcher match = pattern2.matcher(elementWithAttributesString);
-		List<String> builder=new ArrayList<String>();
+		checkValid(elementWithAttributesString);
+		Pattern startingCssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_REGULAR_EXPRESSION);
+		Matcher match = startingCssElementAtributePattern.matcher(elementWithAttributesString);
+		List<String> attributeList=new ArrayList<String>();
 		String element=null;
 		if (match.find())
 		{
 			String possibleElement = match.group();
 			if(!possibleElement.isEmpty())
 			{
+				checkElement(possibleElement);
 				element=possibleElement;
 				System.out.println(possibleElement);
 			}
 		}
-		builder.add(element);
-
-		Pattern pattern3 = Pattern.compile(ATTRIBUTE_REGULAR_EXPRESSION);
-		match = pattern3.matcher(elementWithAttributesString);
+		Pattern restOfCssElementAtributePattern = Pattern.compile(ATTRIBUTE_REGULAR_EXPRESSION);
+		match = restOfCssElementAtributePattern.matcher(elementWithAttributesString);
 		while(match.find())
 		{
-			builder.add(match.group());
-			System.out.println(builder);
+			attributeList.add(match.group());
+			System.out.println(attributeList);
 		}	
-		return builder;
+		return new CssElementAttribute(element,attributeList);
 	}
 	
-	public CssElementAttribute stringToCssElementAttribute(String elementWithAttributesString) throws CssSelectorStringSplitterException
+	
+	public void checkElement(String possibleElement) throws CssSelectorStringSplitterException 
 	{
-		checkValid(elementWithAttributesString);
-		return new CssElementAttribute(elementWithAttributesString,createAttributeList(elementWithAttributesString));
-		
+		Pattern p = Pattern.compile("^((-?[_a-zA-Z]+[_a-zA-Z0-9-]*)|([*]))");
+		Matcher match = p.matcher(possibleElement);
+		if(!match.find())
+		{
+			throw new CssSelectorStringSplitterException("invalid elementInput");
+
+		}
 	}
+		
+}
 	
 
-}
+

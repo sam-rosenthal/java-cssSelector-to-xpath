@@ -17,18 +17,18 @@ import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorStringSplitterE
 //only has constructor and getters
 public class CssElementAttribute
 {
-	private String elementWithAttributesString;
+	private String element;
 	private List<String> attributeList;
 
-	public CssElementAttribute(String elementWithAttributesStringIn, List<String> attributeListIn) throws CssSelectorStringSplitterException
+	public CssElementAttribute(String elementIn, List<String> attributeListIn) throws CssSelectorStringSplitterException
 	{
-		this.elementWithAttributesString=elementWithAttributesStringIn;
+		this.element=elementIn;
 		this.attributeList=attributeListIn;
 	}
 	
 	public String getElement() 
 	{
-		return elementWithAttributesString;
+		return element;
 	}
 
 	public List<String> getAttributeList() 
@@ -39,7 +39,7 @@ public class CssElementAttribute
 	@Override
 	public String toString()
 	{
-		return "(ElementWithAttributesString="+this.elementWithAttributesString+"; AttributeList="+this.attributeList;
+		return "(Element="+this.element+"; AttributeList="+this.attributeList;
 	}
 	
 	@Override
