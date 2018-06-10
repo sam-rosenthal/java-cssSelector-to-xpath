@@ -9,14 +9,14 @@ import org.sam.rosenthal.cssselectortoxpath.model.CssElementAttribute;
 
 public class CssElementAttributeParser 
 {
-	private static final String STARTING_ELEMENT_REGULAR_EXPRESSION = "^([^\\[\\]])*";
+	private static final String STARTING_ELEMENT_REGULAR_EXPRESSION = "^((-?[_a-zA-Z]+[_a-zA-Z0-9-]*)|([*]))?";
 	private static final String ATTRIBUTE_REGULAR_EXPRESSION = "(\\[[^\\[\\]]+\\])";
 
 	public void checkValid(String elementWithAttributesString) throws CssSelectorStringSplitterException
 	{
 		Pattern cssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_REGULAR_EXPRESSION+ATTRIBUTE_REGULAR_EXPRESSION+"*$");
 		Matcher match = cssElementAtributePattern.matcher(elementWithAttributesString);
-		if (match.find()==false)
+		if (!match.find())
 		{
 			throw new CssSelectorStringSplitterException("invalid elementWithAttributesStringInput");
 		}
@@ -38,7 +38,6 @@ public class CssElementAttributeParser
 			String possibleElement = match.group();
 			if(!possibleElement.isEmpty())
 			{
-				checkElement(possibleElement);
 				element=possibleElement;
 				System.out.println(possibleElement);
 			}
@@ -50,21 +49,10 @@ public class CssElementAttributeParser
 			attributeList.add(match.group());
 			System.out.println(attributeList);
 		}	
-		return new CssElementAttribute(element,attributeList);
-	}
-	
-	
-	public void checkElement(String possibleElement) throws CssSelectorStringSplitterException 
-	{
-		Pattern p = Pattern.compile("^((-?[_a-zA-Z]+[_a-zA-Z0-9-]*)|([*]))");
-		Matcher match = p.matcher(possibleElement);
-		if(!match.find())
-		{
-			throw new CssSelectorStringSplitterException("invalid elementInput");
-
-		}
-	}
-		
+		CssElementAttribute cssElementAttribute = new CssElementAttribute(element,attributeList);
+		System.out.println(cssElementAttribute);
+		return cssElementAttribute;
+	}		
 }
 	
 

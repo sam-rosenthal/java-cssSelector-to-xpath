@@ -203,9 +203,18 @@ public class CssSelectorStringSplitterTest {
 	public void cssElementAttributeParserTester() throws CssSelectorStringSplitterException
 	{
 		testCssElementAttributeParser("X",new CssElementAttribute("X",new ArrayList<>()));
+		testCssElementAttributeParser("x",new CssElementAttribute("x",new ArrayList<>()));
 		testCssElementAttributeParser("*",new CssElementAttribute("*",new ArrayList<>()));
-
+		testCssElementAttributeParser("_",new CssElementAttribute("_",new ArrayList<>()));
+		testCssElementAttributeParser("-X",new CssElementAttribute("-X",new ArrayList<>()));
+		testCssElementAttributeParser("x1",new CssElementAttribute("x1",new ArrayList<>()));
+		testCssElementAttributeParser("-X9",new CssElementAttribute("-X9",new ArrayList<>()));
+		testCssElementAttributeParser("-xx",new CssElementAttribute("-xx",new ArrayList<>()));
+		testCssElementAttributeParser("XX",new CssElementAttribute("XX",new ArrayList<>()));
+		
 		testCssElementAttributeParser("*[X]",new CssElementAttribute("*",asList("[X]")));
+		testCssElementAttributeParser("x9[xx][yy]",new CssElementAttribute("x9",asList("[xx]","[yy]")));
+		testCssElementAttributeParser("-x9[x][y]",new CssElementAttribute("-x9",asList("[x]","[y]")));
 		testCssElementAttributeParser("XX[YY]",new CssElementAttribute("XX",asList("[YY]")));
 		testCssElementAttributeParser("XXX[YYY][ZZZ]",new CssElementAttribute("XXX",asList("[YYY]","[ZZZ]")));
 		testCssElementAttributeParser("[Z]",new CssElementAttribute(null,asList("[Z]")));
@@ -220,9 +229,17 @@ public class CssSelectorStringSplitterTest {
 	@Test
 	public void checkValidElementAttributeTester()
 	{
-		//testCheckValidElementAttribute("****");
+		testCheckValidElementAttribute("**");
+		testCheckValidElementAttribute("X*");
+		testCheckValidElementAttribute("*X");
+		testCheckValidElementAttribute("-");
+		testCheckValidElementAttribute("--");
+		testCheckValidElementAttribute("---");
 		
-		
+		testCheckValidElementAttribute("#");
+		testCheckValidElementAttribute("~=");
+		testCheckValidElementAttribute("$%^@");
+
 		testCheckValidElementAttribute("xx[");
 		testCheckValidElementAttribute("xx[y]zz");
 		testCheckValidElementAttribute("xx[yy][qq");
