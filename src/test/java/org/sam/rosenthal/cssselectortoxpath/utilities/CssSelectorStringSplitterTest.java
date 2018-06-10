@@ -201,17 +201,17 @@ public class CssSelectorStringSplitterTest {
 	@Test
 	public void cssElementAttributeParserTester() throws CssSelectorStringSplitterException
 	{
-		testCssElementAttributeParser("X",asList("X"));
-		testCssElementAttributeParser("XX[YY]",asList("XX","[YY]"));
-		testCssElementAttributeParser("XXX[YYY][ZZZ]",asList("XXX","[YYY]","[ZZZ]"));
-		testCssElementAttributeParser("[Z]",asList(null,"[Z]"));
-		testCssElementAttributeParser("[Y][Z]",asList(null,"[Y]","[Z]"));
+		testCssElementAttributeParser("X",new CssElementAttribute("X",asList("X")));
+		testCssElementAttributeParser("XX[YY]",new CssElementAttribute("XX[YY]",asList("XX","[YY]")));
+		testCssElementAttributeParser("XXX[YYY][ZZZ]",new CssElementAttribute("XXX[YYY][ZZZ]",asList("XXX","[YYY]","[ZZZ]")));
+		testCssElementAttributeParser("[Z]",new CssElementAttribute("[Z]",asList(null,"[Z]")));
+		testCssElementAttributeParser("[Y][Z]",new CssElementAttribute("[Y][Z]",asList(null,"[Y]","[Z]")));
 
 	}
 
-	public void testCssElementAttributeParser(String elementAttributeString,List<String> expectedOutput ) throws CssSelectorStringSplitterException {
-		List<String> elementAttributeList=attribute.createAttributeList(elementAttributeString);
-		assertEquals("elment="+elementAttributeString,expectedOutput,elementAttributeList);
+	public void testCssElementAttributeParser(String elementAttributeString,CssElementAttribute expectedOutput ) throws CssSelectorStringSplitterException {
+		CssElementAttribute elementAttributeList=attribute.stringToCssElementAttribute(elementAttributeString);
+		assertEquals("elementstringWithattributes="+elementAttributeString,expectedOutput,elementAttributeList);
 	}
 	@Test
 	public void checkValidElementAttributeTester()
@@ -234,7 +234,7 @@ public class CssSelectorStringSplitterTest {
 	private void testCheckValidElementAttribute(String elementAttributeString) 
 	{
 		try {
-			attribute.checkValid(elementAttributeString);			
+			CssElementAttribute elementAttributeList=attribute.stringToCssElementAttribute(elementAttributeString);
 			fail("CssSelectorStringSplitterException not thrown for: "+elementAttributeString);
 		} catch (CssSelectorStringSplitterException e) {
 			//success

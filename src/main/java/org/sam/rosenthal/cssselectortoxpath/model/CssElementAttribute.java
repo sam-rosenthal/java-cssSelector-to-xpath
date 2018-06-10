@@ -17,20 +17,43 @@ import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorStringSplitterE
 //only has constructor and getters
 public class CssElementAttribute
 {
-	private String element;
+	private String elementWithAttributesString;
 	private List<String> attributeList;
 
-	public CssElementAttribute(String elementIn, List<String> attributeListIn) throws CssSelectorStringSplitterException
+	public CssElementAttribute(String elementWithAttributesStringIn, List<String> attributeListIn) throws CssSelectorStringSplitterException
 	{
-		this.element=elementIn;
+		this.elementWithAttributesString=elementWithAttributesStringIn;
 		this.attributeList=attributeListIn;
 	}
-
-	public String getElement() {
-		return element;
+	
+	public String getElement() 
+	{
+		return elementWithAttributesString;
 	}
 
-	public List<String> getAttributeList() {
+	public List<String> getAttributeList() 
+	{
 		return attributeList;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "(ElementWithAttributesString="+this.elementWithAttributesString+"; AttributeList="+this.attributeList;
+	}
+	
+	@Override
+	public boolean equals(Object cssElementAttribute)
+	{
+		if(cssElementAttribute==null)
+		{
+			return false;
+		}
+		return this.toString().equals(cssElementAttribute.toString());
+	}
+	@Override
+	public int hashCode() {
+		return toString().hashCode();
+	}
+	
 }

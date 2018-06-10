@@ -5,15 +5,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.sam.rosenthal.cssselectortoxpath.model.CssElementAttribute;
+
 public class CssElementAttributeParser 
 {
 	private static final String STARTING_ELEMENT_REGULAR_EXPRESSION = "^([^\\[\\]])*";
 	private static final String ATTRIBUTE_REGULAR_EXPRESSION = "(\\[[^\\[\\]]+\\])";
 
-	public void checkValid(String elementIn) throws CssSelectorStringSplitterException
+	public void checkValid(String elementWithAttributesString) throws CssSelectorStringSplitterException
 	{
 		Pattern pattern1 = Pattern.compile(STARTING_ELEMENT_REGULAR_EXPRESSION+ATTRIBUTE_REGULAR_EXPRESSION+"*$");
-		Matcher match = pattern1.matcher(elementIn);
+		Matcher match = pattern1.matcher(elementWithAttributesString);
 		if (match.find()==false)
 		{
 			throw new CssSelectorStringSplitterException("invalid elementInput");
@@ -49,6 +51,13 @@ public class CssElementAttributeParser
 			System.out.println(builder);
 		}	
 		return builder;
+	}
+	
+	public CssElementAttribute stringToCssElementAttribute(String elementWithAttributesString) throws CssSelectorStringSplitterException
+	{
+		checkValid(elementWithAttributesString);
+		return new CssElementAttribute(elementWithAttributesString,createAttributeList(elementWithAttributesString));
+		
 	}
 	
 
