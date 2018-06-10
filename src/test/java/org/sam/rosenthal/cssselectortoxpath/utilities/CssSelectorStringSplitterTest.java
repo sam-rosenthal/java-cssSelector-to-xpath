@@ -9,11 +9,12 @@ import java.util.List;
 import org.junit.Test;
 import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
 import org.sam.rosenthal.cssselectortoxpath.model.CssCombinatorType;
+import org.sam.rosenthal.cssselectortoxpath.model.CssElementAttribute;
 
 public class CssSelectorStringSplitterTest {
 	
 	private CssSelectorStringSplitter splitter=new CssSelectorStringSplitter();
-
+	private CssElementAttributeParser attribute=new CssElementAttributeParser();
 
 	@Test
 	public void splitSelectorsErrorTester()
@@ -194,6 +195,50 @@ public class CssSelectorStringSplitterTest {
 	public void testListSplitSelectorsIntoElementCombinatorPairs(String selector,List<List<CssElementCombinatorPair>> expectedOutput) throws CssSelectorStringSplitterException {
 		List<List<CssElementCombinatorPair>> elementCombinatorPairs=splitter.listSplitSelectorsIntoElementCombinatorPairs(selector);
 		assertEquals("selectorString="+selector+"; elementCombinatorPairs="+elementCombinatorPairs.toString(),expectedOutput,elementCombinatorPairs);
+	}
+	
+	
+	@Test
+	public void cssElementAttributeParserTester() throws CssSelectorStringSplitterException
+	{
+		testCssElementAttributeParser("X",asList("X"));
+		testCssElementAttributeParser("XX[YY]",asList("XX","[YY]"));
+		testCssElementAttributeParser("XXX[YYY][ZZZ]",asList("XXX","[YYY]","[ZZZ]"));
+		testCssElementAttributeParser("[Z]",asList(null,"[Z]"));
+		testCssElementAttributeParser("[Y][Z]",asList(null,"[Y]","[Z]"));
+
+	}
+
+	public void testCssElementAttributeParser(String elementAttributeString,List<String> expectedOutput ) throws CssSelectorStringSplitterException {
+		List<String> elementAttributeList=attribute.createAttributeList(elementAttributeString);
+		assertEquals("elment="+elementAttributeString,expectedOutput,elementAttributeList);
+	}
+	@Test
+	public void checkValidElementAttributeTester()
+	{
+		testCheckValidElementAttribute("xx[");
+		testCheckValidElementAttribute("xx[y]zz");
+		testCheckValidElementAttribute("xx[yy][qq");
+		testCheckValidElementAttribute("[yy]xx");
+
+		testCheckValidElementAttribute("[yy]xx");
+		testCheckValidElementAttribute("[zz]xx[yy]");
+		testCheckValidElementAttribute("[]");
+		testCheckValidElementAttribute("[");
+		testCheckValidElementAttribute("]");
+		testCheckValidElementAttribute("x[]");
+		testCheckValidElementAttribute("x[[y]");
+		testCheckValidElementAttribute("x[y]]");
+		testCheckValidElementAttribute("x[[y]]");
+	}
+	private void testCheckValidElementAttribute(String elementAttributeString) 
+	{
+		try {
+			attribute.checkValid(elementAttributeString);			
+			fail("CssSelectorStringSplitterException not thrown for: "+elementAttributeString);
+		} catch (CssSelectorStringSplitterException e) {
+			//success
+		}
 	}
 
 }
