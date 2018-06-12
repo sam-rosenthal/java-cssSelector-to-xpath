@@ -212,13 +212,18 @@ public class CssSelectorStringSplitterTest {
 		testCssElementAttributeParser("-xx",new CssElementAttribute("-xx",new ArrayList<>()));
 		testCssElementAttributeParser("XX",new CssElementAttribute("XX",new ArrayList<>()));
 		
-		testCssElementAttributeParser("*[X]",new CssElementAttribute("*",asList("[X]")));
-		testCssElementAttributeParser("x9[xx][yy]",new CssElementAttribute("x9",asList("[xx]","[yy]")));
-		testCssElementAttributeParser("-x9[x][y]",new CssElementAttribute("-x9",asList("[x]","[y]")));
-		testCssElementAttributeParser("XX[YY]",new CssElementAttribute("XX",asList("[YY]")));
-		testCssElementAttributeParser("XXX[YYY][ZZZ]",new CssElementAttribute("XXX",asList("[YYY]","[ZZZ]")));
-		testCssElementAttributeParser("[Z]",new CssElementAttribute(null,asList("[Z]")));
-		testCssElementAttributeParser("[Y][Z]",new CssElementAttribute(null,asList("[Y]","[Z]")));
+		testCssElementAttributeParser("X[X=\"AAA\"]",new CssElementAttribute("X",asList("[X=\"AAA\"]")));
+		testCssElementAttributeParser("*[ X~=\"-\"]",new CssElementAttribute("*",asList("[ X~=\"-\"]")));
+		testCssElementAttributeParser("-X[X |=\"_-b\"]",new CssElementAttribute("-X",asList("[X |=\"_-b\"]")));
+		testCssElementAttributeParser("XX[X^= \"__00_aa-\"]",new CssElementAttribute("XX",asList("[X^= \"__00_aa-\"]")));
+		testCssElementAttributeParser("-X9[X$=\"90\" ]",new CssElementAttribute("-X9",asList("[X$=\"90\" ]")));
+		testCssElementAttributeParser("-xx[ X *= \"9\" ]",new CssElementAttribute("-xx",asList("[ X *= \"9\" ]")));
+
+		
+		testCssElementAttributeParser("x9[X=\"9\"][x=\"X\"]",new CssElementAttribute("x9",asList("[X=\"9\"]","[x=\"X\"]")));
+		testCssElementAttributeParser("-x9[ X~=\"9\"][-x9=\"9\"]",new CssElementAttribute("-x9",asList("[ X~=\"9\"]","[-x9=\"9\"]")));
+		testCssElementAttributeParser("[ X *= \"9\" ]",new CssElementAttribute(null,asList("[ X *= \"9\" ]")));
+		testCssElementAttributeParser("[X9|=\"9\"][-X ^= \"9\"]",new CssElementAttribute(null,asList("[X9|=\"9\"]","[-X ^= \"9\"]")));
 
 	}
 
