@@ -2,9 +2,6 @@ package org.sam.rosenthal.cssselectortoxpath.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorStringSplitterException;
 //Take a string and the format of the string is...
 //xxx[yyy]...[zzz]
@@ -15,15 +12,15 @@ import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorStringSplitterE
 //make into css element attribute
 //fills this stuff,
 //only has constructor and getters
-public class CssElementAttribute
+public class CssElementAttributes
 {
 	private String element;
-	private List<String> attributeList;
+	private List<CssAttribute> cssAttributeList;
 
-	public CssElementAttribute(String elementIn, List<String> attributeListIn) throws CssSelectorStringSplitterException
+	public CssElementAttributes(String elementIn, List<CssAttribute> cssAttributeListIn) throws CssSelectorStringSplitterException
 	{
 		this.element=elementIn;
-		this.attributeList=attributeListIn;
+		this.cssAttributeList=new ArrayList<>(cssAttributeListIn);
 	}
 	
 	public String getElement() 
@@ -31,25 +28,25 @@ public class CssElementAttribute
 		return element;
 	}
 
-	public List<String> getAttributeList() 
+	public List<CssAttribute> getCssAttributeList() 
 	{
-		return attributeList;
+		return cssAttributeList;
 	}
 	
 	@Override
 	public String toString()
 	{
-		return "(Element="+this.element+"; AttributeList="+this.attributeList;
+		return "Element="+this.element+"; CssAttributeList="+this.cssAttributeList;
 	}
 	
 	@Override
-	public boolean equals(Object cssElementAttribute)
+	public boolean equals(Object cssElementAttributes)
 	{
-		if(cssElementAttribute==null)
+		if(cssElementAttributes==null)
 		{
 			return false;
 		}
-		return this.toString().equals(cssElementAttribute.toString());
+		return this.toString().equals(cssElementAttributes.toString());
 	}
 	@Override
 	public int hashCode() {

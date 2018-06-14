@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.sam.rosenthal.cssselectortoxpath.model.CssAttributeType;
-import org.sam.rosenthal.cssselectortoxpath.model.CssCombinatorType;
-import org.sam.rosenthal.cssselectortoxpath.model.CssElementAttribute;
-import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
+import org.sam.rosenthal.cssselectortoxpath.model.CssAttribute;
+import org.sam.rosenthal.cssselectortoxpath.model.CssAttributeValueType;
+import org.sam.rosenthal.cssselectortoxpath.model.CssElementAttributes;
+
 
 public class CssElementAttributeParser 
 {
@@ -21,7 +21,7 @@ public class CssElementAttributeParser
 	private static String createElementAttributeNameRegularExpression()
 	{
 		StringBuilder builder=new StringBuilder();
-		for(CssAttributeType type:CssAttributeType.values())
+		for(CssAttributeValueType type:CssAttributeValueType.values())
 		{
 			if(builder.length()==0)
 			{
@@ -51,12 +51,12 @@ public class CssElementAttributeParser
 		}
 	}
 	
-	public CssElementAttribute createElementAttribute(String elementWithAttributesString) throws CssSelectorStringSplitterException 
+	public CssElementAttributes createElementAttribute(String elementWithAttributesString) throws CssSelectorStringSplitterException 
 	{
 		checkValid(elementWithAttributesString);
 		Pattern startingCssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_REGULAR_EXPRESSION);
 		Matcher match = startingCssElementAtributePattern.matcher(elementWithAttributesString);
-		List<String> attributeList=new ArrayList<String>();
+		List<CssAttribute> attributeList=new ArrayList<CssAttribute>();
 		String element=null;
 		if (match.find())
 		{
@@ -69,34 +69,17 @@ public class CssElementAttributeParser
 		}
 		Pattern restOfCssElementAtributePattern = Pattern.compile(ATTRIBUTE_REGULAR_EXPRESSION);
 		match = restOfCssElementAtributePattern.matcher(elementWithAttributesString);
+
 		while(match.find())
 		{
-			attributeList.add(match.group());
+			attributeList.add(new CssAttribute(match.group(2),match.group(10),match.group(3)));
 			System.out.println(attributeList);
 		}	
-		CssElementAttribute cssElementAttribute = new CssElementAttribute(element,attributeList);
+		CssElementAttributes cssElementAttribute = new CssElementAttributes(element,attributeList);
 		System.out.println(cssElementAttribute);
 		return cssElementAttribute;
 	}	
-	public void splitAttribute(String attribute) throws CssSelectorStringSplitterException
-	{
-		attribute=attribute.substring(1, attribute.length()-1);
-		String cutter=null;
-		for(CssAttributeType type:CssAttributeType.values())
-		{
-			int splitIndex=attribute.indexOf(type.getEqualStringName());
-			if(splitIndex>-1)
-			{
-				System.out.println(type.getEqualStringName());
-				String[] nameValue=attribute.split(type.getEqualStringName());
-				String name=nameValue[0];
-				System.out.println("name="+name);
-				String value=nameValue[1];
-				System.out.println("Value="+value);
-				cutter=type.getEqualStringName();
-			}
-		}
-	}
+
 }
 	
 
