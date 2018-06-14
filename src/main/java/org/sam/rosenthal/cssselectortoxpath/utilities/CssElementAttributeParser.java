@@ -16,7 +16,7 @@ public class CssElementAttributeParser
 	private static final String ATTRIBUTE_TYPE_REGULAR_EXPRESSION = createElementAttributeNameRegularExpression();
 	private static final String ELEMENT_ATTRIBUTE_NAME_REGULAR_EXPRESSION="(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)";
 	private static final String STARTING_ELEMENT_REGULAR_EXPRESSION = "^("+ELEMENT_ATTRIBUTE_NAME_REGULAR_EXPRESSION+"|([*]))?";
-	private static final String ATTRIBUTE_REGULAR_EXPRESSION = "(\\["+"\\s*"+ELEMENT_ATTRIBUTE_NAME_REGULAR_EXPRESSION+"\\s*"+ATTRIBUTE_TYPE_REGULAR_EXPRESSION+"\\s*"+"\""+ATTRIBUTE_VALUE_REGULAR_EXPRESSION+"\""+"\\s*"+"\\])"; 
+	private static final String ATTRIBUTE_REGULAR_EXPRESSION = "(\\["+"\\s*"+ELEMENT_ATTRIBUTE_NAME_REGULAR_EXPRESSION+"\\s*"+ATTRIBUTE_TYPE_REGULAR_EXPRESSION+"\\s*"+"(([\"\'])"+ATTRIBUTE_VALUE_REGULAR_EXPRESSION+"([\"\']))"+"\\s*"+"\\])"; 
 	
 	private static String createElementAttributeNameRegularExpression()
 	{
@@ -45,9 +45,16 @@ public class CssElementAttributeParser
 		{
 			throw new CssSelectorStringSplitterException("invalid elementWithAttributesStringInput");
 		}
+		if((match.group(13)!=null) && !(match.group(14).equals(match.group(16))))
+		{
+
+			throw new CssSelectorStringSplitterException("invalid quotations");
+
+		}
+
 		else
 		{
-			System.out.println("Valid");
+			//System.out.println("Valid");
 		}
 	}
 	
@@ -64,7 +71,7 @@ public class CssElementAttributeParser
 			if(!possibleElement.isEmpty())
 			{
 				element=possibleElement;
-				System.out.println(possibleElement);
+				//System.out.println(possibleElement);
 			}
 		}
 		Pattern restOfCssElementAtributePattern = Pattern.compile(ATTRIBUTE_REGULAR_EXPRESSION);
@@ -72,11 +79,11 @@ public class CssElementAttributeParser
 
 		while(match.find())
 		{
-			attributeList.add(new CssAttribute(match.group(2),match.group(10),match.group(3)));
-			System.out.println(attributeList);
+			attributeList.add(new CssAttribute(match.group(2),match.group(12),match.group(3)));
+			//System.out.println(attributeList);
 		}	
 		CssElementAttributes cssElementAttribute = new CssElementAttributes(element,attributeList);
-		System.out.println(cssElementAttribute);
+		//System.out.println(cssElementAttribute);
 		return cssElementAttribute;
 	}	
 

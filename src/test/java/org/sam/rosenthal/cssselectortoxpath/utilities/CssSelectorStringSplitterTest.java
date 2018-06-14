@@ -247,6 +247,10 @@ public class CssSelectorStringSplitterTest {
 		testCheckValidElementAttribute("~=");
 		testCheckValidElementAttribute("$%^@");
 
+		testCheckValidElementAttribute("xx[x=\'9\"]");
+		testCheckValidElementAttribute("xx[x=\"9\']");
+
+		testCheckValidElementAttribute("xx[");		
 		testCheckValidElementAttribute("xx[");
 		testCheckValidElementAttribute("xx[y]zz");
 		testCheckValidElementAttribute("xx[yy][qq");
