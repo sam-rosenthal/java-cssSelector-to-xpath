@@ -236,37 +236,42 @@ public class CssSelectorStringSplitterTest {
 	@Test
 	public void checkValidElementAttributeTester()
 	{
-		testCheckValidElementAttribute("**");
-		testCheckValidElementAttribute("X*");
-		testCheckValidElementAttribute("*X");
-		testCheckValidElementAttribute("-");
-		testCheckValidElementAttribute("--");
-		testCheckValidElementAttribute("---");
+		testCheckInValidElementAttribute("**");
+		testCheckInValidElementAttribute("X*");
+		testCheckInValidElementAttribute("*X");
+		testCheckInValidElementAttribute("-");
+		testCheckInValidElementAttribute("--");
+		testCheckInValidElementAttribute("---");
 		
-		testCheckValidElementAttribute("#");
-		testCheckValidElementAttribute("~=");
-		testCheckValidElementAttribute("$%^@");
+		testCheckInValidElementAttribute("#");
+		testCheckInValidElementAttribute("~=");
+		testCheckInValidElementAttribute("$%^@");
 
-		testCheckValidElementAttribute("xx[x=\'9\"]");
-		testCheckValidElementAttribute("xx[x=\"9\']");
+		testCheckInValidElementAttribute("xx[x=\'9\"]");
+		testCheckInValidElementAttribute("xx[x=\"9\']");
 
-		testCheckValidElementAttribute("xx[");		
-		testCheckValidElementAttribute("xx[");
-		testCheckValidElementAttribute("xx[y]zz");
-		testCheckValidElementAttribute("xx[yy][qq");
-		testCheckValidElementAttribute("[yy]xx");
+		testCheckInValidElementAttribute("xx[x=]");
+		testCheckInValidElementAttribute("xx[x\"yyy\"]");
+		testCheckInValidElementAttribute("xx[\"yyy\"]");
+		testCheckInValidElementAttribute("xx[=\"yyy\"]");
+		
+		testCheckInValidElementAttribute("xx[");		
+		testCheckInValidElementAttribute("xx[");
+		testCheckInValidElementAttribute("xx[y]zz");
+		testCheckInValidElementAttribute("xx[yy][qq");
+		testCheckInValidElementAttribute("[yy]xx");
 
-		testCheckValidElementAttribute("[yy]xx");
-		testCheckValidElementAttribute("[zz]xx[yy]");
-		testCheckValidElementAttribute("[]");
-		testCheckValidElementAttribute("[");
-		testCheckValidElementAttribute("]");
-		testCheckValidElementAttribute("x[]");
-		testCheckValidElementAttribute("x[[y]");
-		testCheckValidElementAttribute("x[y]]");
-		testCheckValidElementAttribute("x[[y]]");
+		testCheckInValidElementAttribute("[yy]xx");
+		testCheckInValidElementAttribute("[zz]xx[yy]");
+		testCheckInValidElementAttribute("[]");
+		testCheckInValidElementAttribute("[");
+		testCheckInValidElementAttribute("]");
+		testCheckInValidElementAttribute("x[]");
+		testCheckInValidElementAttribute("x[[y]");
+		testCheckInValidElementAttribute("x[y]]");
+		testCheckInValidElementAttribute("x[[y]]");
 	}
-	private void testCheckValidElementAttribute(String elementAttributeString) 
+	private void testCheckInValidElementAttribute(String elementAttributeString) 
 	{
 		try {
 			System.out.println(attribute.createElementAttribute(elementAttributeString));
