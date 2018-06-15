@@ -3,17 +3,21 @@ package org.sam.rosenthal.cssselectortoxpath.utilities;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
 import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
+import org.sam.rosenthal.cssselectortoxpath.model.CssAttribute;
+import org.sam.rosenthal.cssselectortoxpath.model.CssAttributeValueType;
 import org.sam.rosenthal.cssselectortoxpath.model.CssCombinatorType;
+import org.sam.rosenthal.cssselectortoxpath.model.CssElementAttributes;
 
 public class CssSelectorStringSplitterTest {
 	
 	private CssSelectorStringSplitter splitter=new CssSelectorStringSplitter();
-
+	private CssElementAttributeParser attribute=new CssElementAttributeParser();
 
 	@Test
 	public void splitSelectorsErrorTester()
@@ -194,6 +198,98 @@ public class CssSelectorStringSplitterTest {
 	public void testListSplitSelectorsIntoElementCombinatorPairs(String selector,List<List<CssElementCombinatorPair>> expectedOutput) throws CssSelectorStringSplitterException {
 		List<List<CssElementCombinatorPair>> elementCombinatorPairs=splitter.listSplitSelectorsIntoElementCombinatorPairs(selector);
 		assertEquals("selectorString="+selector+"; elementCombinatorPairs="+elementCombinatorPairs.toString(),expectedOutput,elementCombinatorPairs);
+	}
+	
+	
+	@Test
+	public void cssElementAttributeParserTester() throws CssSelectorStringSplitterException
+	{
+		testCssElementAttributeParser("X",new CssElementAttributes("X",new ArrayList<>()));
+		testCssElementAttributeParser("x",new CssElementAttributes("x",new ArrayList<>()));
+		testCssElementAttributeParser("*",new CssElementAttributes("*",new ArrayList<>()));
+		testCssElementAttributeParser("_",new CssElementAttributes("_",new ArrayList<>()));
+		testCssElementAttributeParser("-X",new CssElementAttributes("-X",new ArrayList<>()));
+		testCssElementAttributeParser("x1",new CssElementAttributes("x1",new ArrayList<>()));
+		testCssElementAttributeParser("-X9",new CssElementAttributes("-X9",new ArrayList<>()));
+		testCssElementAttributeParser("-xx",new CssElementAttributes("-xx",new ArrayList<>()));
+		testCssElementAttributeParser("XX",new CssElementAttributes("XX",new ArrayList<>()));
+		
+		testCssElementAttributeParser("X[X]",new CssElementAttributes("X",asList(new CssAttribute("X", null, (CssAttributeValueType)null))));
+
+		
+		testCssElementAttributeParser("X[X=\"AAA\"]",new CssElementAttributes("X",asList(new CssAttribute("X", "AAA", CssAttributeValueType.EQUAL))));
+		testCssElementAttributeParser("*[ X~=\"-\"]",new CssElementAttributes("*",asList(new CssAttribute("X", "-", "~="))));
+		testCssElementAttributeParser("-X[X |=\"_-b\"]",new CssElementAttributes("-X",asList(new CssAttribute("X", "_-b", CssAttributeValueType.PIPE_EQUAL))));
+		testCssElementAttributeParser("XX[X^= \"__00_aa-\"]",new CssElementAttributes("XX",asList(new CssAttribute("X", "__00_aa-", "^="))));
+		testCssElementAttributeParser("-X9[X$=\"90\" ]",new CssElementAttributes("-X9",asList(new CssAttribute("X", "90", CssAttributeValueType.DOLLAR_SIGN_EQUAL))));
+		testCssElementAttributeParser("-xx[ X *= \"9\" ]",new CssElementAttributes("-xx",asList(new CssAttribute("X", "9", "*="))));
+
+		testCssElementAttributeParser("x9[X=\"9\"][X]",new CssElementAttributes("x9",asList(new CssAttribute("X", "9", CssAttributeValueType.EQUAL),new CssAttribute("X", null, (CssAttributeValueType)null))));
+
+		
+		testCssElementAttributeParser("x9[X=\"9\"][x=\"X\"]",new CssElementAttributes("x9",asList(new CssAttribute("X", "9", CssAttributeValueType.EQUAL),new CssAttribute("x", "X", CssAttributeValueType.EQUAL))));
+		testCssElementAttributeParser("-x9[ X~=\"9\"][-x9=\"9\"]",new CssElementAttributes("-x9",asList(new CssAttribute("X", "9", "~="),new CssAttribute("-x9", "9", "="))));
+		testCssElementAttributeParser("[ X *= \"9\" ]",new CssElementAttributes(null,asList(new CssAttribute("X", "9", CssAttributeValueType.STAR_EQUAL))));
+		testCssElementAttributeParser("[X9|=\"9\"][-X ^= \"9\"]",new CssElementAttributes(null,asList(new CssAttribute("X9", "9", "|="),new CssAttribute("-X", "9", "^="))));
+
+	}
+
+	public void testCssElementAttributeParser(String elementAttributeString,CssElementAttributes expectedOutput ) throws CssSelectorStringSplitterException {
+		CssElementAttributes elementAttributeList=attribute.createElementAttribute(elementAttributeString);
+		assertEquals("elementstringWithattributes="+elementAttributeString,expectedOutput,elementAttributeList);
+	}
+	@Test
+	public void checkValidElementAttributeTester()
+	{
+		testCheckInValidElementAttribute("**");
+		testCheckInValidElementAttribute("*X");
+		testCheckInValidElementAttribute("-");
+		testCheckInValidElementAttribute("--");
+		testCheckInValidElementAttribute("---");
+		
+		testCheckInValidElementAttribute("#");
+		testCheckInValidElementAttribute("~=");
+		testCheckInValidElementAttribute("$%^@");
+
+		testCheckInValidElementAttribute("xx[x^=\'9\"]");
+		testCheckInValidElementAttribute("xx[x$=\"10\']");
+		testCheckInValidElementAttribute("xx[x^=9\"]");
+		testCheckInValidElementAttribute("xx[x$=\"10]");
+
+		testCheckInValidElementAttribute("xx[x\"yyy\"]");
+		testCheckInValidElementAttribute("xx[x$=]");
+		testCheckInValidElementAttribute("xx[\"yyy\"]");
+		testCheckInValidElementAttribute("xx[=\"yyy\"]");
+
+		testCheckInValidElementAttribute("xx[x$=$='BBB']");
+		testCheckInValidElementAttribute("xx[x~=='BBB']");
+		testCheckInValidElementAttribute("xx[aa=\"yyy\"\"AA\"]");
+
+		
+		testCheckInValidElementAttribute("xx[");		
+		testCheckInValidElementAttribute("xx[");
+		testCheckInValidElementAttribute("xx[y]zz");
+		testCheckInValidElementAttribute("xx[yy][qq");
+		testCheckInValidElementAttribute("[yy]xx");
+
+		testCheckInValidElementAttribute("[yy]xx");
+		testCheckInValidElementAttribute("[zz]xx[yy]");
+		testCheckInValidElementAttribute("[]");
+		testCheckInValidElementAttribute("[");
+		testCheckInValidElementAttribute("]");
+		testCheckInValidElementAttribute("x[]");
+		testCheckInValidElementAttribute("x[[y]");
+		testCheckInValidElementAttribute("x[y]]");
+		testCheckInValidElementAttribute("x[[y]]");
+	}
+	private void testCheckInValidElementAttribute(String elementAttributeString) 
+	{
+		try {
+			System.out.println(attribute.createElementAttribute(elementAttributeString));
+			fail("CssSelectorStringSplitterException not thrown for: "+elementAttributeString);
+		} catch (CssSelectorStringSplitterException e) {
+			//success
+		}
 	}
 
 }
