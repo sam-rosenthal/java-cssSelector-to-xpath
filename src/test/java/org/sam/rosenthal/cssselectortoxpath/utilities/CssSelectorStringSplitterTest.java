@@ -214,12 +214,17 @@ public class CssSelectorStringSplitterTest {
 		testCssElementAttributeParser("-xx",new CssElementAttributes("-xx",new ArrayList<>()));
 		testCssElementAttributeParser("XX",new CssElementAttributes("XX",new ArrayList<>()));
 		
+		testCssElementAttributeParser("X[X]",new CssElementAttributes("X",asList(new CssAttribute("X", null, (CssAttributeValueType)null))));
+
+		
 		testCssElementAttributeParser("X[X=\"AAA\"]",new CssElementAttributes("X",asList(new CssAttribute("X", "AAA", CssAttributeValueType.EQUAL))));
 		testCssElementAttributeParser("*[ X~=\"-\"]",new CssElementAttributes("*",asList(new CssAttribute("X", "-", "~="))));
 		testCssElementAttributeParser("-X[X |=\"_-b\"]",new CssElementAttributes("-X",asList(new CssAttribute("X", "_-b", CssAttributeValueType.PIPE_EQUAL))));
 		testCssElementAttributeParser("XX[X^= \"__00_aa-\"]",new CssElementAttributes("XX",asList(new CssAttribute("X", "__00_aa-", "^="))));
-		testCssElementAttributeParser("-X9[X$=\"90\" ]",new CssElementAttributes("-X9",asList(new CssAttribute("X", "90", CssAttributeValueType.MONEY_EQUAL))));
+		testCssElementAttributeParser("-X9[X$=\"90\" ]",new CssElementAttributes("-X9",asList(new CssAttribute("X", "90", CssAttributeValueType.DOLLAR_SIGN_EQUAL))));
 		testCssElementAttributeParser("-xx[ X *= \"9\" ]",new CssElementAttributes("-xx",asList(new CssAttribute("X", "9", "*="))));
+
+		testCssElementAttributeParser("x9[X=\"9\"][X]",new CssElementAttributes("x9",asList(new CssAttribute("X", "9", CssAttributeValueType.EQUAL),new CssAttribute("X", null, (CssAttributeValueType)null))));
 
 		
 		testCssElementAttributeParser("x9[X=\"9\"][x=\"X\"]",new CssElementAttributes("x9",asList(new CssAttribute("X", "9", CssAttributeValueType.EQUAL),new CssAttribute("x", "X", CssAttributeValueType.EQUAL))));
@@ -237,7 +242,6 @@ public class CssSelectorStringSplitterTest {
 	public void checkValidElementAttributeTester()
 	{
 		testCheckInValidElementAttribute("**");
-		testCheckInValidElementAttribute("X*");
 		testCheckInValidElementAttribute("*X");
 		testCheckInValidElementAttribute("-");
 		testCheckInValidElementAttribute("--");
@@ -247,13 +251,20 @@ public class CssSelectorStringSplitterTest {
 		testCheckInValidElementAttribute("~=");
 		testCheckInValidElementAttribute("$%^@");
 
-		testCheckInValidElementAttribute("xx[x=\'9\"]");
-		testCheckInValidElementAttribute("xx[x=\"9\']");
+		testCheckInValidElementAttribute("xx[x^=\'9\"]");
+		testCheckInValidElementAttribute("xx[x$=\"10\']");
+		testCheckInValidElementAttribute("xx[x^=9\"]");
+		testCheckInValidElementAttribute("xx[x$=\"10]");
 
-		testCheckInValidElementAttribute("xx[x=]");
 		testCheckInValidElementAttribute("xx[x\"yyy\"]");
+		testCheckInValidElementAttribute("xx[x$=]");
 		testCheckInValidElementAttribute("xx[\"yyy\"]");
 		testCheckInValidElementAttribute("xx[=\"yyy\"]");
+
+		testCheckInValidElementAttribute("xx[x$=$='BBB']");
+		testCheckInValidElementAttribute("xx[x~=='BBB']");
+		testCheckInValidElementAttribute("xx[aa=\"yyy\"\"AA\"]");
+
 		
 		testCheckInValidElementAttribute("xx[");		
 		testCheckInValidElementAttribute("xx[");

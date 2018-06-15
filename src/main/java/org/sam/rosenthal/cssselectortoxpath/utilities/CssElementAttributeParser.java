@@ -12,11 +12,12 @@ import org.sam.rosenthal.cssselectortoxpath.model.CssElementAttributes;
 
 public class CssElementAttributeParser 
 {
-	private static final String ATTRIBUTE_VALUE_REGULAR_EXPRESSION = "([_a-zA-Z0-9-]+)";
-	private static final String ATTRIBUTE_TYPE_REGULAR_EXPRESSION = createElementAttributeNameRegularExpression();
-	private static final String ELEMENT_ATTRIBUTE_NAME_REGULAR_EXPRESSION="(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)";
-	private static final String STARTING_ELEMENT_REGULAR_EXPRESSION = "^("+ELEMENT_ATTRIBUTE_NAME_REGULAR_EXPRESSION+"|([*]))?";
-	private static final String ATTRIBUTE_REGULAR_EXPRESSION = "(\\["+"\\s*"+ELEMENT_ATTRIBUTE_NAME_REGULAR_EXPRESSION+"\\s*"+ATTRIBUTE_TYPE_REGULAR_EXPRESSION+"\\s*"+"(([\"\'])"+ATTRIBUTE_VALUE_REGULAR_EXPRESSION+"([\"\']))"+"\\s*"+"\\])"; 
+	private static final String QUOTES_RE = "([\"\'])";
+	private static final String ATTRIBUTE_VALUE_RE = "([_a-zA-Z0-9-]+)";
+	private static final String ATTRIBUTE_TYPE_RE = createElementAttributeNameRegularExpression();
+	private static final String ELEMENT_ATTRIBUTE_NAME_RE="(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)";
+	private static final String STARTING_ELEMENT_RE = "^("+ELEMENT_ATTRIBUTE_NAME_RE+"|([*]))?";
+	private static final String ATTRIBUTE_RE = "(\\["+"\\s*"+ELEMENT_ATTRIBUTE_NAME_RE+"\\s*"+ATTRIBUTE_TYPE_RE+"\\s*"+"("+QUOTES_RE+ATTRIBUTE_VALUE_RE+QUOTES_RE+")?"+"\\s*"+"\\])"; 
 	
 	private static String createElementAttributeNameRegularExpression()
 	{
@@ -33,35 +34,44 @@ public class CssElementAttributeParser
 			}
 			builder.append("\\").append(type.getEqualStringName());
 		}
-		builder.append("))");
+		builder.append("))?");
+		//System.out.println("elementAttributeRE="+builder);
 		return builder.toString();
 	}
 	
 	public void checkValid(String elementWithAttributesString) throws CssSelectorStringSplitterException
 	{
-		Pattern cssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_REGULAR_EXPRESSION+ATTRIBUTE_REGULAR_EXPRESSION+"*$");
+		System.out.println("checkValid: "+elementWithAttributesString+" ,re="+STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
+		Pattern cssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Matcher match = cssElementAtributePattern.matcher(elementWithAttributesString);
 		if (!match.find())
 		{
-			throw new CssSelectorStringSplitterException("invalid elementWithAttributesStringInput");
+			throw new CssSelectorStringSplitterException("invalid element and/or attributes");
 		}
-		if((match.group(13)!=null) && !(match.group(14).equals(match.group(16))))
+		System.out.println();
+		boolean cssAttributeValueTypeExists = match.group(6)!=null;
+		boolean cssAttributeValueExists = match.group(13)!=null;
+		System.out.println("Type="+cssAttributeValueTypeExists+", Value="+cssAttributeValueExists);
+		if((cssAttributeValueTypeExists&&!cssAttributeValueExists)||(!cssAttributeValueTypeExists&&cssAttributeValueExists))
 		{
+				throw new CssSelectorStringSplitterException("invalid attribute value");
+		}
 
+		String startQuote = match.group(14);
+		String endQuote = match.group(16);
+		boolean startQuoteExists=startQuote!=null;
+		//note the only way startQuote could be null is that there no attribute value 
+		if(startQuoteExists && !(startQuote.equals(endQuote)))
+		{
 			throw new CssSelectorStringSplitterException("invalid quotations");
-
 		}
-
-		else
-		{
-			//System.out.println("Valid");
-		}
+		System.out.println("Valid: "+elementWithAttributesString);
 	}
 	
 	public CssElementAttributes createElementAttribute(String elementWithAttributesString) throws CssSelectorStringSplitterException 
 	{
 		checkValid(elementWithAttributesString);
-		Pattern startingCssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_REGULAR_EXPRESSION);
+		Pattern startingCssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_RE);
 		Matcher match = startingCssElementAtributePattern.matcher(elementWithAttributesString);
 		List<CssAttribute> attributeList=new ArrayList<CssAttribute>();
 		String element=null;
@@ -74,7 +84,7 @@ public class CssElementAttributeParser
 				//System.out.println(possibleElement);
 			}
 		}
-		Pattern restOfCssElementAtributePattern = Pattern.compile(ATTRIBUTE_REGULAR_EXPRESSION);
+		Pattern restOfCssElementAtributePattern = Pattern.compile(ATTRIBUTE_RE);
 		match = restOfCssElementAtributePattern.matcher(elementWithAttributesString);
 
 		while(match.find())
