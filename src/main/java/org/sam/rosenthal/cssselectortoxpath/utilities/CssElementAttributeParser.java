@@ -41,17 +41,17 @@ public class CssElementAttributeParser
 	
 	public void checkValid(String elementWithAttributesString) throws CssSelectorStringSplitterException
 	{
-		System.out.println("checkValid: "+elementWithAttributesString+" ,re="+STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
+		//System.out.println("checkValid: "+elementWithAttributesString+" ,re="+STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Pattern cssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Matcher match = cssElementAtributePattern.matcher(elementWithAttributesString);
 		if (!match.find())
 		{
 			throw new CssSelectorStringSplitterException("invalid element and/or attributes");
 		}
-		System.out.println();
+		//System.out.println();
 		boolean cssAttributeValueTypeExists = match.group(6)!=null;
 		boolean cssAttributeValueExists = match.group(13)!=null;
-		System.out.println("Type="+cssAttributeValueTypeExists+", Value="+cssAttributeValueExists);
+		//System.out.println("Type="+cssAttributeValueTypeExists+", Value="+cssAttributeValueExists);
 		if((cssAttributeValueTypeExists&&!cssAttributeValueExists)||(!cssAttributeValueTypeExists&&cssAttributeValueExists))
 		{
 				throw new CssSelectorStringSplitterException("invalid attribute value");
@@ -65,7 +65,7 @@ public class CssElementAttributeParser
 		{
 			throw new CssSelectorStringSplitterException("invalid quotations");
 		}
-		System.out.println("Valid: "+elementWithAttributesString);
+		//System.out.println("Valid: "+elementWithAttributesString);
 	}
 	
 	public CssElementAttributes createElementAttribute(String elementWithAttributesString) throws CssSelectorStringSplitterException 

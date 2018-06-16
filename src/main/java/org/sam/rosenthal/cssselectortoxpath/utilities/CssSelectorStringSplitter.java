@@ -47,13 +47,25 @@ public class CssSelectorStringSplitter
 			selectorString=selectorString.replaceAll("\\s+","");
 			selectorString=selectorString.replaceAll("("+WHITESPACE_PLACE_HOLDER+")+", " ");
 			invalClassIdPairCheck(selectorString);
-			selectorString=selectorString.replaceAll("#([^.#\\[]+)","[id=\"$1\"]");
-			selectorString=selectorString.replaceAll("[.]([^.#\\[]+)","[class~=\"$1\"]");
+			selectorString=selectorString.replaceAll("#"+classIdCombinatorRE(),"[id=\"$1\"]");
+			selectorString=selectorString.replaceAll("[.]"+classIdCombinatorRE(),"[class~=\"$1\"]");
 //			System.out.println(selectorString);
 			return selectorString;
 		}
 	}
-
+	private String classIdCombinatorRE()
+	{
+		StringBuilder builder=new StringBuilder("([^.#\\[,");
+		for(CssCombinatorType combinatorType:CssCombinatorType.values())
+		{
+			builder.append(combinatorType.getCombinatorChar());
+		}
+		builder.append("]+)");
+		return builder.toString();
+		
+	}
+	
+	
 	protected void invalClassIdPairCheck(String selectorString) throws CssSelectorStringSplitterException 
 	{
 		String nextSelectorIdentifier="[.#\\[]";

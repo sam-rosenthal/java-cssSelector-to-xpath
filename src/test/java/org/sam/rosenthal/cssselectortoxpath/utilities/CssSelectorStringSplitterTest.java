@@ -187,7 +187,7 @@ public class CssSelectorStringSplitterTest {
 	public void listSplitSelectorsIntoElementCombinatorPairsTester() throws CssSelectorStringSplitterException
 	{
 		testListSplitSelectorsIntoElementCombinatorPairs("X",asList(asList(new CssElementCombinatorPair(null, "X"))));
-		testListSplitSelectorsIntoElementCombinatorPairs("X,Y,Z,1",asList(asList(new CssElementCombinatorPair(null, "X")),asList(new CssElementCombinatorPair(null, "Y")),asList(new CssElementCombinatorPair(null, "Z")),asList(new CssElementCombinatorPair(null, "1"))));
+		testListSplitSelectorsIntoElementCombinatorPairs("X,Y,Z,a",asList(asList(new CssElementCombinatorPair(null, "X")),asList(new CssElementCombinatorPair(null, "Y")),asList(new CssElementCombinatorPair(null, "Z")),asList(new CssElementCombinatorPair(null, "a"))));
 		testListSplitSelectorsIntoElementCombinatorPairs("X+Y",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Y"))));
 		testListSplitSelectorsIntoElementCombinatorPairs("X+Y,A>B",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Y")),asList(new CssElementCombinatorPair(null, "A"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "B"))));
 		testListSplitSelectorsIntoElementCombinatorPairs("X Y+Z>A~B,C,D E",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Z"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "A"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "B")),
