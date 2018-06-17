@@ -13,7 +13,7 @@ import org.sam.rosenthal.cssselectortoxpath.model.CssElementAttributes;
 public class CssElementAttributeParser 
 {
 	private static final String QUOTES_RE = "([\"\'])";
-	private static final String ATTRIBUTE_VALUE_RE = "([_a-zA-Z0-9-]+)";
+	private static final String ATTRIBUTE_VALUE_RE = "([_a-zA-Z0-9- ]+)";
 	private static final String ATTRIBUTE_TYPE_RE = createElementAttributeNameRegularExpression();
 	private static final String ELEMENT_ATTRIBUTE_NAME_RE="(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)";
 	private static final String STARTING_ELEMENT_RE = "^("+ELEMENT_ATTRIBUTE_NAME_RE+"|([*]))?";
@@ -48,10 +48,10 @@ public class CssElementAttributeParser
 		{
 			throw new CssSelectorStringSplitterException("invalid element and/or attributes");
 		}
-		System.out.println();
+		//System.out.println();
 		boolean cssAttributeValueTypeExists = match.group(6)!=null;
 		boolean cssAttributeValueExists = match.group(13)!=null;
-		System.out.println("Type="+cssAttributeValueTypeExists+", Value="+cssAttributeValueExists);
+		//System.out.println("Type="+cssAttributeValueTypeExists+", Value="+cssAttributeValueExists);
 		if((cssAttributeValueTypeExists&&!cssAttributeValueExists)||(!cssAttributeValueTypeExists&&cssAttributeValueExists))
 		{
 				throw new CssSelectorStringSplitterException("invalid attribute value");
@@ -65,7 +65,7 @@ public class CssElementAttributeParser
 		{
 			throw new CssSelectorStringSplitterException("invalid quotations");
 		}
-		System.out.println("Valid: "+elementWithAttributesString);
+		//System.out.println("Valid: "+elementWithAttributesString);
 	}
 	
 	public CssElementAttributes createElementAttribute(String elementWithAttributesString) throws CssSelectorStringSplitterException 

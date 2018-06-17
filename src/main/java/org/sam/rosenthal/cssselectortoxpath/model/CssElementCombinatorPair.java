@@ -1,23 +1,29 @@
 package org.sam.rosenthal.cssselectortoxpath.model;
 
+import org.sam.rosenthal.cssselectortoxpath.utilities.CssElementAttributeParser;
+import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorStringSplitterException;
+
 public class CssElementCombinatorPair {
 	private CssCombinatorType combinatorType;
-	private String element;
-	public CssElementCombinatorPair(CssCombinatorType combinatorTypeIn, String elementIn)
+	private CssElementAttributes cssElementAttributes;
+	
+	public CssElementCombinatorPair(CssCombinatorType combinatorTypeIn, String cssElementAttributesStringIn) throws CssSelectorStringSplitterException
 	{
 		this.combinatorType=combinatorTypeIn;
-		this.element=elementIn;
+		this.cssElementAttributes=new CssElementAttributeParser().createElementAttribute(cssElementAttributesStringIn);
 	}
 	public CssCombinatorType getCombinatorType() {
 		return combinatorType;
 	}
-	public String getElement() {
-		return element;
+	public CssElementAttributes getCssElementAttributes() {
+		return cssElementAttributes;
 	}
+	
+	
 	@Override
 	public String toString()
 	{
-		return "(Combinator="+this.getCombinatorType()+"; Element="+this.getElement()+")";
+		return "(Combinator="+this.getCombinatorType()+"; Element="+this.cssElementAttributes+")";
 	}
 	@Override
 	public boolean equals(Object cssElementCombinatorPair)

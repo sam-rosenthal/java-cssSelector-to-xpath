@@ -17,6 +17,17 @@ public class CssAttribute
 		this.type=typeIn;
 	}
 	
+	
+	public String getName() {
+		return name;
+	}
+	public String getValue() {
+		return value;
+	}
+	public CssAttributeValueType getType() {
+		return type;
+	}
+	
 	@Override
 	public String toString()
 	{
