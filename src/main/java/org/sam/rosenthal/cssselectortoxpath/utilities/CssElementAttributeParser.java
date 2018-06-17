@@ -13,7 +13,7 @@ import org.sam.rosenthal.cssselectortoxpath.model.CssElementAttributes;
 public class CssElementAttributeParser 
 {
 	private static final String QUOTES_RE = "([\"\'])";
-	private static final String ATTRIBUTE_VALUE_RE = "([_a-zA-Z0-9-]+)";
+	private static final String ATTRIBUTE_VALUE_RE = "([_a-zA-Z0-9- ]+)";
 	private static final String ATTRIBUTE_TYPE_RE = createElementAttributeNameRegularExpression();
 	private static final String ELEMENT_ATTRIBUTE_NAME_RE="(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)";
 	private static final String STARTING_ELEMENT_RE = "^("+ELEMENT_ATTRIBUTE_NAME_RE+"|([*]))?";
@@ -41,7 +41,7 @@ public class CssElementAttributeParser
 	
 	public void checkValid(String elementWithAttributesString) throws CssSelectorStringSplitterException
 	{
-		//System.out.println("checkValid: "+elementWithAttributesString+" ,re="+STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
+		System.out.println("checkValid: "+elementWithAttributesString+" ,re="+STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Pattern cssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Matcher match = cssElementAtributePattern.matcher(elementWithAttributesString);
 		if (!match.find())

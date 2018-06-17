@@ -216,7 +216,7 @@ public class CssSelectorStringSplitterTest {
 		
 		testCssElementAttributeParser("X[X]",new CssElementAttributes("X",asList(new CssAttribute("X", null, (CssAttributeValueType)null))));
 
-		
+		testCssElementAttributeParser("X[X=\" \"]",new CssElementAttributes("X",asList(new CssAttribute("X", " ", CssAttributeValueType.EQUAL))));
 		testCssElementAttributeParser("X[X=\"AAA\"]",new CssElementAttributes("X",asList(new CssAttribute("X", "AAA", CssAttributeValueType.EQUAL))));
 		testCssElementAttributeParser("*[ X~=\"-\"]",new CssElementAttributes("*",asList(new CssAttribute("X", "-", "~="))));
 		testCssElementAttributeParser("-X[X |=\"_-b\"]",new CssElementAttributes("-X",asList(new CssAttribute("X", "_-b", CssAttributeValueType.PIPE_EQUAL))));

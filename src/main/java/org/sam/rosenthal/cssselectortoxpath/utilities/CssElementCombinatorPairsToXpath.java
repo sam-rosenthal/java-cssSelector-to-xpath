@@ -52,16 +52,61 @@ public class CssElementCombinatorPairsToXpath
 	private void convertCssAttributeListToXpath(StringBuilder xpathBuilder, CssElementCombinatorPair elementCombinatorPair)
 	{
 		List<CssAttribute> cssAttributeList = elementCombinatorPair.getCssElementAttributes().getCssAttributeList();
-
+		//starts-with(@href, "abc")
 		for(CssAttribute cssAttribute: cssAttributeList)
 		{
+			String name = cssAttribute.getName();
+			String value = cssAttribute.getValue();
 			if(cssAttribute.getType()==CssAttributeValueType.EQUAL)
 			{
 				xpathBuilder.append("[@");
-				xpathBuilder.append(cssAttribute.getName());
+				xpathBuilder.append(name);
 				xpathBuilder.append("=\"");
-				xpathBuilder.append(cssAttribute.getValue());
+				xpathBuilder.append(value);
 				xpathBuilder.append("\"]");
+			}
+			else if(cssAttribute.getType()==CssAttributeValueType.CARROT_EQUAL)
+			{
+				xpathBuilder.append("[starts-with(@");
+				xpathBuilder.append(name);
+				xpathBuilder.append(",\"");
+				xpathBuilder.append(value);
+				xpathBuilder.append("\")]");
+			}
+			else if(cssAttribute.getType()==CssAttributeValueType.DOLLAR_SIGN_EQUAL)
+			{
+				//TODO: implement this when we implement xpath 2.0
+//				xpathBuilder.append("[ends-with(@");
+//				xpathBuilder.append(cssAttribute.getName());
+//				xpathBuilder.append(",\"");
+//				xpathBuilder.append(cssAttribute.getValue());
+//				xpathBuilder.append("\")]");
+				
+				xpathBuilder.append("[substring(@");
+				xpathBuilder.append(name);
+				xpathBuilder.append(",string-length(@");
+				xpathBuilder.append(name);
+				xpathBuilder.append(")-string-length(\"");
+				xpathBuilder.append(value);
+				xpathBuilder.append("\")+1)=\"");
+				xpathBuilder.append(value);
+				xpathBuilder.append("\"]");
+			}
+			else if(cssAttribute.getType()==CssAttributeValueType.STAR_EQUAL)
+			{
+				xpathBuilder.append("[contains(@");
+				xpathBuilder.append(name);
+				xpathBuilder.append(",\"");
+				xpathBuilder.append(value);
+				xpathBuilder.append("\")]");
+			}
+			else if(cssAttribute.getType()==CssAttributeValueType.TILDA_EQUAL)
+			{
+				xpathBuilder.append("[contains(concat(' ',normalize-space(@");
+				xpathBuilder.append(name);
+				xpathBuilder.append("),' '),' ");
+				xpathBuilder.append(value);
+				xpathBuilder.append(" ')]");
 			}
 		}
 	}
@@ -91,32 +136,16 @@ public class CssElementCombinatorPairsToXpath
 		return xpathBuilder.toString();
 	}
 	
-	public String convertCssStringToXpathString(String selectorString) throws CssSelectorStringSplitterException
+	public String convertCssSelectorStringToXpathString(String selectorString) throws CssSelectorStringSplitterException
 	{
 		List<List<CssElementCombinatorPair>> cssElementCombinatorPairListList=cssSelectorString.listSplitSelectorsIntoElementCombinatorPairs(selectorString);
 		String xpath=cssElementCombinatorPairListListConversion(cssElementCombinatorPairListList);
+		System.out.println("CSS Selector="+selectorString+", Xpath string="+xpath);
+
 		return xpath;
 	}
 	
 	
-
-//		List<CssAttribute> cssAttributeList=cssElementAttribute.getCssAttributeList();
-//		if (!cssAttributeList.isEmpty()) 
-//		{
-//			convertCssAttributeListToXpath(xPathBuilder, cssAttributeList);
-//		}
-//		return xPathBuilder.toString();
-//	}
-//	
-
-//	
-//	public String convertCssElementAttributeToXpathString(String elementWithAttributesString) throws CssSelectorStringSplitterException
-//	{
-//		CssElementAttributes cssElementAttribute=cssElementAttributeParser.createElementAttribute(elementWithAttributesString);
-//		String xpath= cssElementAttributeToXpathStringConversion(cssElementAttribute);
-//		return xpath;
-//	
-//	}
 }
 		
 		

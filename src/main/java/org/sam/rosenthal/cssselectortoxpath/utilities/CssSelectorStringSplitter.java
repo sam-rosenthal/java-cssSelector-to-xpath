@@ -111,13 +111,13 @@ public class CssSelectorStringSplitter
 		}
 		return selectorList;
 	}
-	public List<CssElementCombinatorPair> splitSelectorsIntoElementCombinatorPairs(String processedSelector) throws CssSelectorStringSplitterException
+	protected List<CssElementCombinatorPair> splitSelectorsIntoElementCombinatorPairs(String processedSelector) throws CssSelectorStringSplitterException
 	{
 		List<CssElementCombinatorPair> selectorList=new ArrayList<>();
 		recursiveSelectorSplit(null,processedSelector,selectorList);
 		return selectorList;
 	}
-	public void recursiveSelectorSplit(CssCombinatorType previousCombinatorType, String cssSelector,List<CssElementCombinatorPair> selectorList) throws CssSelectorStringSplitterException
+	protected void recursiveSelectorSplit(CssCombinatorType previousCombinatorType, String cssSelector,List<CssElementCombinatorPair> selectorList) throws CssSelectorStringSplitterException
 	{
 		for(CssCombinatorType type:CssCombinatorType.values())
 		{
