@@ -22,7 +22,6 @@ public class CssElementAttributes
 		this.element=elementIn;
 		this.cssAttributeList=new ArrayList<>(cssAttributeListIn);
 	}
-	
 	public String getElement() 
 	{
 		return element;

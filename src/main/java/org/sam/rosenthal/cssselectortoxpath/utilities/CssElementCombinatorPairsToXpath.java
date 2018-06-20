@@ -31,7 +31,6 @@ public class CssElementCombinatorPairsToXpath
 			}
 			addElementToXpathString(xpathBuilder, elementCombinatorPair);
 			convertCssAttributeListToXpath(xpathBuilder,elementCombinatorPair);
-
 		}
 		return xpathBuilder.toString();
 	}

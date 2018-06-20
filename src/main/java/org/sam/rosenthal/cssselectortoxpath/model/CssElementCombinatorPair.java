@@ -19,7 +19,6 @@ public class CssElementCombinatorPair {
 		return cssElementAttributes;
 	}
 	
-	
 	@Override
 	public String toString()
 	{

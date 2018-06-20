@@ -133,7 +133,7 @@ public class CssElementCombinatorPairsToXpathTest
 		
 		testConvertCssStringToXpathString("[B][C]","//*[@B][@C]");	
 	}
-	
+
 	public void testConvertCssStringToXpathString(String cssSelector, String expectedOutput) throws CssSelectorStringSplitterException  {
 		String xpath=elementCombinatorPair.convertCssSelectorStringToXpathString(cssSelector);
 		//System.out.println(xpath);

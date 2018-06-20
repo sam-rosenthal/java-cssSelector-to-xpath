@@ -19,7 +19,6 @@ public enum CssAttributeValueType
 	public String getEqualStringName() {
 		return equalString;
 	}
-
 	public static CssAttributeValueType valueTypeString(String unknownString) {
 		if(unknownString==null)
 		{

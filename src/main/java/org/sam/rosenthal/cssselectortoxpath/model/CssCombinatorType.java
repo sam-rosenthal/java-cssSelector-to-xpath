@@ -14,7 +14,6 @@ public enum CssCombinatorType {
 		this.typeChar=typeCharIn;
 		this.xpath=xpathIn;
 	}
-
 	public char getCombinatorChar() 
 	{
 		return typeChar;

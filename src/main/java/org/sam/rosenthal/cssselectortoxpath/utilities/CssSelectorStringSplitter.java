@@ -11,13 +11,11 @@ import org.sam.rosenthal.cssselectortoxpath.model.CssCombinatorType;
 
 public class CssSelectorStringSplitter 
 {
-	
 	private static final String COMBINATORS = " ~+>";
 	private static final String COMBINATOR_RE = "["+COMBINATORS+"]";
 
 	private static final String X = "([^"+COMBINATORS+"\\[]*(\\[[^\\]]+\\])*)";
 	private static final String XY = "^"+X+"($|(("+COMBINATOR_RE+")"+"([^"+COMBINATORS+"].*)$))";
-
 
 	public static final String ERROR_INVALID_CLASS_CSS_SELECTOR = "invalid class css selector";
 	public static final String ERROR_INVALID_ID_CSS_SELECTOR = "invalid id css selector";
