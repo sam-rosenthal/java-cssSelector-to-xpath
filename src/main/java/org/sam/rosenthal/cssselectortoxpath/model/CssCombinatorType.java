@@ -24,6 +24,25 @@ public enum CssCombinatorType {
 	{
 		return xpath;
 	}
-	
+	public static CssCombinatorType combinatorTypeChar(String unknownString) {
+		if(unknownString==null)
+		{
+			return null;
+		}
+
+		switch (unknownString) 
+		{
+			case " ": 
+                 return SPACE;
+        	case "+":  
+        		return PLUS;
+        	case ">": 
+        		return GREATER_THAN;
+        	case "~":  
+        		return TILDA;
+        	default:
+        		throw new IllegalArgumentException(unknownString);
+		}
+	}
 
 }

@@ -36,7 +36,7 @@ public class CssElementAttributes
 	@Override
 	public String toString()
 	{
-		return "Element="+this.element+"; CssAttributeList="+this.cssAttributeList;
+		return "Element="+this.element+", CssAttributeList="+this.cssAttributeList;
 	}
 	
 	@Override

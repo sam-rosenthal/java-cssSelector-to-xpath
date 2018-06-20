@@ -6,11 +6,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
+import org.sam.rosenthal.cssselectortoxpath.model.CssAttributeValueType;
 import org.sam.rosenthal.cssselectortoxpath.model.CssCombinatorType;
 
 public class CssSelectorStringSplitter 
 {
 	
+	private static final String COMBINATORS = " ~+>";
+	private static final String COMBINATOR_RE = "["+COMBINATORS+"]";
+
+	private static final String X = "([^"+COMBINATORS+"\\[]*(\\[[^\\]]+\\])*)";
+	private static final String XY = "^"+X+"($|(("+COMBINATOR_RE+")"+"([^"+COMBINATORS+"].*)$))";
+
+
 	public static final String ERROR_INVALID_CLASS_CSS_SELECTOR = "invalid class css selector";
 	public static final String ERROR_INVALID_ID_CSS_SELECTOR = "invalid id css selector";
 	public static final String ERROR_SELECTOR_STRING_IS_NULL = "Selector string is null";
@@ -86,8 +94,9 @@ public class CssSelectorStringSplitter
 	public List<String> splitSelectors(String selectorString) throws CssSelectorStringSplitterException
 	{
 		selectorString=removeNonCssSelectorWhiteSpaces(selectorString);
+		System.out.println("ADJUSTED="+selectorString);
 		//selectorString=removeNonCssSelectorWhiteSpaces(selectorString);
-		//split() will not error out if there is a trialing ','
+		//split() will not error out if there is a trailing ','
 		int index=selectorString.lastIndexOf(',');
 		if(index==(selectorString.length()-1))
 		{
@@ -115,36 +124,73 @@ public class CssSelectorStringSplitter
 	{
 		List<CssElementCombinatorPair> selectorList=new ArrayList<>();
 		recursiveSelectorSplit(null,processedSelector,selectorList);
+
 		return selectorList;
 	}
 	protected void recursiveSelectorSplit(CssCombinatorType previousCombinatorType, String cssSelector,List<CssElementCombinatorPair> selectorList) throws CssSelectorStringSplitterException
-	{
-		for(CssCombinatorType type:CssCombinatorType.values())
-		{
-			int splitIndex=cssSelector.indexOf(type.getCombinatorChar());
-			if(splitIndex>-1)
+	{ 
+
+			Pattern cssCombinator = Pattern.compile(XY);
+			Matcher match = cssCombinator.matcher(cssSelector);
+			System.out.println(XY);
+			if(match.find())
 			{
-				//found
-				String firstCssSelector=cssSelector.substring(0,splitIndex);
-				if(firstCssSelector.isEmpty())
-				{
-					throw new CssSelectorStringSplitterException("Empty Selector");
+				CssCombinatorType type= CssCombinatorType.combinatorTypeChar(match.group(5));
+				System.out.println("TYPE:"+type);
+				if(type!=null)
+				{	
+					String firstCssSelector=match.group(1);
+					System.out.println("firstcss"+firstCssSelector);
+					if(firstCssSelector.isEmpty())
+					{
+						throw new CssSelectorStringSplitterException("Empty Selector");
+					}
+					selectorList.add(new CssElementCombinatorPair(previousCombinatorType,firstCssSelector));
+					String nextCssSelector=match.group(6); 
+					System.out.println("nextcss="+nextCssSelector+"; type"+type);
+
+					if(nextCssSelector.isEmpty())
+					{
+						throw new CssSelectorStringSplitterException("Empty Selector");
+					}
+					recursiveSelectorSplit(type,nextCssSelector,selectorList);
 				}
-				selectorList.add(new CssElementCombinatorPair(previousCombinatorType,firstCssSelector));
-				
-				String nextCssSelector=cssSelector.substring(splitIndex+1);
-				recursiveSelectorSplit(type,nextCssSelector,selectorList);
-				return;
+				else
+				{
+					if(cssSelector.isEmpty())
+					{
+						throw new CssSelectorStringSplitterException("Empty Selector");
+					}
+					selectorList.add(new CssElementCombinatorPair(previousCombinatorType,cssSelector));
+				}
 			}
-		}
-		if(cssSelector.isEmpty())
-		{
-			throw new CssSelectorStringSplitterException("Empty Selector");
-		}
-		selectorList.add(new CssElementCombinatorPair(previousCombinatorType,cssSelector));
+			else
+			{
+				throw new CssSelectorStringSplitterException("Invalid Selector");
+
+			}
+//
+//		int splitIndex=cssSelector.indexOf(type.getCombinatorChar());
+//			if(splitIndex>-1)
+//			{
+//				//found
+//				String firstCssSelector=cssSelector.substring(0,splitIndex);
+//				if(firstCssSelector.isEmpty())
+//				{
+//					throw new CssSelectorStringSplitterException("Empty Selector");
+//				}
+//				selectorList.add(new CssElementCombinatorPair(previousCombinatorType,firstCssSelector));
+//				String nextCssSelector=cssSelector.substring(splitIndex+1);
+//				recursiveSelectorSplit(type,nextCssSelector,selectorList);
+//				return;
+//			}
+		
+
 	}
 	public List<List<CssElementCombinatorPair>> listSplitSelectorsIntoElementCombinatorPairs(String selectorString) throws CssSelectorStringSplitterException
 	{
+		System.out.println("###"+selectorString);
+
 		List<List<CssElementCombinatorPair>> listList=new ArrayList<>();
 		List<String> selectorList=splitSelectors(selectorString);
 		for(String selector:selectorList)
@@ -152,6 +198,10 @@ public class CssSelectorStringSplitter
 			List<CssElementCombinatorPair> cssElementCombinatorPairList= splitSelectorsIntoElementCombinatorPairs(selector);
 			listList.add(cssElementCombinatorPairList);
 		}
+		
+		System.out.println("$$$$"+listList);
+		System.out.println("XXX");
+
 		return listList;
 	}
 	

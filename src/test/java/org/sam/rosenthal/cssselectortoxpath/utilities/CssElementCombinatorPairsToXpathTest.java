@@ -81,13 +81,16 @@ public class CssElementCombinatorPairsToXpathTest
 		testConvertCssStringToXpathString("A~B","//A/following-sibling::B");
 		
 		testConvertCssStringToXpathString("A#B","//A[@id=\"B\"]");
-		testConvertCssStringToXpathString("A[B='C']","//A[@B=\"C\"]");
-		testConvertCssStringToXpathString("A[B^='C']","//A[starts-with(@B,\"C\")]");
-		testConvertCssStringToXpathString("A[B*='C']","//A[contains(@B,\"C\")]");	
-		testConvertCssStringToXpathString("A[B$='C']","//A[substring(@B,string-length(@B)-string-length(\"C\")+1)=\"C\"]");	
-//		testConvertCssStringToXpathString("A.B","//A[contains(concat(' ',normalize-space(@class),' ',' B ')]");	
-//		testConvertCssStringToXpathString("A[B~='C']","//A[contains(concat(' ',normalize-space(@B),' ',' C ')]");	
-
+		testConvertCssStringToXpathString("A[B=\"C\"]","//A[@B=\"C\"]");
+		testConvertCssStringToXpathString("A[B^=\"C\"]","//A[starts-with(@B,\"C\")]");
+		testConvertCssStringToXpathString("A[B*=\"C\"]","//A[contains(@B,\"C\")]");	
+		testConvertCssStringToXpathString("A[B$=\"C\"]","//A[substring(@B,string-length(@B)-string-length(\"C\")+1)=\"C\"]");	
+		testConvertCssStringToXpathString("A.B","//A[contains(concat(\" \",normalize-space(@class),\" \"),\" B \")]");	
+		testConvertCssStringToXpathString("A[B~=\"C\"]","//A[contains(concat(\" \",normalize-space(@B),\" \"),\" C \")]");	
+		//p[starts-with(@me,concat("you",'-'))]
+		testConvertCssStringToXpathString("A[B|=\"C\"]","//A[starts-with(@B,concat(\"C\",\"-\")) or @B=\"C\"]");	
+		testConvertCssStringToXpathString("[rel|=\"alternate\"]","//*[starts-with(@rel,concat(\"alternate\",\"-\")) or @rel=\"alternate\"]");
+		testConvertCssStringToXpathString("A[B]","//A[@B]");	
 
 	}
 	
@@ -102,27 +105,33 @@ public class CssElementCombinatorPairsToXpathTest
 		testConvertCssStringToXpathString("A~B,A+B","(//A/following-sibling::B)|(//A/following-sibling::*[1]/self::B)");
 
 		testConvertCssStringToXpathString("#B","//*[@id=\"B\"]");
-		testConvertCssStringToXpathString("[B='C']","//*[@B=\"C\"]");
-		testConvertCssStringToXpathString("[B^='C']","//*[starts-with(@B,\"C\")]");
-		testConvertCssStringToXpathString("[B*='C']","//*[contains(@B,\"C\")]");
+		testConvertCssStringToXpathString("[B=\"C\"]","//*[@B=\"C\"]");
+		testConvertCssStringToXpathString("[B^=\"C\"]","//*[starts-with(@B,\"C\")]");
+		testConvertCssStringToXpathString("[B*=\"C\"]","//*[contains(@B,\"C\")]");
 
 		
 		testConvertCssStringToXpathString("A[yy=\"-\"]","//A[@yy=\"-\"]");
 		testConvertCssStringToXpathString("[A=\"B\"][C=\"D\"]","//*[@A=\"B\"][@C=\"D\"]");
 		testConvertCssStringToXpathString("A1[BB=\"-\"][CCC=\"123\"][D=\"-\"]","//A1[@BB=\"-\"][@CCC=\"123\"][@D=\"-\"]");
 		
-		testConvertCssStringToXpathString("A[B='C']>E[F='G']","//A[@B=\"C\"]/E[@F=\"G\"]");
-		testConvertCssStringToXpathString("A[B='C']>E[F='G'],H","(//A[@B=\"C\"]/E[@F=\"G\"])|(//H)");
+		testConvertCssStringToXpathString("A[B=\"C\"]>E[F=\"G\"]","//A[@B=\"C\"]/E[@F=\"G\"]");
+		testConvertCssStringToXpathString("A[B=\"C\"]>E[F=\"G\"],H","(//A[@B=\"C\"]/E[@F=\"G\"])|(//H)");
 		
-		testConvertCssStringToXpathString("A#B","//A[@id=\"B\"]");
 		testConvertCssStringToXpathString("A#B>E","//A[@id=\"B\"]/E");
 
 		testConvertCssStringToXpathString("A[B*=\"C\"]","//A[contains(@B,\"C\")]");
 		testConvertCssStringToXpathString("[A*=\"B\"][C=\"D\"]","//*[contains(@A,\"B\")][@C=\"D\"]");
 		
 		testConvertCssStringToXpathString("A[B^=\"C\"]","//A[starts-with(@B,\"C\")]");
-		testConvertCssStringToXpathString("[A*='B'][C='D']~E[F^='G']","//*[contains(@A,\"B\")][@C=\"D\"]/following-sibling::E[starts-with(@F,\"G\")]");
-//		testConvertCssStringToXpathString("A[B*=' ']","//A[contains(@B,\" \")]");	
+		testConvertCssStringToXpathString("[A*=\"B\"][C=\"D\"]~E[F^=\"G\"]","//*[contains(@A,\"B\")][@C=\"D\"]/following-sibling::E[starts-with(@F,\"G\")]");
+		testConvertCssStringToXpathString("A[B*=\" \"]","//A[contains(@B,\" \")]");	
+		
+		testConvertCssStringToXpathString("A>B,[B$=\"C\"]","(//A/B)|(//*[substring(@B,string-length(@B)-string-length(\"C\")+1)=\"C\"])");	
+		testConvertCssStringToXpathString("A.B+C","//A[contains(concat(\" \",normalize-space(@class),\" \"),\" B \")]/following-sibling::*[1]/self::C");	
+		testConvertCssStringToXpathString("A[B~=\"C\"][D$=\"E\"],F","(//A[contains(concat(\" \",normalize-space(@B),\" \"),\" C \")][substring(@D,string-length(@D)-string-length(\"E\")+1)=\"E\"])|(//F)");	
+		testConvertCssStringToXpathString("A[B|=\"C\"],[D~=\"E\"]+F","(//A[starts-with(@B,concat(\"C\",\"-\")) or @B=\"C\"])|(//*[contains(concat(\" \",normalize-space(@D),\" \"),\" E \")]/following-sibling::*[1]/self::F)");
+		
+		testConvertCssStringToXpathString("[B][C]","//*[@B][@C]");	
 	}
 	
 	public void testConvertCssStringToXpathString(String cssSelector, String expectedOutput) throws CssSelectorStringSplitterException  {
@@ -130,8 +139,4 @@ public class CssElementCombinatorPairsToXpathTest
 		//System.out.println(xpath);
 		assertEquals("CssString="+cssSelector,expectedOutput,xpath);
 	}
-	
-
-	
-
 }

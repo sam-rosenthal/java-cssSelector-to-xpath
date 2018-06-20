@@ -23,7 +23,7 @@ public class CssElementCombinatorPair {
 	@Override
 	public String toString()
 	{
-		return "(Combinator="+this.getCombinatorType()+"; Element="+this.cssElementAttributes+")";
+		return "(Combinator="+this.getCombinatorType()+", "+this.cssElementAttributes+")";
 	}
 	@Override
 	public boolean equals(Object cssElementCombinatorPair)

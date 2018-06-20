@@ -41,7 +41,7 @@ public class CssElementAttributeParser
 	
 	public void checkValid(String elementWithAttributesString) throws CssSelectorStringSplitterException
 	{
-		System.out.println("checkValid: "+elementWithAttributesString+" ,re="+STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
+		//System.out.println("checkValid: "+elementWithAttributesString+" ,re="+STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Pattern cssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Matcher match = cssElementAtributePattern.matcher(elementWithAttributesString);
 		if (!match.find())
