@@ -31,11 +31,9 @@ public class CssElementCombinatorPairsToXpath
 			}
 			addElementToXpathString(xpathBuilder, elementCombinatorPair);
 			convertCssAttributeListToXpath(xpathBuilder,elementCombinatorPair);
-
 		}
 		return xpathBuilder.toString();
 	}
-
 
 	private void addElementToXpathString(StringBuilder xpathBuilder, CssElementCombinatorPair elementCombinatorPair) {
 		String element=elementCombinatorPair.getCssElementAttributes().getElement();
@@ -59,11 +57,8 @@ public class CssElementCombinatorPairsToXpath
 			String value = cssAttribute.getValue();
 			if(cssAttribute.getType()==CssAttributeValueType.EQUAL)
 			{
-				xpathBuilder.append("[@");
-				xpathBuilder.append(name);
-				xpathBuilder.append("=\"");
-				xpathBuilder.append(value);
-				xpathBuilder.append("\"]");
+				xpathBuilder.append("[");
+				exactMatchXpath(xpathBuilder, name, value);
 			}
 			else if(cssAttribute.getType()==CssAttributeValueType.CARROT_EQUAL)
 			{
@@ -102,15 +97,37 @@ public class CssElementCombinatorPairsToXpath
 			}
 			else if(cssAttribute.getType()==CssAttributeValueType.TILDA_EQUAL)
 			{
-				xpathBuilder.append("[contains(concat(' ',normalize-space(@");
+				xpathBuilder.append("[contains(concat(\" \",normalize-space(@");
 				xpathBuilder.append(name);
-				xpathBuilder.append("),' '),' ");
+				xpathBuilder.append("),\" \"),\" ");
 				xpathBuilder.append(value);
-				xpathBuilder.append(" ')]");
+				xpathBuilder.append(" \")]");
+			}
+			else if(cssAttribute.getType()==CssAttributeValueType.PIPE_EQUAL)
+			{
+				xpathBuilder.append("[starts-with(@");
+				xpathBuilder.append(name);
+				xpathBuilder.append(",concat(\"");
+				xpathBuilder.append(value);
+				xpathBuilder.append("\",\"-\")) or ");
+				exactMatchXpath(xpathBuilder, name, value);
+			}
+			else if(cssAttribute.getType()==null)
+			{
+				xpathBuilder.append("[@");
+				xpathBuilder.append(name);
+				xpathBuilder.append("]");
 			}
 		}
 	}
-	
+
+	private void exactMatchXpath(StringBuilder xpathBuilder, String name, String value) {
+		xpathBuilder.append("@");
+		xpathBuilder.append(name);
+		xpathBuilder.append("=\"");
+		xpathBuilder.append(value);
+		xpathBuilder.append("\"]");
+	}
 	
 	public String cssElementCombinatorPairListListConversion(List<List<CssElementCombinatorPair>> cssElementCombinatorPairListList) throws CssSelectorStringSplitterException
 	{
@@ -143,9 +160,7 @@ public class CssElementCombinatorPairsToXpath
 		System.out.println("CSS Selector="+selectorString+", Xpath string="+xpath);
 
 		return xpath;
-	}
-	
-	
+	}	
 }
 		
 		

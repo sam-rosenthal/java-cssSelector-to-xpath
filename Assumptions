@@ -1,0 +1,10 @@
+Assumptions:
+-Element Name and Attribute Name corresponds to the following regular expression: -?[_a-zA-Z]+[_a-zA-Z0-9-]*
+
+-Attribute value corresponds to the following regular expression: [_a-zA-Z0-9- ]+
+
+-Attribute values are always enclosed with single or double quotes 
+
+--CSS Selectors are case sensitive
+
+-

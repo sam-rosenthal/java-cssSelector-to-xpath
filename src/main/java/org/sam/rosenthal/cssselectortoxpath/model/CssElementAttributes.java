@@ -22,7 +22,6 @@ public class CssElementAttributes
 		this.element=elementIn;
 		this.cssAttributeList=new ArrayList<>(cssAttributeListIn);
 	}
-	
 	public String getElement() 
 	{
 		return element;
@@ -36,7 +35,7 @@ public class CssElementAttributes
 	@Override
 	public String toString()
 	{
-		return "Element="+this.element+"; CssAttributeList="+this.cssAttributeList;
+		return "Element="+this.element+", CssAttributeList="+this.cssAttributeList;
 	}
 	
 	@Override

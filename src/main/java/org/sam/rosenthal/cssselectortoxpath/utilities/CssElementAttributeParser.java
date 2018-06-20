@@ -19,6 +19,7 @@ public class CssElementAttributeParser
 	private static final String STARTING_ELEMENT_RE = "^("+ELEMENT_ATTRIBUTE_NAME_RE+"|([*]))?";
 	private static final String ATTRIBUTE_RE = "(\\["+"\\s*"+ELEMENT_ATTRIBUTE_NAME_RE+"\\s*"+ATTRIBUTE_TYPE_RE+"\\s*"+"("+QUOTES_RE+ATTRIBUTE_VALUE_RE+QUOTES_RE+")?"+"\\s*"+"\\])"; 
 	
+	
 	private static String createElementAttributeNameRegularExpression()
 	{
 		StringBuilder builder=new StringBuilder();
@@ -41,7 +42,7 @@ public class CssElementAttributeParser
 	
 	public void checkValid(String elementWithAttributesString) throws CssSelectorStringSplitterException
 	{
-		System.out.println("checkValid: "+elementWithAttributesString+" ,re="+STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
+		//System.out.println("checkValid: "+elementWithAttributesString+" ,re="+STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Pattern cssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Matcher match = cssElementAtributePattern.matcher(elementWithAttributesString);
 		if (!match.find())

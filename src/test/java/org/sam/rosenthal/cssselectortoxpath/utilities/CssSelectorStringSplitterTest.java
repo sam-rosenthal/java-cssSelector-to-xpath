@@ -36,6 +36,7 @@ public class CssSelectorStringSplitterTest {
 		testSelectorException("a,");
 		testSelectorException(",b");
 		testSelectorException(",");
+		
 
 	}
 	private void testSelectorException(String selectorInput) {

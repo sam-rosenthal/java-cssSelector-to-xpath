@@ -17,7 +17,6 @@ public class CssAttribute
 		this.type=typeIn;
 	}
 	
-	
 	public String getName() {
 		return name;
 	}
