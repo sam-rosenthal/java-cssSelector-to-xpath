@@ -21,16 +21,13 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
+import org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath;
+import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorStringSplitterException;
 
-
-/**
- * The simplest form application possible. Just prints any user input to a label.
- * 
- * @author Eelco Hillenius
- */
 public class EnterText extends WebPage
 {
-	private String message = "[type SAMMMM message to the world here]";
+	private CssElementCombinatorPairsToXpath cssElementCombinatorPairsToXpath=new CssElementCombinatorPairsToXpath();
+	private String message = "[enter a css selector]";
 
 	/**
 	 * Constructor.
@@ -63,9 +60,10 @@ public class EnterText extends WebPage
 	/**
 	 * @param message
 	 *            the message to set
+	 * @throws CssSelectorStringSplitterException 
 	 */
-	public void setMessage(String message)
+	public void setMessage(String message) throws CssSelectorStringSplitterException
 	{
-		this.message = message;
+		this.message = cssElementCombinatorPairsToXpath.convertCssSelectorStringToXpathString(message);
 	}
 }
