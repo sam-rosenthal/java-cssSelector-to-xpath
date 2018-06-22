@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+<title>Requests Page</title>
+</wicket:head>
+</head>
+<body>
+  <wicket:extend>
+  <h1><img border="0" wicket:id="bug" src="bug.png"/> Wicket Sessions Inspector</h1>
+	<a href="javascript:history.go(-1)">Go Back</a>
+
+  	<h2>Session</h2>
+  	<ul>
+	  	<li>Id: <span wicket:id="id">9999</span></li>
+		<li>Session Size: <span wicket:id="size">none</span></li>
+	  	<li>Session Info: <span wicket:id="sessionInfo"></span></li>
+	  	<li>Start Date: <span wicket:id="startDate"></span></li>
+	  	<li>Last Request Time: <span wicket:id="lastRequestTime"></span></li>
+	  	<li>Number of Requests: <span wicket:id="numberOfRequests"></span></li>
+	  	<li>Total Time Taken: <span wicket:id="totalTimeTaken"></span></li>
+	</ul>
+    
+  	<h2>Request Information</h2>
+	<table border="1">
+		<tr>
+			<th wicket:id="sessionid">Id</th>
+			<th>Start Date</th>
+			<th>Time Taken</th>
+			<th>Event Target</th>
+			<th>Response Target</th>
+			<th>Altered Objects</th>
+			<th>Session Size</th>
+		</tr>
+		<tr wicket:id="requests">
+			<td wicket:id="id"></td>
+			<td wicket:id="startDate"></td>
+			<td wicket:id="timeTaken" align="right"></td>
+			<td wicket:id="eventTarget"></td>
+			<td wicket:id="responseTarget"></td>
+			<td wicket:id="alteredObjects"></td>
+			<td wicket:id="sessionSize"></td>
+		</tr>
+	</table>
+	<span wicket:id="navigator"></span>
+  </wicket:extend>
+</body>
+</html>
