@@ -15,7 +15,7 @@ public class CssSelectorStringSplitter
 	private static final String COMBINATOR_RE = "["+COMBINATORS+"]";
 
 	private static final String X = "([^"+COMBINATORS+"\\[]*(\\[[^\\]]+\\])*)";
-	private static final String XY = "^"+X+"($|(("+COMBINATOR_RE+")"+"([^"+COMBINATORS+"].*)$))";
+	private static final String XY = "^"+X+"($|(\\s*("+COMBINATOR_RE+")\\s*"+"([^"+COMBINATORS+"].*)$))";
 
 	public static final String ERROR_INVALID_CLASS_CSS_SELECTOR = "invalid class css selector";
 	public static final String ERROR_INVALID_ID_CSS_SELECTOR = "invalid id css selector";
@@ -122,69 +122,52 @@ public class CssSelectorStringSplitter
 	{
 		List<CssElementCombinatorPair> selectorList=new ArrayList<>();
 		recursiveSelectorSplit(null,processedSelector,selectorList);
-
 		return selectorList;
 	}
 	protected void recursiveSelectorSplit(CssCombinatorType previousCombinatorType, String cssSelector,List<CssElementCombinatorPair> selectorList) throws CssSelectorStringSplitterException
 	{ 
 
-			Pattern cssCombinator = Pattern.compile(XY);
-			Matcher match = cssCombinator.matcher(cssSelector);
-			System.out.println(XY);
-			if(match.find())
-			{
-				CssCombinatorType type= CssCombinatorType.combinatorTypeChar(match.group(5));
-				System.out.println("TYPE:"+type);
-				if(type!=null)
-				{	
-					String firstCssSelector=match.group(1);
-					System.out.println("firstcss"+firstCssSelector);
-					if(firstCssSelector.isEmpty())
-					{
-						throw new CssSelectorStringSplitterException("Empty Selector");
-					}
-					selectorList.add(new CssElementCombinatorPair(previousCombinatorType,firstCssSelector));
-					String nextCssSelector=match.group(6); 
-					System.out.println("nextcss="+nextCssSelector+"; type"+type);
-
-					if(nextCssSelector.isEmpty())
-					{
-						throw new CssSelectorStringSplitterException("Empty Selector");
-					}
-					recursiveSelectorSplit(type,nextCssSelector,selectorList);
-				}
-				else
+		Pattern cssCombinator = Pattern.compile(XY);
+		Matcher match = cssCombinator.matcher(cssSelector);
+		System.out.println(XY);
+		if(match.find())
+		{
+			CssCombinatorType type= CssCombinatorType.combinatorTypeChar(match.group(5));
+			System.out.println("TYPE:"+type);
+			if(type!=null)
+			{	
+				String firstCssSelector=match.group(1);
+				System.out.println("firstcss"+firstCssSelector);
+				if(firstCssSelector.isEmpty())
 				{
-					if(cssSelector.isEmpty())
-					{
-						throw new CssSelectorStringSplitterException("Empty Selector");
-					}
-					selectorList.add(new CssElementCombinatorPair(previousCombinatorType,cssSelector));
+					throw new CssSelectorStringSplitterException("Empty Selector");
 				}
+				selectorList.add(new CssElementCombinatorPair(previousCombinatorType,firstCssSelector));
+				String nextCssSelector=match.group(6); 
+				System.out.println("nextcss="+nextCssSelector+"; type"+type);
+
+				if(nextCssSelector.isEmpty())
+				{
+					throw new CssSelectorStringSplitterException("Empty Selector");
+				}
+				recursiveSelectorSplit(type,nextCssSelector,selectorList);
 			}
 			else
 			{
-				throw new CssSelectorStringSplitterException("Invalid Selector");
-
+				if(cssSelector.isEmpty())
+				{
+					throw new CssSelectorStringSplitterException("Empty Selector");
+				}
+				selectorList.add(new CssElementCombinatorPair(previousCombinatorType,cssSelector));
 			}
-//
-//		int splitIndex=cssSelector.indexOf(type.getCombinatorChar());
-//			if(splitIndex>-1)
-//			{
-//				//found
-//				String firstCssSelector=cssSelector.substring(0,splitIndex);
-//				if(firstCssSelector.isEmpty())
-//				{
-//					throw new CssSelectorStringSplitterException("Empty Selector");
-//				}
-//				selectorList.add(new CssElementCombinatorPair(previousCombinatorType,firstCssSelector));
-//				String nextCssSelector=cssSelector.substring(splitIndex+1);
-//				recursiveSelectorSplit(type,nextCssSelector,selectorList);
-//				return;
-//			}
-		
+		}
+		else
+		{
+			throw new CssSelectorStringSplitterException("Invalid Selector");
 
+		}
 	}
+	
 	public List<List<CssElementCombinatorPair>> listSplitSelectorsIntoElementCombinatorPairs(String selectorString) throws CssSelectorStringSplitterException
 	{
 		System.out.println("###"+selectorString);

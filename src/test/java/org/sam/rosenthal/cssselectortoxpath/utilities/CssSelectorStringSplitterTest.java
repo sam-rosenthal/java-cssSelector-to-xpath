@@ -169,6 +169,12 @@ public class CssSelectorStringSplitterTest {
 		testSplitSelectorsIntoElementCombinatorPairs("X>Y",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "Y"));
 		testSplitSelectorsIntoElementCombinatorPairs("X~Y",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "Y"));
 		
+		testSplitSelectorsIntoElementCombinatorPairs("X  Y",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"));
+		testSplitSelectorsIntoElementCombinatorPairs("X   Y",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"));
+		testSplitSelectorsIntoElementCombinatorPairs("X+ Y",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Y"));
+		testSplitSelectorsIntoElementCombinatorPairs("X >Y",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "Y"));
+		testSplitSelectorsIntoElementCombinatorPairs("X ~ Y",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "Y"));
+
 		testSplitSelectorsIntoElementCombinatorPairs("X Y Z",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Z"));
 		testSplitSelectorsIntoElementCombinatorPairs("X+Y+Z+A",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Y"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Z"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "A"));
 		testSplitSelectorsIntoElementCombinatorPairs("X>Y>Z",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "Y"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "Z"));
@@ -176,6 +182,9 @@ public class CssSelectorStringSplitterTest {
 		
 		testSplitSelectorsIntoElementCombinatorPairs("X Y+Z",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Z"));
 		testSplitSelectorsIntoElementCombinatorPairs("X Y+Z>A~B",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Z"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "A"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "B"));
+		
+		testSplitSelectorsIntoElementCombinatorPairs("X  Y +Z >A ~ B",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Z"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "A"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "B"));
+
 	}
 
 	public void testSplitSelectorsIntoElementCombinatorPairs(String processedSelector,CssElementCombinatorPair... expectedOutput) throws CssSelectorStringSplitterException {
@@ -192,6 +201,17 @@ public class CssSelectorStringSplitterTest {
 		testListSplitSelectorsIntoElementCombinatorPairs("X+Y",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Y"))));
 		testListSplitSelectorsIntoElementCombinatorPairs("X+Y,A>B",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Y")),asList(new CssElementCombinatorPair(null, "A"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "B"))));
 		testListSplitSelectorsIntoElementCombinatorPairs("X Y+Z>A~B,C,D E",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Z"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "A"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "B")),
+				asList(new CssElementCombinatorPair(null, "C")),asList(new CssElementCombinatorPair(null, "D"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "E"))));
+		
+		testListSplitSelectorsIntoElementCombinatorPairs("X          Y",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"))));
+		testListSplitSelectorsIntoElementCombinatorPairs("X   ~   Y",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "Y"))));
+		testListSplitSelectorsIntoElementCombinatorPairs("X+ Y,A   > B",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Y")),asList(new CssElementCombinatorPair(null, "A"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "B"))));
+		testListSplitSelectorsIntoElementCombinatorPairs("X+ Y ,A   > B",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Y")),asList(new CssElementCombinatorPair(null, "A"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "B"))));
+		testListSplitSelectorsIntoElementCombinatorPairs("X+ Y, A   > B",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Y")),asList(new CssElementCombinatorPair(null, "A"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "B"))));
+		testListSplitSelectorsIntoElementCombinatorPairs("X+ Y , A   > B",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Y")),asList(new CssElementCombinatorPair(null, "A"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "B"))));
+
+		
+		testListSplitSelectorsIntoElementCombinatorPairs("X  Y +Z> A  ~  B, C,D E",asList(asList(new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"),new CssElementCombinatorPair(CssCombinatorType.PLUS, "Z"),new CssElementCombinatorPair(CssCombinatorType.GREATER_THAN, "A"),new CssElementCombinatorPair(CssCombinatorType.TILDA, "B")),
 				asList(new CssElementCombinatorPair(null, "C")),asList(new CssElementCombinatorPair(null, "D"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "E"))));
 		
 	}
