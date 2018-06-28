@@ -26,8 +26,11 @@ import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorStringSplitterE
 
 public class EnterText extends WebPage
 {
-	private CssElementCombinatorPairsToXpath cssElementCombinatorPairsToXpath=new CssElementCombinatorPairsToXpath();
-	private String message = "[enter a css selector]";
+
+	private static final long serialVersionUID = 1L;
+	private transient CssElementCombinatorPairsToXpath cssElementCombinatorPairsToXpath=null;
+	private String cssSelector = null;
+	private String xPath=null;
 
 	/**
 	 * Constructor.
@@ -36,34 +39,44 @@ public class EnterText extends WebPage
 	{
 		// This model references the page's message property and is
 		// shared by the label and form component
-		PropertyModel<String> messageModel = new PropertyModel<>(this, "message");
+		PropertyModel<String> xPathModel = new PropertyModel<>(this, "xpath");
 
 		// The label displays the currently set message
-		add(new Label("msg", messageModel));
+		add(new Label("msg", xPathModel));
 
 		// Add a form to change the message. We don't need to do anything
 		// else with this form as the shared model is automatically updated
 		// on form submits
-		Form<?> form = new Form("form");
+		Form<?> form = new Form<>("form");
+		PropertyModel<String> messageModel = new PropertyModel<>(this, "cssSelector");
 		form.add(new TextField<>("msgInput", messageModel));
 		add(form);
 	}
-
-	/**
-	 * @return the message
-	 */
-	public String getMessage()
-	{
-		return message;
+	
+	public String getXpath() {
+		return xPath;
 	}
 
-	/**
-	 * @param message
-	 *            the message to set
-	 * @throws CssSelectorStringSplitterException 
-	 */
-	public void setMessage(String message) throws CssSelectorStringSplitterException
+
+	public String getCssSelector()
 	{
-		this.message = cssElementCombinatorPairsToXpath.convertCssSelectorStringToXpathString(message);
+		return cssSelector;
+	}
+
+
+	public void setCssSelector(String cssSelectorIn) throws CssSelectorStringSplitterException
+	{
+		if (cssElementCombinatorPairsToXpath==null) {
+			cssElementCombinatorPairsToXpath=new CssElementCombinatorPairsToXpath();
+		}
+		this.cssSelector = cssSelectorIn;
+		try
+		{
+			xPath=cssElementCombinatorPairsToXpath.convertCssSelectorStringToXpathString(cssSelector);
+		}
+		catch (CssSelectorStringSplitterException e)
+		{
+			xPath="INVALID CSS SELECTOR INPUT";
+		}
 	}
 }

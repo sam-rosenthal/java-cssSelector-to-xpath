@@ -18,11 +18,6 @@ package org.sam.rosenthal.wicket.javacssselectortoxpath;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
-//import org.apache.wicket.examples.kittenCaptcha.WicketApplication;
-import org.apache.wicket.resource.CssUrlReplacer;
-import org.apache.wicket.settings.SecuritySettings;
-import org.apache.wicket.util.crypt.ClassCryptFactory;
-import org.apache.wicket.util.crypt.NoCrypt;
 
 public class EnterTextApplication extends WebApplication
 {

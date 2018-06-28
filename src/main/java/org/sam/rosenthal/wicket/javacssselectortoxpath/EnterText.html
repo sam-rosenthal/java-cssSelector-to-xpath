@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 <head>
-    <title>Wicket Examples - echo</title>
+    <title>CSS Selector to Xpath</title>
 </head>
 <body>
+<style>
+	h {
+		color:red;
+		font-weight:bold;
+		font-size: 37px
+	}
+	div.content {
+		padding-top:10px
+	}
+	body {
+    background-color: green;
+	}
+
+</style>
+<h>
+Sam Rosenthal's CSS Selector to Xpath Converter
+</h>
+<div class="content">
 	<form wicket:id="form">
-		<input type="text" wicket:id="msgInput" value="" size="50" />
-		<input type="submit" value="set message" />
+		<input type="text" wicket:id="msgInput" value="" size="100" placeholder="Enter a CSS selector to convert to Xpath"/>
+		<input type="submit" value="Convert" />
 	</form>
     <span wicket:id="msg" id="msg">Message goes here</span>
-
+</div>
 </body>
 </html>

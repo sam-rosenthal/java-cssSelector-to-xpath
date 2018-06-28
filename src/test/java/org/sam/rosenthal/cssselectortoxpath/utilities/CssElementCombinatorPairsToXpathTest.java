@@ -100,15 +100,26 @@ public class CssElementCombinatorPairsToXpathTest
 	{
 
 		testConvertCssStringToXpathString("A,B,C","(//A)|(//B)|(//C)");
-		
+	
 		testConvertCssStringToXpathString("A B,A>B","(//A//B)|(//A/B)");
+		testConvertCssStringToXpathString("A B, A>B","(//A//B)|(//A/B)");
+		testConvertCssStringToXpathString("A B ,A>B","(//A//B)|(//A/B)");
+		testConvertCssStringToXpathString("A B , A>B","(//A//B)|(//A/B)");
+		testConvertCssStringToXpathString("A  B , A >B","(//A//B)|(//A/B)");
+		testConvertCssStringToXpathString("A B , A   >B","(//A//B)|(//A/B)");
+		testConvertCssStringToXpathString("A    B , A   > B","(//A//B)|(//A/B)");
+
+		testConvertCssStringToXpathString("A  B, A >B","(//A//B)|(//A/B)");
+
+		testConvertCssStringToXpathString("A ~B, A+ B","(//A/following-sibling::B)|(//A/following-sibling::*[1]/self::B)");
+
+		
 		testConvertCssStringToXpathString("A~B,A+B","(//A/following-sibling::B)|(//A/following-sibling::*[1]/self::B)");
 
 		testConvertCssStringToXpathString("#B","//*[@id=\"B\"]");
 		testConvertCssStringToXpathString("[B=\"C\"]","//*[@B=\"C\"]");
 		testConvertCssStringToXpathString("[B^=\"C\"]","//*[starts-with(@B,\"C\")]");
 		testConvertCssStringToXpathString("[B*=\"C\"]","//*[contains(@B,\"C\")]");
-
 		
 		testConvertCssStringToXpathString("A[yy=\"-\"]","//A[@yy=\"-\"]");
 		testConvertCssStringToXpathString("[A=\"B\"][C=\"D\"]","//*[@A=\"B\"][@C=\"D\"]");
