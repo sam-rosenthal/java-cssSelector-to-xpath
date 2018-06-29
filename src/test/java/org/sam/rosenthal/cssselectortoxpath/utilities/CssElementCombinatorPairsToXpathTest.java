@@ -142,7 +142,9 @@ public class CssElementCombinatorPairsToXpathTest
 		testConvertCssStringToXpathString("A[B~=\"C\"][D$=\"E\"],F","(//A[contains(concat(\" \",normalize-space(@B),\" \"),\" C \")][substring(@D,string-length(@D)-string-length(\"E\")+1)=\"E\"])|(//F)");	
 		testConvertCssStringToXpathString("A[B|=\"C\"],[D~=\"E\"]+F","(//A[starts-with(@B,concat(\"C\",\"-\")) or @B=\"C\"])|(//*[contains(concat(\" \",normalize-space(@D),\" \"),\" E \")]/following-sibling::*[1]/self::F)");
 		
-		xtestConvertCssStringToXpathString("x[B][C]","//*[@B][@C]");	
+		testConvertCssStringToXpathString("[B][C]","//*[@B][@C]");	
+		testConvertCssStringToXpathString("TO DO","Test CI");	
+
 	}
 
 	public void testConvertCssStringToXpathString(String cssSelector, String expectedOutput) throws CssSelectorStringSplitterException  {
