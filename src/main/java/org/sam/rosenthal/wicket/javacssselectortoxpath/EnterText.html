@@ -2,25 +2,49 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 <head>
     <title>CSS Selector to Xpath</title>
+    <link rel="shortcut icon" type="image/png" href="fav.png">
 </head>
-<body>
+<body> 
+
+<a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
 <style>
-	h {
+	h1 {
 		color:red;
 		font-weight:bold;
 		font-size: 37px
 	}
+	
+	p {
+		color:black;
+		font-weight:bold;
+		font-size: 15px
+	}
 	div.content {
-		padding-top:10px
+		padding-top:10px;
+		height:150px;
 	}
 	body {
-    background-color: green;
+    	background-color: white;
 	}
-
+	
+	footer{
+		border-bottom: 1px #ccc solid;
+		margin-bottom: 10px;
+	}
+	#footer p{
+		text-align: center;
+		font-size: 80%;
+		color: grey;
+	}
+	
+	
+	
 </style>
-<h>
+
+<h1>
 Sam Rosenthal's CSS Selector to Xpath Converter
-</h>
+</h1>
+
 <div class="content">
 	<form wicket:id="form">
 		<input type="text" wicket:id="msgInput" value="" size="100" placeholder="Enter a CSS selector to convert to Xpath"/>
@@ -28,5 +52,12 @@ Sam Rosenthal's CSS Selector to Xpath Converter
 	</form>
     <span wicket:id="msg" id="msg">Message goes here</span>
 </div>
+<hr>
+<div id="footer">
+	<p>
+		Developed by <a href="https://github.com/sam-rosenthal" target="_blank">Sam Rosenthal</a>
+	</p>
+</div>  
+ 
 </body>
 </html>
