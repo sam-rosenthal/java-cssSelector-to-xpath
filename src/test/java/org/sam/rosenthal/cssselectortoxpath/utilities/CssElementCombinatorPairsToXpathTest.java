@@ -143,7 +143,6 @@ public class CssElementCombinatorPairsToXpathTest
 		testConvertCssStringToXpathString("A[B|=\"C\"],[D~=\"E\"]+F","(//A[starts-with(@B,concat(\"C\",\"-\")) or @B=\"C\"])|(//*[contains(concat(\" \",normalize-space(@D),\" \"),\" E \")]/following-sibling::*[1]/self::F)");
 		
 		testConvertCssStringToXpathString("[B][C]","//*[@B][@C]");	
-		testConvertCssStringToXpathString("TO DO","xxxTest CI");	
 
 	}
 
