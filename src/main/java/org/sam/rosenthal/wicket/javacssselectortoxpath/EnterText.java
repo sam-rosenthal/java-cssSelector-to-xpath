@@ -16,11 +16,17 @@
  */
 package org.sam.rosenthal.wicket.javacssselectortoxpath;
 
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.MetaDataHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorStringSplitterException;
 
@@ -64,7 +70,7 @@ public class EnterText extends WebPage
 	}
 
 
-	public void setCssSelector(String cssSelectorIn) throws CssSelectorStringSplitterException
+	public void setCssSelector(String cssSelectorIn)
 	{
 		if (cssElementCombinatorPairsToXpath==null) {
 			cssElementCombinatorPairsToXpath=new CssElementCombinatorPairsToXpath();
@@ -76,7 +82,17 @@ public class EnterText extends WebPage
 		}
 		catch (CssSelectorStringSplitterException e)
 		{
-			xPath="INVALID CSS SELECTOR INPUT";
+			if (e.getMessage().trim().length()>0) {
+				xPath="Error: "+e.getMessage();
+			} else {
+				xPath="Error:  Invalid CSS Selector";
+			}
+		}
+		catch (RuntimeException e)
+		{
+			xPath="Unexpected Error:  "+e;
+			e.printStackTrace();
 		}
 	}
+	
 }
