@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 <head>
-    <title>CSS Selector to Xpath</title>
+    <title>CSS Selector to XPath</title>
     <link rel="shortcut icon" type="image/png" href="fav.png">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 </head>
 <body> 
 
 <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
 <style>
 	h1 {
-		color:red;
+		color:#013243;
 		font-weight:bold;
 		font-size: 37px
 	}
 	
-	p {
+	p.developedBy {
 		color:black;
 		font-weight:bold;
 		font-size: 15px
 	}
 	div.content {
-		padding-top:10px;
-		height:150px;
+	border:black;
+		height:300px;	
+		margin: auto;
+		width:60%;
 	}
 	body {
-    	background-color: white;
-	}
+     	background-color: #B0E2FF;
+     }
 	
 	footer{
 		border-bottom: 1px #ccc solid;
@@ -36,27 +39,87 @@
 		font-size: 80%;
 		color: grey;
 	}
+	form:not([invalid-xpath="true"]) i[class="fa fa-times-circle"]  {
+		display:none
+	}
+	form[invalid-xpath="true"] b.xpath, form:not([invalid-xpath]) b.xpath{
+		display:none
+	}	
+	form:not([invalid-xpath]) b.cssselector{
+		display:none
+	}	
+	form>i {
+		color: red;
+	}
+	div.error{
+	    display: inline;
+	    padding-left:3px;
+	}
+	form:not([invalid-xpath="true"]) td {
+	    border-style: solid;
+   	 	border-width: 1px;
+    	border-color: gray;
+		word-wrap: break-word;
+	}
 	
-	
-	
+	table {
+		table-layout: fixed;
+		border-collapse: collapse;
+	}
+	form:not([invalid-xpath]) td{
+		display:none;
+	}
+
+	 	
 </style>
 
-<h1>
-Sam Rosenthal's CSS Selector to Xpath Converter
-</h1>
 
 <div class="content">
-	<form wicket:id="form">
-		<input type="text" wicket:id="msgInput" value="" size="100" placeholder="Enter a CSS selector to convert to Xpath"/>
-		<input type="submit" value="Convert" />
+	<h1 style="text-align:center">
+		CSS Selector to XPath Converter
+	</h1>
+	<form class="form" wicket:id="form">
+		<div style="display: flex" >
+			<input type="text" wicket:id="cssSelectorInput" style="flex:1"  onfocus="this.select()" placeholder="Enter a CSS selector to convert to Xpath"/>
+			<input type="submit" wicket:id="convert" value="Convert" />
+		</div>
+		<div style="clear:both; padding-bottom:15px"/> 
+		<table>
+			<tbody>
+				<tr>
+					<td style="white-space: nowrap;"> 
+						<b  class="cssselector" style="padding-right:5px">CSS Selector:</b>
+					</td>
+					<td>
+						<span  wicket:id="cssSelector"/>
+					</td>
+				</tr>
+				<tr>
+					<td> 
+						<b class="xpath" style="padding-right:5px">XPath:</b>
+					</td>
+					<td>
+						<span  wicket:id="xPath"/>
+					</td>				
+				</tr>
+			</tbody>
+		</table>
+   		<i class="fa fa-times-circle" aria-hidden="true"/><div class="error" wicket:id="error"/>
 	</form>
-    <span wicket:id="msg" id="msg">Message goes here</span>
 </div>
 <hr>
 <div id="footer">
-	<p>
+	<p class="developedBy">
 		Developed by <a href="https://github.com/sam-rosenthal" target="_blank">Sam Rosenthal</a>
 	</p>
+	<p2>
+		Helpful Links/More Info: 
+		<ul>
+			<li><a href="https://en.wikipedia.org/wiki/Cascading_Style_Sheets" target="_blank">Cascading Style Sheets-Wiki</a></li>
+			<li><a href="https://en.wikibooks.org/wiki/XPath/CSS_Equivalents" target="_blank">XPath/CSS Equivalents</a></li>
+			<li><a href="https://github.com/sam-rosenthal" target="_blank">Sam Rosenthal</a></li>
+		</ul>
+	</p2>
 </div>  
  
 </body>

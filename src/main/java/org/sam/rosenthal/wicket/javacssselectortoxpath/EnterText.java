@@ -16,6 +16,9 @@
  */
 package org.sam.rosenthal.wicket.javacssselectortoxpath;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -24,6 +27,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -37,26 +41,56 @@ public class EnterText extends WebPage
 	private transient CssElementCombinatorPairsToXpath cssElementCombinatorPairsToXpath=null;
 	private String cssSelector = null;
 	private String xPath=null;
+	private String error=null;
+	private Label cssSelectorLabel;
+	private Label xpathLabel;
+	private Label errorLabel;
+	private TextField cssSelectorTextField;
+
 
 	/**
 	 * Constructor.
 	 */
 	public EnterText()
 	{
-		// This model references the page's message property and is
-		// shared by the label and form component
-		PropertyModel<String> xPathModel = new PropertyModel<>(this, "xpath");
-
-		// The label displays the currently set message
-		add(new Label("msg", xPathModel));
 
 		// Add a form to change the message. We don't need to do anything
 		// else with this form as the shared model is automatically updated
 		// on form submits
-		Form<?> form = new Form<>("form");
-		PropertyModel<String> messageModel = new PropertyModel<>(this, "cssSelector");
-		form.add(new TextField<>("msgInput", messageModel));
+		final Form<?> form = new Form<>("form");
+		form.add(new AjaxButton("convert", form)
+         {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target) {
+				target.add(cssSelectorLabel);
+				target.add(xpathLabel);
+				target.add(errorLabel);
+				target.focusComponent(cssSelectorTextField);
+				target.add(form);
+				form.add(AttributeAppender.replace("invalid-xpath",(error==null)?"false":"true"));
+				super.onSubmit(target);
+			}
+
+         });
+		PropertyModel<String> cssSelectorInputModel = new PropertyModel<>(this, "cssSelector");		
+		cssSelectorTextField = new TextField<>("cssSelectorInput", cssSelectorInputModel);
+		cssSelectorTextField.setOutputMarkupId(true);
+		form.add(cssSelectorTextField);
+		cssSelectorLabel=createLabel("cssSelector", form);
+		xpathLabel=createLabel("xPath",form);
+		errorLabel=createLabel("error",form);
+
 		add(form);
+	}
+
+	private Label createLabel(String idAndProperty, Form<?> form) {
+		PropertyModel<String> model = new PropertyModel<>(this, idAndProperty);
+	    Label label = new Label(idAndProperty, model);
+	    label.setOutputMarkupId(true);
+		form.add(label);
+		return label;
 	}
 	
 	public String getXpath() {
@@ -68,31 +102,40 @@ public class EnterText extends WebPage
 	{
 		return cssSelector;
 	}
+	
+
+	public String getError()
+	{
+		return error;
+	}
 
 
 	public void setCssSelector(String cssSelectorIn)
 	{
+		error=null;
 		if (cssElementCombinatorPairsToXpath==null) {
 			cssElementCombinatorPairsToXpath=new CssElementCombinatorPairsToXpath();
 		}
 		this.cssSelector = cssSelectorIn;
 		try
 		{
+			xPath=null;
 			xPath=cssElementCombinatorPairsToXpath.convertCssSelectorStringToXpathString(cssSelector);
 		}
 		catch (CssSelectorStringSplitterException e)
 		{
 			if (e.getMessage().trim().length()>0) {
-				xPath="Error: "+e.getMessage();
+				error="Error: "+e.getMessage();
 			} else {
-				xPath="Error:  Invalid CSS Selector";
+				error="Error:  Invalid CSS Selector";
 			}
 		}
 		catch (RuntimeException e)
 		{
-			xPath="Unexpected Error:  "+e;
+			error="Unexpected Error:  "+e;
 			e.printStackTrace();
 		}
+
 	}
 	
 }
