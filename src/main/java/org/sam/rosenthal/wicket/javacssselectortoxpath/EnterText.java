@@ -62,7 +62,11 @@ public class EnterText extends WebPage
 				target.add(errorLabel);
 				target.focusComponent(cssSelectorTextField);
 				target.add(form);
-				form.add(AttributeAppender.replace("invalid-xpath",(error==null)?"false":"true"));
+				if((xPath==null)&&(error==null)) {
+					form.add(AttributeAppender.remove("invalid-xpath"));					
+				} else {
+					form.add(AttributeAppender.replace("invalid-xpath",(error==null)?"false":"true"));
+				}
 				super.onSubmit(target);
 			}
 
