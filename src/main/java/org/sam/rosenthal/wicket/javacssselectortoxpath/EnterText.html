@@ -69,10 +69,17 @@
 	form:not([invalid-xpath]) td{
 		display:none;
 	}
-
+	.watermark{
+		color:lightgrey;
+		font-size:120px;
+		transform:rotate(330deg);
+		-webkit-transform:rotate(330deg);
+		z-index:-2;
+		position:absolute;
+		top:0;
+	}
 	 	
 </style>
-
 
 <div class="content">
 	<h1 style="text-align:center">
@@ -107,6 +114,9 @@
    		<i class="fa fa-times-circle" aria-hidden="true"/><div class="error" wicket:id="error"/>
 	</form>
 </div>
+<div class="watermark">
+	<p> Beta Release </p>
+</div>	
 <hr>
 <div id="footer">
 	<p class="developedBy">
@@ -121,6 +131,6 @@
 		</ul>
 	</p2>
 </div>  
- 
+
 </body>
 </html>

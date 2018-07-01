@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
-import org.sam.rosenthal.cssselectortoxpath.model.CssAttributeValueType;
 import org.sam.rosenthal.cssselectortoxpath.model.CssCombinatorType;
+import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
 
 public class CssSelectorStringSplitter 
 {

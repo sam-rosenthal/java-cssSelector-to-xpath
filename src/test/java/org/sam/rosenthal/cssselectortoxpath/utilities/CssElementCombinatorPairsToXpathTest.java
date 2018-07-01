@@ -6,11 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
-import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
-import org.sam.rosenthal.cssselectortoxpath.model.CssAttribute;
-import org.sam.rosenthal.cssselectortoxpath.model.CssAttributeValueType;
 import org.sam.rosenthal.cssselectortoxpath.model.CssCombinatorType;
-import org.sam.rosenthal.cssselectortoxpath.model.CssElementAttributes;
+import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
 
 public class CssElementCombinatorPairsToXpathTest 
 {
