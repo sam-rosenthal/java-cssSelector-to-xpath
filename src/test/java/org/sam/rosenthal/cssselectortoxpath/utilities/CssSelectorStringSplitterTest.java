@@ -246,12 +246,17 @@ public class CssSelectorStringSplitterTest {
 		testCssElementAttributeParser("-xx[ X *= \"9\" ]",new CssElementAttributes("-xx",asList(new CssAttribute("X", "9", "*="))));
 
 		testCssElementAttributeParser("x9[X=\"9\"][X]",new CssElementAttributes("x9",asList(new CssAttribute("X", "9", CssAttributeValueType.EQUAL),new CssAttribute("X", null, (CssAttributeValueType)null))));
-
 		
 		testCssElementAttributeParser("x9[X=\"9\"][x=\"X\"]",new CssElementAttributes("x9",asList(new CssAttribute("X", "9", CssAttributeValueType.EQUAL),new CssAttribute("x", "X", CssAttributeValueType.EQUAL))));
 		testCssElementAttributeParser("-x9[ X~=\"9\"][-x9=\"9\"]",new CssElementAttributes("-x9",asList(new CssAttribute("X", "9", "~="),new CssAttribute("-x9", "9", "="))));
 		testCssElementAttributeParser("[ X *= \"9\" ]",new CssElementAttributes(null,asList(new CssAttribute("X", "9", CssAttributeValueType.STAR_EQUAL))));
 		testCssElementAttributeParser("[X9|=\"9\"][-X ^= \"9\"]",new CssElementAttributes(null,asList(new CssAttribute("X9", "9", "|="),new CssAttribute("-X", "9", "^="))));
+
+		testCssElementAttributeParser("X[X=    A]",new CssElementAttributes("X",asList(new CssAttribute("X", "A", CssAttributeValueType.EQUAL))));
+		testCssElementAttributeParser("X[X=ABC]",new CssElementAttributes("X",asList(new CssAttribute("X", "ABC", CssAttributeValueType.EQUAL))));
+		testCssElementAttributeParser("-x9[ X~=9][-x9=\"9\"]",new CssElementAttributes("-x9",asList(new CssAttribute("X", "9", "~="),new CssAttribute("-x9", "9", "="))));
+		testCssElementAttributeParser("-X9[X$=90 ]",new CssElementAttributes("-X9",asList(new CssAttribute("X", "90", CssAttributeValueType.DOLLAR_SIGN_EQUAL))));
+
 
 	}
 

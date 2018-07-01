@@ -14,10 +14,11 @@ public class CssElementAttributeParser
 {
 	private static final String QUOTES_RE = "([\"\'])";
 	private static final String ATTRIBUTE_VALUE_RE = "([_a-zA-Z0-9- ]+)";
+	private static final String ATTRIBUTE_VALUE_RE_NO_SPACES = "([_a-zA-Z0-9-]+)";
 	private static final String ATTRIBUTE_TYPE_RE = createElementAttributeNameRegularExpression();
 	private static final String ELEMENT_ATTRIBUTE_NAME_RE="(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)";
 	private static final String STARTING_ELEMENT_RE = "^("+ELEMENT_ATTRIBUTE_NAME_RE+"|([*]))?";
-	private static final String ATTRIBUTE_RE = "(\\["+"\\s*"+ELEMENT_ATTRIBUTE_NAME_RE+"\\s*"+ATTRIBUTE_TYPE_RE+"\\s*"+"("+QUOTES_RE+ATTRIBUTE_VALUE_RE+QUOTES_RE+")?"+"\\s*"+"\\])"; 
+	private static final String ATTRIBUTE_RE = "(\\["+"\\s*"+ELEMENT_ATTRIBUTE_NAME_RE+"\\s*"+ATTRIBUTE_TYPE_RE+"\\s*"+"(("+QUOTES_RE+ATTRIBUTE_VALUE_RE+QUOTES_RE+")|("+ATTRIBUTE_VALUE_RE_NO_SPACES+"))?"+"\\s*"+"\\])"; 
 	
 	
 	private static String createElementAttributeNameRegularExpression()
@@ -42,7 +43,13 @@ public class CssElementAttributeParser
 	
 	public void checkValid(String elementWithAttributesString) throws CssSelectorStringSplitterException
 	{
-		//System.out.println("checkValid: "+elementWithAttributesString+" ,re="+STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
+		int reIndexAttributeValueType=6;
+		int reIndexAttributeValue=13;
+		int reIndexStartingQuote=reIndexAttributeValue+2;
+		int reIndexEndingQuote=reIndexStartingQuote+2;
+
+		
+		System.out.println("checkValid: "+elementWithAttributesString+" ,re="+STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Pattern cssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Matcher match = cssElementAtributePattern.matcher(elementWithAttributesString);
 		if (!match.find())
@@ -50,16 +57,16 @@ public class CssElementAttributeParser
 			throw new CssSelectorStringSplitterException("invalid element and/or attributes");
 		}
 		//System.out.println();
-		boolean cssAttributeValueTypeExists = match.group(6)!=null;
-		boolean cssAttributeValueExists = match.group(13)!=null;
+		boolean cssAttributeValueTypeExists = match.group(reIndexAttributeValueType)!=null;
+		boolean cssAttributeValueExists = match.group(reIndexAttributeValue)!=null;
 		//System.out.println("Type="+cssAttributeValueTypeExists+", Value="+cssAttributeValueExists);
 		if((cssAttributeValueTypeExists&&!cssAttributeValueExists)||(!cssAttributeValueTypeExists&&cssAttributeValueExists))
 		{
 				throw new CssSelectorStringSplitterException("invalid attribute value");
 		}
 
-		String startQuote = match.group(14);
-		String endQuote = match.group(16);
+		String startQuote = match.group(reIndexStartingQuote);
+		String endQuote = match.group(reIndexEndingQuote);
 		boolean startQuoteExists=startQuote!=null;
 		//note the only way startQuote could be null is that there no attribute value 
 		if(startQuoteExists && !(startQuote.equals(endQuote)))
@@ -71,6 +78,12 @@ public class CssElementAttributeParser
 	
 	public CssElementAttributes createElementAttribute(String elementWithAttributesString) throws CssSelectorStringSplitterException 
 	{
+		int reIndexAttributeName=2;
+		int reIndexAttributeType=reIndexAttributeName+1;
+		int reIndexAttributeValueWithQuotes=11;
+		int reIndexAttributeValueWithinQuotes=reIndexAttributeValueWithQuotes+2;
+		int reIndexAttributeValueWithoutQuotes=reIndexAttributeValueWithinQuotes+2;
+		
 		checkValid(elementWithAttributesString);
 		Pattern startingCssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_RE);
 		Matcher match = startingCssElementAtributePattern.matcher(elementWithAttributesString);
@@ -86,12 +99,16 @@ public class CssElementAttributeParser
 			}
 		}
 		Pattern restOfCssElementAtributePattern = Pattern.compile(ATTRIBUTE_RE);
+		System.out.println(ATTRIBUTE_RE);
 		match = restOfCssElementAtributePattern.matcher(elementWithAttributesString);
 
 		while(match.find())
 		{
-			attributeList.add(new CssAttribute(match.group(2),match.group(12),match.group(3)));
-			//System.out.println(attributeList);
+			boolean attributeValueHasQuotes = match.group(reIndexAttributeValueWithQuotes)!=null;
+			attributeList.add(new CssAttribute(
+					match.group(reIndexAttributeName),
+					match.group(attributeValueHasQuotes?reIndexAttributeValueWithinQuotes:reIndexAttributeValueWithoutQuotes),
+					match.group(reIndexAttributeType)));
 		}	
 		CssElementAttributes cssElementAttribute = new CssElementAttributes(element,attributeList);
 		//System.out.println(cssElementAttribute);
