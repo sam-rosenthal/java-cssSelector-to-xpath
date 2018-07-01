@@ -5,6 +5,14 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>java-cssSelector-to-xpath</name>
   <description>java-cssSelector-to-xpath</description>
+
+  <properties>
+    <!--<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
+    <appengine.app.version>1</appengine.app.version>
+    <appengine.target.version>1.9.64</appengine.target.version>
+    <appengine-maven-plugin-version>1.9.64</appengine-maven-plugin-version>
+  </properties>
+
   <dependencies>
   	<dependency>
   		<groupId>junit</groupId>
@@ -31,7 +39,24 @@
   		<artifactId>slf4j-simple</artifactId>
   		<version>1.7.25</version>
   	</dependency>
-  </dependencies>
+   <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-1.0-sdk</artifactId>
+      <version>${appengine.target.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-testing</artifactId>
+      <version>${appengine.target.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-stubs</artifactId>
+      <version>${appengine.target.version}</version>
+      <scope>test</scope>
+    </dependency>
+    </dependencies>
 	<build>
 
 	    <resources>
@@ -75,6 +100,11 @@
 	                <target>1.8</target>
 	            </configuration>
 	        </plugin>
+	        <plugin>
+			   <groupId>com.google.appengine</groupId>
+			   <artifactId>appengine-maven-plugin</artifactId>
+			   <version>${appengine-maven-plugin-version}</version>
+			</plugin>
 	    </plugins>
 	</build>
 </project>
