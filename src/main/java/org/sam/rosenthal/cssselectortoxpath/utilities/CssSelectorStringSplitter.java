@@ -54,6 +54,11 @@ public class CssSelectorStringSplitter
 			invalClassIdPairCheck(selectorString);
 			selectorString=selectorString.replaceAll("#"+classIdCombinatorRE(),"[id=\"$1\"]");
 			selectorString=selectorString.replaceAll("[.]"+classIdCombinatorRE(),"[class~=\"$1\"]");
+			selectorString=selectorString.replaceAll(":disabled","[disabled]");
+			selectorString=selectorString.replaceAll(":required","[required]");
+			selectorString=selectorString.replaceAll(":optional","[not(@required)]");
+			selectorString=selectorString.replaceAll(":empty","[not(text()) and count(*)=0]");
+
 //			System.out.println(selectorString);
 			return selectorString;
 		}

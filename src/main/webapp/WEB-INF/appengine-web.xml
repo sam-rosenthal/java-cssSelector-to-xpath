@@ -2,6 +2,6 @@
     <threadsafe>true</threadsafe>
     <runtime>java8</runtime>
      <sessions-enabled>true</sessions-enabled>
-     <application>direct-landing-208900</application>
-       <version>uno</version>
+     <application>css-selector-to-xpath</application>
+       <version>single-version</version>
 </appengine-web-app>

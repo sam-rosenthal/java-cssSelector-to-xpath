@@ -80,6 +80,8 @@ public class CssElementCombinatorPairsToXpathTest
 		testConvertCssStringToXpathString("A#B","//A[@id=\"B\"]");
 		testConvertCssStringToXpathString("A[B=\"C\"]","//A[@B=\"C\"]");
 		testConvertCssStringToXpathString("A[B=C]","//A[@B=\"C\"]");
+		testConvertCssStringToXpathString("A:disabled","//A[@disabled]");
+
 		
 		testConvertCssStringToXpathString("A[B^=\"C\"]","//A[starts-with(@B,\"C\")]");
 		testConvertCssStringToXpathString("A[B*=\"C\"]","//A[contains(@B,\"C\")]");	
