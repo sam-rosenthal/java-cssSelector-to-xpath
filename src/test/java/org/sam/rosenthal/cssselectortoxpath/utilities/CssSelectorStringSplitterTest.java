@@ -234,7 +234,7 @@ public class CssSelectorStringSplitterTest {
 		testCssElementAttributeParser("-X9",new CssElementAttributes("-X9",new ArrayList<>()));
 		testCssElementAttributeParser("-xx",new CssElementAttributes("-xx",new ArrayList<>()));
 		testCssElementAttributeParser("XX",new CssElementAttributes("XX",new ArrayList<>()));
-		
+			
 		testCssElementAttributeParser("X[X]",new CssElementAttributes("X",asList(new CssAttribute("X", null, (CssAttributeValueType)null))));
 
 		testCssElementAttributeParser("X[X=\" \"]",new CssElementAttributes("X",asList(new CssAttribute("X", " ", CssAttributeValueType.EQUAL))));
@@ -307,6 +307,15 @@ public class CssSelectorStringSplitterTest {
 		testCheckInValidElementAttribute("x[[y]");
 		testCheckInValidElementAttribute("x[y]]");
 		testCheckInValidElementAttribute("x[[y]]");
+		
+		testCheckInValidElementAttribute(":lang(en)");
+		testCheckInValidElementAttribute("input:required");
+		testCheckInValidElementAttribute(":root");
+		testCheckInValidElementAttribute(":not([style='test'])");
+		testCheckInValidElementAttribute("div:first-child");
+		testCheckInValidElementAttribute(":test");
+
+
 	}
 	private void testCheckInValidElementAttribute(String elementAttributeString) 
 	{
