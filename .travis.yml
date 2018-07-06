@@ -6,6 +6,8 @@ jdk:
 addons:
   sonarcloud:
     organization: "sam-rosenthal-github"
+      token:
+        secure: ff9e52b13fdc1d7579470b4eac2adaa0ad482180
       
     
 script:
