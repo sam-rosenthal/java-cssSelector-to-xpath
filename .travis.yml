@@ -9,6 +9,6 @@ addons:
 
 script:
   # JaCoCo is used to have code coverage, the agent has to be activated
-  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -X
+  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
   #-Dsonar.organization=sam-rosenthal-github-Dsonar.host.url=https://sonarcloud.io-Dsonar.login=ff9e52b13fdc1d7579470b4eac2adaa0ad482180
   
