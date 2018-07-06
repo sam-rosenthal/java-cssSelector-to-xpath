@@ -16,6 +16,9 @@
  */
 package org.sam.rosenthal.wicket.javacssselectortoxpath;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.behavior.AttributeAppender;
@@ -130,7 +133,7 @@ public class EnterText extends WebPage
 		catch (RuntimeException e)
 		{
 			error="Unexpected Error:  "+e;
-			e.printStackTrace();
+			Logger.getLogger(getClass().getCanonicalName()).log(Level.WARNING, error, e);
 		}
 
 	}
