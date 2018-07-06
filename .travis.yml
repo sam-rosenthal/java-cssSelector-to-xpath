@@ -13,5 +13,5 @@ script:
   mvn org.jacoco:jacoco-maven-plugin:prepare-agent
   mvn package
   #sonar:sonar
-  mvn sonar:sonar-Dsonar.organization=sam-rosenthal-github-Dsonar.host.url=https://sonarcloud.io-Dsonar.login=ff9e52b13fdc1d7579470b4eac2adaa0ad482180
+  #mvn sonar:sonar-Dsonar.organization=sam-rosenthal-github-Dsonar.host.url=https://sonarcloud.io-Dsonar.login=ff9e52b13fdc1d7579470b4eac2adaa0ad482180
   
