@@ -5,7 +5,8 @@ jdk:
 
 addons:
   sonarcloud:
-    organization: "sonarcloud"
+    organization: "sam-rosenthal-github"
+      
     
 script:
   # JaCoCo is used to have code coverage, the agent has to be activated
