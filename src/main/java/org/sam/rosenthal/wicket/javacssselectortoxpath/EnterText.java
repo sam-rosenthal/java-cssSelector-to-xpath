@@ -16,6 +16,9 @@
  */
 package org.sam.rosenthal.wicket.javacssselectortoxpath;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.behavior.AttributeAppender;
@@ -46,6 +49,7 @@ public class EnterText extends WebPage
 	 */
 	public EnterText()
 	{
+		cssElementCombinatorPairsToXpath=new CssElementCombinatorPairsToXpath();
 
 		// Add a form to change the message. We don't need to do anything
 		// else with this form as the shared model is automatically updated
@@ -78,8 +82,12 @@ public class EnterText extends WebPage
 		cssSelectorLabel=createLabel("cssSelector", form);
 		xpathLabel=createLabel("xPath",form);
 		errorLabel=createLabel("error",form);
-
+		
 		add(form);
+        add(new Label("version", cssElementCombinatorPairsToXpath.getVersionNumber()));
+        add(new Label("webversion", CssElementCombinatorPairsToXpath.VERSION_PROPERTIES.getProperty("webpage.version")));
+
+
 	}
 
 	private Label createLabel(String idAndProperty, Form<?> form) {
@@ -105,14 +113,11 @@ public class EnterText extends WebPage
 	{
 		return error;
 	}
-
+	
 
 	public void setCssSelector(String cssSelectorIn)
 	{
 		error=null;
-		if (cssElementCombinatorPairsToXpath==null) {
-			cssElementCombinatorPairsToXpath=new CssElementCombinatorPairsToXpath();
-		}
 		this.cssSelector = cssSelectorIn;
 		try
 		{
@@ -130,9 +135,8 @@ public class EnterText extends WebPage
 		catch (RuntimeException e)
 		{
 			error="Unexpected Error:  "+e;
-			e.printStackTrace();
+			Logger.getLogger(getClass().getCanonicalName()).log(Level.WARNING, error, e);
 		}
-
 	}
 	
 }

@@ -28,8 +28,6 @@ public class Start
 	 */
 	public static void main(String[] args)
 	{
-		System.setProperty("wicket.configuration", "development");
-
 		Server server = new Server();
 
 		HttpConfiguration http_config = new HttpConfiguration();

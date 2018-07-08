@@ -25,22 +25,22 @@ public class CssSelectorStringSplitter
 	{
 //	This method should perform the following
 //	i.	Remove all leading and trailing white spaces
-//	ii.	Remove all white spaces except tabs and actual space(“ “)
+//	ii.	Remove all white spaces except tabs and actual space(" ")
 //	1.	Note, very important
-//	a.	‘\t’ corresponds to the tab character in java
-//	iii.	Consolidate all consecutive tabs and “ “ into a single “ “ and single tab into a “ “‘
+//	a.	'\t' corresponds to the tab character in java
+//	iii.	Consolidate all consecutive tabs and " " into a single " " and single tab into a " "
 //	1.	The final string should have no tabs only non consecutive spaces
 //	b.	Implementation
 //	i.	Check for null string and if found throw a CssSelectorStringSplitterException
 //	ii.	Use String.trim() to remove leading and trailing spaces
 //	iii.	Use String.replaceAll()  to manipulate the string
-//	1.	The tricky part is that tab and “ “ are both white spaces
+//	1.	The tricky part is that tab and " " are both white spaces
 //	2.	Preprocess the string
-//	a.	Replace all tabs with  a unique string like “~+_placeHolder_+”
+//	a.	Replace all tabs with  a unique string like "~+_placeHolder_+"
 //	b.	Replace all spaces with the same unique string
 //	i.	Remember at the end we want only spaces
-//	3.	Replace all white spaces with the empty string “”
-//	4.	Replace “~+_placeHolder_+” with “ “
+//	3.	Replace all white spaces with the empty string ""
+//	4.	Replace "~+_placeHolder_+" with " "
 		if(selectorString==null)
 		{
 			throw new CssSelectorStringSplitterException(ERROR_SELECTOR_STRING_IS_NULL);
@@ -54,12 +54,7 @@ public class CssSelectorStringSplitter
 			invalClassIdPairCheck(selectorString);
 			selectorString=selectorString.replaceAll("#"+classIdCombinatorRE(),"[id=\"$1\"]");
 			selectorString=selectorString.replaceAll("[.]"+classIdCombinatorRE(),"[class~=\"$1\"]");
-			selectorString=selectorString.replaceAll(":disabled","[disabled]");
-			selectorString=selectorString.replaceAll(":required","[required]");
-			selectorString=selectorString.replaceAll(":optional","[not(@required)]");
-			selectorString=selectorString.replaceAll(":empty","[not(text()) and count(*)=0]");
-
-//			System.out.println(selectorString);
+			//System.out.println("STRING="+selectorString);
 			return selectorString;
 		}
 	}
@@ -96,7 +91,7 @@ public class CssSelectorStringSplitter
 	public List<String> splitSelectors(String selectorString) throws CssSelectorStringSplitterException
 	{
 		selectorString=removeNonCssSelectorWhiteSpaces(selectorString);
-		System.out.println("ADJUSTED="+selectorString);
+		//System.out.println("ADJUSTED="+selectorString);
 		//selectorString=removeNonCssSelectorWhiteSpaces(selectorString);
 		//split() will not error out if there is a trailing ','
 		int index=selectorString.lastIndexOf(',');
@@ -133,22 +128,22 @@ public class CssSelectorStringSplitter
 
 		Pattern cssCombinator = Pattern.compile(XY);
 		Matcher match = cssCombinator.matcher(cssSelector);
-		System.out.println(XY);
+		//System.out.println(XY);
 		if(match.find())
 		{
 			CssCombinatorType type= CssCombinatorType.combinatorTypeChar(match.group(5));
-			System.out.println("TYPE:"+type);
+			//System.out.println("TYPE:"+type);
 			if(type!=null)
 			{	
 				String firstCssSelector=match.group(1);
-				System.out.println("firstcss"+firstCssSelector);
+				//System.out.println("firstcss"+firstCssSelector);
 				if(firstCssSelector.isEmpty())
 				{
 					throw new CssSelectorStringSplitterException("Empty Selector");
 				}
 				selectorList.add(new CssElementCombinatorPair(previousCombinatorType,firstCssSelector));
 				String nextCssSelector=match.group(6); 
-				System.out.println("nextcss="+nextCssSelector+"; type"+type);
+				//System.out.println("nextcss="+nextCssSelector+"; type"+type);
 
 				if(nextCssSelector.isEmpty())
 				{
@@ -174,7 +169,7 @@ public class CssSelectorStringSplitter
 	
 	public List<List<CssElementCombinatorPair>> listSplitSelectorsIntoElementCombinatorPairs(String selectorString) throws CssSelectorStringSplitterException
 	{
-		System.out.println("###"+selectorString);
+		//System.out.println("###"+selectorString);
 
 		List<List<CssElementCombinatorPair>> listList=new ArrayList<>();
 		List<String> selectorList=splitSelectors(selectorString);
@@ -184,8 +179,8 @@ public class CssSelectorStringSplitter
 			listList.add(cssElementCombinatorPairList);
 		}
 		
-		System.out.println("$$$$"+listList);
-		System.out.println("XXX");
+		//System.out.println("$$$$"+listList);
+		//System.out.println("XXX");
 
 		return listList;
 	}

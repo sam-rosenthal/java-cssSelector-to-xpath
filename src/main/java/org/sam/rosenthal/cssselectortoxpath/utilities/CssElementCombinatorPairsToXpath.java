@@ -1,7 +1,9 @@
 package org.sam.rosenthal.cssselectortoxpath.utilities;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import org.sam.rosenthal.cssselectortoxpath.model.CssAttribute;
 import org.sam.rosenthal.cssselectortoxpath.model.CssAttributeValueType;
@@ -9,6 +11,8 @@ import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
 
 public class CssElementCombinatorPairsToXpath 
 {
+	public static Properties VERSION_PROPERTIES=getVersionProperties();
+	
 	private CssSelectorStringSplitter cssSelectorString=new CssSelectorStringSplitter();
 	
 	public String cssElementCombinatorPairListConversion(List <CssElementCombinatorPair> elementCombinatorPairs) throws CssSelectorStringSplitterException
@@ -33,6 +37,17 @@ public class CssElementCombinatorPairsToXpath
 			convertCssAttributeListToXpath(xpathBuilder,elementCombinatorPair);
 		}
 		return xpathBuilder.toString();
+	}
+
+	private static Properties getVersionProperties() {
+		ClassLoader classLoader = CssElementCombinatorPairsToXpath.class.getClassLoader();
+		Properties properties= new Properties();
+		try {
+			properties.load(classLoader.getResourceAsStream("version.properties"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return properties;
 	}
 
 	private void addElementToXpathString(StringBuilder xpathBuilder, CssElementCombinatorPair elementCombinatorPair) {
@@ -157,10 +172,63 @@ public class CssElementCombinatorPairsToXpath
 	{
 		List<List<CssElementCombinatorPair>> cssElementCombinatorPairListList=cssSelectorString.listSplitSelectorsIntoElementCombinatorPairs(selectorString);
 		String xpath=cssElementCombinatorPairListListConversion(cssElementCombinatorPairListList);
-		System.out.println("CSS Selector="+selectorString+", Xpath string="+xpath);
+		//System.out.println("CSS Selector="+selectorString+", Xpath string="+xpath);
 
 		return xpath;
 	}	
+	
+	public String mainGo(String[] args)
+	{
+		
+		if(args.length!=1)
+		{
+			throw new RuntimeException(getUsageString());
+		}
+		if("-version".equalsIgnoreCase(args[0])||"-v".equalsIgnoreCase(args[0]))
+		{
+			return "Java-CSS-Selector-To-XPath version:  "+getVersionNumber();
+		}
+		else if("-help".equalsIgnoreCase(args[0])||"-h".equalsIgnoreCase(args[0]))
+		{
+			return getUsageString();
+		}
+		String error;
+		try
+		{
+			return "XPath = "+convertCssSelectorStringToXpathString(args[0]);
+		}
+		catch (CssSelectorStringSplitterException e)
+		{
+			if (e.getMessage().trim().length()>0) {
+				error="Error: "+e.getMessage();
+			} else {
+				error="Error:  Invalid CSS Selector";
+			}
+		}
+		catch (RuntimeException e)
+		{
+			error="Unexpected Error:  "+e;
+		}
+		throw new RuntimeException(error);
+	}
+
+	private String getUsageString() {
+		return "java -classpath <Java-CSS-Selector-To-XPath jar file>  org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath <CSS Selector string>";
+	}
+	public String getVersionNumber() {
+		return VERSION_PROPERTIES.getProperty("java.cssSelector.to.xpath.version");
+	}
+	
+	public static void main(String[] args)
+	{
+		try {
+		   System.out.println(new CssElementCombinatorPairsToXpath().mainGo(args));
+		   System.exit(0);
+		} catch (RuntimeException e) {
+			System.err.println(e.getMessage());
+		}
+		System.exit(1);;
+	}
 }
 		
 		

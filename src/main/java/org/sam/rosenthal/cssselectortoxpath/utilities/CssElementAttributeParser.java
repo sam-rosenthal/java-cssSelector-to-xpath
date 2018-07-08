@@ -18,7 +18,8 @@ public class CssElementAttributeParser
 	private static final String ATTRIBUTE_TYPE_RE = createElementAttributeNameRegularExpression();
 	private static final String ELEMENT_ATTRIBUTE_NAME_RE="(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)";
 	private static final String STARTING_ELEMENT_RE = "^("+ELEMENT_ATTRIBUTE_NAME_RE+"|([*]))?";
-	private static final String ATTRIBUTE_RE = "(\\["+"\\s*"+ELEMENT_ATTRIBUTE_NAME_RE+"\\s*"+ATTRIBUTE_TYPE_RE+"\\s*"+"(("+QUOTES_RE+ATTRIBUTE_VALUE_RE+QUOTES_RE+")|("+ATTRIBUTE_VALUE_RE_NO_SPACES+"))?"+"\\s*"+"\\])"; 
+	private static final String PSUEDO_RE = "(:[a-z]+([(][^)]+[)])?)";
+	private static final String ATTRIBUTE_RE = "("+PSUEDO_RE+"|(\\["+"\\s*"+ELEMENT_ATTRIBUTE_NAME_RE+"\\s*"+ATTRIBUTE_TYPE_RE+"\\s*"+"(("+QUOTES_RE+ATTRIBUTE_VALUE_RE+QUOTES_RE+")|("+ATTRIBUTE_VALUE_RE_NO_SPACES+"))?"+"\\s*"+"\\]))"; 
 	
 	
 	private static String createElementAttributeNameRegularExpression()
@@ -43,13 +44,12 @@ public class CssElementAttributeParser
 	
 	public void checkValid(String elementWithAttributesString) throws CssSelectorStringSplitterException
 	{
-		int reIndexAttributeValueType=6;
-		int reIndexAttributeValue=13;
+		int reIndexAttributeValueType=9;
+		int reIndexAttributeValue=16;
 		int reIndexStartingQuote=reIndexAttributeValue+2;
 		int reIndexEndingQuote=reIndexStartingQuote+2;
-
 		
-		System.out.println("checkValid: "+elementWithAttributesString+" ,re="+STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
+		//System.out.println("checkValid: "+elementWithAttributesString+" ,re="+STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Pattern cssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Matcher match = cssElementAtributePattern.matcher(elementWithAttributesString);
 		if (!match.find())
@@ -78,9 +78,10 @@ public class CssElementAttributeParser
 	
 	public CssElementAttributes createElementAttribute(String elementWithAttributesString) throws CssSelectorStringSplitterException 
 	{
-		int reIndexAttributeName=2;
+		int rePseudoClass=2;
+		int reIndexAttributeName=5;
 		int reIndexAttributeType=reIndexAttributeName+1;
-		int reIndexAttributeValueWithQuotes=11;
+		int reIndexAttributeValueWithQuotes=14;
 		int reIndexAttributeValueWithinQuotes=reIndexAttributeValueWithQuotes+2;
 		int reIndexAttributeValueWithoutQuotes=reIndexAttributeValueWithinQuotes+2;
 		
@@ -88,6 +89,7 @@ public class CssElementAttributeParser
 		Pattern startingCssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_RE);
 		Matcher match = startingCssElementAtributePattern.matcher(elementWithAttributesString);
 		List<CssAttribute> attributeList=new ArrayList<CssAttribute>();
+
 		String element=null;
 		if (match.find())
 		{
@@ -99,17 +101,25 @@ public class CssElementAttributeParser
 			}
 		}
 		Pattern restOfCssElementAtributePattern = Pattern.compile(ATTRIBUTE_RE);
-		System.out.println(ATTRIBUTE_RE);
+		//System.out.println(ATTRIBUTE_RE);
 		match = restOfCssElementAtributePattern.matcher(elementWithAttributesString);
+		
+
 
 		while(match.find())
 		{
+			String psuedoClass=match.group(rePseudoClass);
+			if(psuedoClass!=null)
+			{
+				throw new CssSelectorStringSplitterException("Unable to convert("+psuedoClass+").  A converter for CSS Seletor Psuedo-Classes has not been implement at this time.  TODO: A future capability.");
+			}
 			boolean attributeValueHasQuotes = match.group(reIndexAttributeValueWithQuotes)!=null;
 			attributeList.add(new CssAttribute(
 					match.group(reIndexAttributeName),
 					match.group(attributeValueHasQuotes?reIndexAttributeValueWithinQuotes:reIndexAttributeValueWithoutQuotes),
 					match.group(reIndexAttributeType)));
 		}	
+		
 		CssElementAttributes cssElementAttribute = new CssElementAttributes(element,attributeList);
 		//System.out.println(cssElementAttribute);
 		return cssElementAttribute;

@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
 
-	<display-name>test-wicket</display-name>
+	<display-name>java-cssSselector-to-xpath-wicket</display-name>
 
 	<!--
 		There are three means to configure Wickets configuration mode and they 
@@ -24,12 +24,16 @@
 			<!-- <param-value>org.sam.rosenthal.WicketApplication</param-value> -->
 			<!-- <param-value>org.apache.wicket.examples.helloworld.HelloWorldApplication</param-value> -->
 			<param-value>org.sam.rosenthal.wicket.javacssselectortoxpath.EnterTextApplication</param-value>
-			
 		</init-param>
+		
 	</filter>
 
 	<filter-mapping>
 		<filter-name>java-cssSelector-to-xpath.org.sam-rosenthal.java-cssSelector-to-xpath</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<context-param>
+		<param-name>configuration</param-name>
+		<param-value>deployment</param-value>
+	</context-param>	
 </web-app>
