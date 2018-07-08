@@ -10,7 +10,11 @@
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Implementation" target="_blank"> Implementation</a>     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Dependencies" target="_blank"> Dependencies</a>	     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Installation" target="_blank"> Installation </a>     </li>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Usage" target="_blank"> Usage</a>	           </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Usage" target="_blank"> Usage</a>	     </li>
+     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Todos" target="_blank"> Todos</a>	     </li>
+      <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#links" target="_blank"> Helpful links</a>   </li>
+        <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#about" target="_blank"> About me </a>   </li>
+        <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#license" target="_blank"> License</a>   </li>
   <ul>
 </h3>
 
@@ -24,13 +28,15 @@
 
 The next section is usage, in which you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
 
-<h2><a id="Todos_143"></a>Todos</h2>
+<h2><a id="Todos"></a>Todos</h2>
 <ul>
 <li>Handle Psuedo-classes</li>
 <li>Add </li> </ul>
 
-<h2> About me </h2>
+<h2><a id="links"></a>Helpful links</h2>
+
+<h2><a id="about">About me </h2>
 <a href="https://sam-rosenthal.github.io" target="_blank"> Sam Rosenthal - Cornell Engineering '21 </a>	
 
-<h2> License: </h2>
+<h2><a id="license"> License </h2>
 Finally, include a section for the license of your project. For more information on choosing a license, check out GitHub’s licensing guide!
