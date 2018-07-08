@@ -14,17 +14,19 @@
 </h2>
 
 <h3> Implementation  </h3>
-<ul>
-  <li> Dependencies </li>
-  <li> Installation </li>
-  <li> Usage </li>
-  </ul>
 
-#Usage: The next section is usage, in which you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
+<h4> Dependencies </h4>
+<h5> Installation </h5>
+<h6> Usage </h6>
 
-<h3><a id="Todos_143"></a>Todos</h3>
+The next section is usage, in which you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
+
+<h7><a id="Todos_143"></a>Todos</h7>
 <ul>
 <li>Handle Psuedo-classes</li>
 <li>Add </li> </ul>
+
+<h8> About me </h8>
+<a href="https://sam-rosenthal.github.io" target="_blank"> Sam Rosenthal - Cornell Engineering '21 </a>	
 
 License: Finally, include a section for the license of your project. For more information on choosing a license, check out GitHub’s licensing guide!
