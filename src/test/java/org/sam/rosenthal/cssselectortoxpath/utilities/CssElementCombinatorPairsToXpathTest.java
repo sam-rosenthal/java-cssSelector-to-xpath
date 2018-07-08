@@ -1,6 +1,8 @@
 package org.sam.rosenthal.cssselectortoxpath.utilities;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.List;
@@ -154,9 +156,48 @@ public class CssElementCombinatorPairsToXpathTest
 
 	}
 
-	public void testConvertCssStringToXpathString(String cssSelector, String expectedOutput) throws CssSelectorStringSplitterException  {
+	protected void testConvertCssStringToXpathString(String cssSelector, String expectedOutput) throws CssSelectorStringSplitterException  {
 		String xpath=elementCombinatorPair.convertCssSelectorStringToXpathString(cssSelector);
 		//System.out.println(xpath);
 		assertEquals("CssString="+cssSelector,expectedOutput,xpath);
 	}
+	
+	@Test
+	public void mainGoTest()
+	{
+		String versionNumber = elementCombinatorPair.getVersionNumber();
+		testMainGo(new String[]{"-version"},versionNumber);
+		testMainGo(new String[]{"-v"},versionNumber);
+		
+		String usage = elementCombinatorPair.getUsageString();
+		testMainGo(new String[]{"-help"}, usage);
+		testMainGo(new String[]{"-h"}, usage);
+		testMainGo(new String[]{"test"},"//test");
+	}
+	
+	@Test
+	public void mainGoBExceptionTest()
+	{
+		testMainGoException(new String[]{"A","test"});
+		testMainGoException(new String[]{"This", "is ","a ","test"});
+		testMainGoException(new String[]{"[]"});
+		testMainGoException(new String[]{});
+		testMainGoException(null);
+	}
+	private void testMainGo(String[] args, String expected)
+	{
+		String version=elementCombinatorPair.mainGo(args);
+		assertTrue(args[0].toString(),version.contains(expected));
+		
+	}
+		
+	private void testMainGoException(String[] args) {
+		try {
+			System.out.println(elementCombinatorPair.mainGo(args));
+			fail(""+args.length+((args.length>0)?args[0]:"no args"));
+		} catch (RuntimeException e) {
+			//success
+		}
+	}
+		
 }
