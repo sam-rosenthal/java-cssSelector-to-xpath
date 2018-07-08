@@ -7,18 +7,18 @@
 
 <h3> Table of Contents
   <ul>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Implementation" target="_blank"> Implementation</a>     </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Implementation" target="_blank"> CSS Selector to XPath Conversion Implementation Notes</a>     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Dependencies" target="_blank"> Dependencies</a>	     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Installation" target="_blank"> Installation </a>     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Usage" target="_blank"> Usage</a>	     </li>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Todos" target="_blank"> Todos</a>	     </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Todos" target="_blank"> TODOs</a>	     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#links" target="_blank"> Helpful links</a>   </li>
         <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#about" target="_blank"> About me </a>   </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#license" target="_blank"> License</a>   </li>
   <ul>
 </h3>
 
-<h2 id="Implementation"> Implementation  </h2>
+<h2 id="Implementation"> CSS Selector to XPath Conversion Implementation Notes  </h2>
 
 <h2 id="Dependencies"> Dependencies </h2>
 <p> This project is a pure jave applicication/API. It requries Java JDK 8 and no external jars. Within this project's baseline, there is a <a href="https://css-selector-to-xpath.appspot.com" target="_blank"> web-based implementation</a> that depends on <a href="https://wicket.apache.org">  Wicket 8.0. </a> I consider the webpage an example implementation of this project. As a result I don' consider the dependencies for the websitess a requirement for the OSS.</p>
@@ -45,10 +45,10 @@
 </pre>
   
 
-<h2><a id="Todos"></a>Todos</h2>
+<h2><a id="TODOs"></a>Todos</h2>
 <ul>
-<li>Handle Psuedo-classes</li>
-<li>Add </li> </ul>
+  <li>Handle Psuedo-classes</li>
+</ul>
 
 <h2><a id="links"></a>Helpful links</h2>
 
