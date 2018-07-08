@@ -31,4 +31,6 @@ The next section is usage, in which you instruct other people on how to use your
 
 <h2> About me </h2>
 <a href="https://sam-rosenthal.github.io" target="_blank"> Sam Rosenthal - Cornell Engineering '21 </a>	
-License: Finally, include a section for the license of your project. For more information on choosing a license, check out GitHub’s licensing guide!
+
+<h2> License: <h2>
+Finally, include a section for the license of your project. For more information on choosing a license, check out GitHub’s licensing guide!
