@@ -1,10 +1,11 @@
 <h1><a href="https://github.com/sam-rosenthal/" target="_blank"><img src="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/src/main/webapp/fav.png" align="left" height="40" width="40"></a> java-cssSelector-to-xpath</h1>
 
 <a href="https://travis-ci.org/sam-rosenthal/java-cssSelector-to-xpath" target="_blank"><img src="https://travis-ci.org/sam-rosenthal/java-cssSelector-to-xpath.svg?branch=master" align="left"> </a>
-<br>
-<p>Java tool transforms CSS Selector strings to XPath strings. </p> 
+<br/>
+<p>Java tool for transforming CSS Selector strings to XPath strings. </p> 
 <a href="https://css-selector-to-xpath.appspot.com" target="_blank">Visit the website that implements this tool.</a>
-
+<br/>
+<b><a style="font-size:24px" href="https://sam-rosenthal.github.io" target="_blank"> Need a 2019 summer intern? </a></b>
 <h3> Table of Contents
   <ul>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Implementation" target="_blank"> CSS Selector to XPath Conversion Implementation Notes</a>     </li>
