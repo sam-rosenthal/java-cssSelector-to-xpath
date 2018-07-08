@@ -17,33 +17,48 @@
 	h1 {
 		color:#013243;
 		font-weight:bold;
-		font-size: 37px
+		font-size: 37px;
+		margin-bottom: 0px;
 	}
-	
-	p.developedBy {
-		color:black;
+	h2 {
+		color:#013243;
 		font-weight:bold;
-		font-size: 15px
+		font-size: 10px;
+		margin-top: 0px;
+		padding-bottom:10px;
 	}
-	div.content {
-	border:black;
-		height:300px;	
-		margin: auto;
-		width:60%;
-	}
-	body {
-     	background-color: #87cefa;
-     }
-	
-	footer{
-		border-bottom: 1px #ccc solid;
-		margin-bottom: 10px;
-	}
-	#footer p{
+	p.developedBy {
+		font-weight:bold;
 		text-align: center;
 		font-size: 80%;
 		color: grey;
 	}
+	div.content {
+		border:black;
+		height:300px;	
+		margin: auto;
+		width:60%;
+		background:#b1c8d6;
+		border: 1px solid;
+    	padding: 5px;
+    	box-shadow: 5px 10px;
+    	margin-bottom: 35px;
+	}
+	div#footer ul{
+		margin: 0px;
+		padding-left: 15px;
+	}
+	div#footer fieldset{
+		border-color: black;
+	}
+	body {
+     	background-color: #87cefa;
+     }
+	footer{
+		border-bottom: 1px #ccc solid;
+		margin-bottom: 10px;
+	}
+
 	form:not([invalid-xpath="true"]) i[class="fa fa-times-circle"]  {
 		display:none
 	}
@@ -56,6 +71,11 @@
 	form>i {
 		color: red;
 	}
+
+	input[name="cssSelectorInput"]::selection{
+		background-color:lightblue;
+		color:black;
+		}
 	div.error{
 	    display: inline;
 	    padding-left:3px;
@@ -63,7 +83,7 @@
 	form:not([invalid-xpath="true"]) td {
 	    border-style: solid;
    	 	border-width: 1px;
-    	border-color: gray;
+    	border-color: #013243;
 		word-wrap: break-word;
 	}
 	
@@ -74,69 +94,101 @@
 	form:not([invalid-xpath]) td{
 		display:none;
 	}
-	.watermark{
-		color:grey;
-		font-size:120px;
-		transform:rotate(330deg);
-		-webkit-transform:rotate(330deg);
-		z-index:-2;
-		position:absolute;
-		top:0;
-	}
+	
+
 	 	
 </style>
+	<div class="content">
+		<h1 style="text-align:center">
+			CSS Selector to XPath Converter
+		</h1>
+		<h2 style="text-align:center">
+			(Powered by: <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath" target="_blank">java-cssSelector-to-xpath</a> <label wicket:id="version"/>)
+		</h2>
+		<form class="form" wicket:id="form">
+			<div style="display: flex" >
+				<input type="text" wicket:id="cssSelectorInput" style="flex:1" onfocus="this.select()" placeholder="Enter a CSS Selector to convert to XPath"/> 
+				<input type="submit" wicket:id="convert" value="Convert"/>
+			</div>
+			<div style="clear:both; padding-bottom:15px"/> 
+			<table>
+				<tbody>
+					<tr>
+						<td style="white-space: nowrap;"> 
+							<b  class="cssselector" style="padding-right:5px">CSS Selector:</b>
+						</td>
+						<td>
+							<span  wicket:id="cssSelector"/>
+						</td>
+					</tr>
+					<tr>
+						<td> 
+							<b class="xpath" style="padding-right:5px">XPath:</b>
+						</td>
+						<td>
+							<span  wicket:id="xPath"/>
+						</td>				
+					</tr>
+				</tbody>
+			</table>
+	   		<i class="fa fa-times-circle" aria-hidden="true"/><div class="error" wicket:id="error"/>
+		</form>
+	</div>
 
-<div class="content">
-	<h1 style="text-align:center">
-		CSS Selector to XPath Converter
-	</h1>
-	<form class="form" wicket:id="form">
-		<div style="display: flex" >
-			<input type="text" wicket:id="cssSelectorInput" style="flex:1"  onfocus="this.select()" placeholder="Enter a CSS Selector to convert to XPath"/>
-			<input type="submit" wicket:id="convert" value="Convert"/>
-		</div>
-		<div style="clear:both; padding-bottom:15px"/> 
-		<table>
-			<tbody>
-				<tr>
-					<td style="white-space: nowrap;"> 
-						<b  class="cssselector" style="padding-right:5px">CSS Selector:</b>
-					</td>
-					<td>
-						<span  wicket:id="cssSelector"/>
-					</td>
-				</tr>
-				<tr>
-					<td> 
-						<b class="xpath" style="padding-right:5px">XPath:</b>
-					</td>
-					<td>
-						<span  wicket:id="xPath"/>
-					</td>				
-				</tr>
-			</tbody>
-		</table>
-   		<i class="fa fa-times-circle" aria-hidden="true"/><div class="error" wicket:id="error"/>
-	</form>
-	<p style="color:gray; position:absolute; top:250"> If you have any feedback or suggestions, feel free to email me at ser259@cornell.edu </p>
-	
-</div>
-<div class="watermark">
-	<p> Beta Release </p>
-</div>	
 <hr>
 <div id="footer">
-	<p class="developedBy">
-		Developed by <a href="https://github.com/sam-rosenthal" target="_blank">Sam Rosenthal</a>
-	</p>
-	<p2>
-		Helpful Links/More Info: 
-		<ul>
-			<li><a href="https://en.wikipedia.org/wiki/Cascading_Style_Sheets" target="_blank">Cascading Style Sheets-Wiki</a></li>
-			<li><a href="https://en.wikipedia.org/wiki/XPath" target="_blank">XPath-Wiki</a></li>
-			<li><a href="https://en.wikibooks.org/wiki/XPath/CSS_Equivalents" target="_blank">XPath/CSS Equivalents</a></li>
-		</ul>
-	</p2>
+	<div style="float: left; width: 33%;">
+		<fieldset class="assumptions">
+		 <legend>Implementation Notes</legend>
+			<ul>
+				<li>CSS Selector To XPath has been implemented for all 
+					<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Simple_selectors" target="_blank">Simple Selectors </a>
+					<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Combinators" target="_blank"> and Combinators. </a>
+					<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Pseudo-classes" target="_blank">Pseudo-Classes</a>
+					have not been implemented.  </li>
+				<ul>
+					<li> Not all Pseudo-Class CSS Selectors can be converted to XPaths. </li>
+					<li> A possible future enhancement is to implement a partial subset of CSS Selector Pseudo-Classes. </li>
+				</ul>
+				<li>Chrome Browser was used as reference implementation.</li>
+				<ul> 
+					<li>All base CSS Selectors and corresponding XPaths were tested cases using 
+						<a href="https://yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/" target="_blank">Chrome Browser's Developer Tools.</a>
+					</li>
+				 </ul>
+				<li>Additional restrictions</li>
+					<ul> 		
+						<li>All names and values (Elements and Attributes) are case sensitive</li>
+						<li>Element names and Attribute names are restricted to the following regular expression: -?[_a-zA-Z]+[_a-zA-Z0-9-]*</li>
+						<li>Attribute values are restricted to the following regular expression: [_a-zA-Z0-9- ]+</li>
+					</ul>
+			</ul>
+		</fieldset>		
+	</div>
+	<div style="float: left; width: 33%;">
+			<p class="developedBy">
+			Developed by <a href="https://github.com/sam-rosenthal" target="_blank">Sam Rosenthal</a> 
+			<br/>
+			<label wicket:id="webversion"/>
+		</p>
+	</div>
+	<div style="float: right; width: 33%; ">
+		<fieldset class="links">
+		 <legend>Helpful Links/More Info</legend>
+			<ul>
+				<li><a href="https://en.wikipedia.org/wiki/Cascading_Style_Sheets" target="_blank">Cascading Style Sheets-Wiki</a></li>
+				<li><a href="https://en.wikipedia.org/wiki/XPath" target="_blank">XPath-Wiki</a></li>
+				<li><a href="https://en.wikibooks.org/wiki/XPath/CSS_Equivalents" target="_blank">XPath/CSS Equivalents</a></li>
+				<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors" target="_blank">MDN web docs CSS Selectors</a></li>
+				<li><a href="https://developer.mozilla.org/en-US/docs/Web/XPath">MDN web docs XPath</a></li>
+				<li><a href="https://www.w3schools.com/cssref/trysel.asp" target="_blank">W3Schools CSS Reference</a></li>
+				<li><a href="https://css-tricks.com/almanac/" target="_blank">CSS Tricks Almanac</a></li>
+				<li><a href="https://yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/" target="_blank">Evaluate and validate XPath/CSS selectors in Chrome Developer Tools</a></li>
+				
+				
+			</ul>
+		</fieldset>	
+	</div>
 </div>  
 
 </body>
