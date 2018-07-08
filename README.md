@@ -61,7 +61,7 @@
 <pre>
   <code>mvn install</code>
 </pre>
-<p> The jar file will be installed in <b>target/</b> subdirectory and the name will include the corresponding version number of this project <p/>
+<p> The jar file will be installed in <b>target</b> subdirectory and the name will include the corresponding version number of this project <p/>
 
 
 <h2 id="Usage"> Usage </h2>
