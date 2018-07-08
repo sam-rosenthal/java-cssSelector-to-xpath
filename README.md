@@ -7,20 +7,20 @@
 
 <h2> Table of Contents
   <ul>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/edit/samdev/README.md" target="_blank"> Implementation</a>     </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/edit/samdev/README.md#Implementation" target="_blank"> Implementation</a>     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/edit/samdev/README.md" target="_blank"> Dependencies</a>	     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/edit/samdev/README.md" target="_blank"> Installation </a>     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/edit/samdev/README.md" target="_blank"> Usage</a>	           </li>
   <ul>
 </h2>
 
-<h3> Implementation  </h3>
+<h3 id="Implementation"> Implementation  </h3>
 
-<h3> Dependencies </h3>
+<h3 id="Dependencies"> Dependencies </h3>
 
-<h3> Installation </h3>
+<h3 id="Installation"> Installation </h3>
 
-<h3> Usage </h3>
+<h3 id="Usage"> Usage </h3>
 
 The next section is usage, in which you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
 
