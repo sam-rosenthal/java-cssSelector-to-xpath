@@ -11,10 +11,10 @@
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Dependencies" target="_blank"> Dependencies</a>	     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Installation" target="_blank"> Installation </a>     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Usage" target="_blank"> Usage</a>	     </li>
-     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Todos" target="_blank"> Todos</a>	     </li>
-      <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#links" target="_blank"> Helpful links</a>   </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Todos" target="_blank"> Todos</a>	     </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#links" target="_blank"> Helpful links</a>   </li>
         <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#about" target="_blank"> About me </a>   </li>
-        <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#license" target="_blank"> License</a>   </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#license" target="_blank"> License</a>   </li>
   <ul>
 </h3>
 
@@ -23,6 +23,9 @@
 <h2 id="Dependencies"> Dependencies </h2>
 
 <h2 id="Installation"> Installation </h2>
+<pre>
+  <code>mvn install</code>
+</pre>
 
 <h2 id="Usage"> Usage </h2>
 
