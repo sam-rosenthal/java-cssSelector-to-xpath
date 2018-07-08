@@ -56,4 +56,4 @@
 <a href="https://sam-rosenthal.github.io" target="_blank"> Sam Rosenthal - Cornell Engineering '21 </a>	
 
 <h2><a id="license"> License </h2>
-Finally, include a section for the license of your project. For more information on choosing a license, check out GitHub’s licensing guide!
+<p> This project is licensed under the <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/License.txt" target="_blank">MIT License. </a> </p>
