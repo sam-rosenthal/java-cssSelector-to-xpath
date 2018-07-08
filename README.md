@@ -2,6 +2,8 @@
 
 <a href="https://travis-ci.org/sam-rosenthal/java-cssSelector-to-xpath" target="_blank"><img src="https://travis-ci.org/sam-rosenthal/java-cssSelector-to-xpath.svg?branch=master" align="left"> </a>
 
+<img src="https://img.shields.io/badge/jdk-8-lightgray.svg" align="left"> </a>
+
 <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/License.txt" target="_blank"><img src="https://badges.frapsoft.com/os/mit/mit.svg?v=102" align="left"> </a>
 
 <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath" target="_blank"><img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=102" align="left"> </a>
