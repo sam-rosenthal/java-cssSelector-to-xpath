@@ -1,6 +1,9 @@
 
 <h1><a href="https://github.com/sam-rosenthal/" target="_blank"><img src="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/src/main/webapp/fav.png" align="left" height="40" width="40"></a> java-cssSelector-to-xpath</h1>
 ### TravisCI
+
+<a href="https://github.com/sam-rosenthal/" target="_blank"><img src="https://travis-ci.org/sam-rosenthal/java-cssSelector-to-xpath.svg?branch=masterg" align="left">
+  
 [![Build Status](https://travis-ci.org/sam-rosenthal/java-cssSelector-to-xpath.svg?branch=master)](https://travis-ci.org/sam-rosenthal/java-cssSelector-to-xpath)
 
 <p>Java tool transforms CSS Selector strings to XPath strings. </p> 
