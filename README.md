@@ -21,15 +21,29 @@
 <h2 id="Implementation"> Implementation  </h2>
 
 <h2 id="Dependencies"> Dependencies </h2>
+<p> This project is a pure jave applicication/API. It requries Java JDK 8 and no external jars. Within this project's baseline, there is a <a href="https://css-selector-to-xpath.appspot.com" target="_blank"> web-based implementation</a> that depends on <a href="https://wicket.apache.org">  Wicket 8.0. </a> I consider the webpage an example implementation of this project. As a result I don' consider the dependencies for the websitess a requirement for the OSS.</p>
+<p>
 
 <h2 id="Installation"> Installation </h2>
+<p> To create the project's jar file, run the following maven command: <p/>
 <pre>
   <code>mvn install</code>
 </pre>
+<p> The jar file will be installed in <b>target/</b> subdirectory and the name will include the corresponding version number of this project <p/>
+
 
 <h2 id="Usage"> Usage </h2>
-
-The next section is usage, in which you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
+<pre>
+  <code> 
+    java -cp org.sam.rosenthal.java-cssSelector-to-xpath-<version number> org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath <CSS Selector String>
+    -	Converts a CSS Sector String to a Xpath String
+    java –cp org.sam.rosenthal.java-cssSelector-to-xpath-<version number> org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath -v{ersion}
+    -	Displays  the version number of java-cssSlector-to-xpath
+    Java –cp org.sam.rosenthal.java-cssSelector-to-xpath-<version number> org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath -h{elp}
+    -	Displays this help usage text 
+  </code>
+</pre>
+  
 
 <h2><a id="Todos"></a>Todos</h2>
 <ul>
