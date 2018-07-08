@@ -7,10 +7,10 @@
 
 <h2> Table of Contents
   <ul>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/edit/samdev/README.md#Implementation" target="_blank"> Implementation</a>     </li>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/edit/samdev/README.md" target="_blank"> Dependencies</a>	     </li>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/edit/samdev/README.md" target="_blank"> Installation </a>     </li>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/edit/samdev/README.md" target="_blank"> Usage</a>	           </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Implementation" target="_blank"> Implementation</a>     </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md" target="_blank"> Dependencies</a>	     </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md" target="_blank"> Installation </a>     </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md" target="_blank"> Usage</a>	           </li>
   <ul>
 </h2>
 
