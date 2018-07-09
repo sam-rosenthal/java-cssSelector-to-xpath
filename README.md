@@ -4,7 +4,7 @@
 
 <img src="https://img.shields.io/badge/jdk-8-lightgray.svg" align="left"> </a>
 
-<a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/License.txt" target="_blank"><img src="https://badges.frapsoft.com/os/mit/mit.svg?v=102" align="left"> </a>
+<a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/License.txt" target="_blank"><img src="https://badges.frapsoft.com/os/mit/mit.svg?v=102" align="left"> </a>
 
 <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath" target="_blank"><img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=102" align="left"> </a>
 
@@ -16,14 +16,14 @@
 <b><a style="font-size:24px" href="https://sam-rosenthal.github.io" target="_blank"> Need a 2019 summer intern? </a></b>
 <h3> Table of Contents
   <ul>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Implementation" target="_blank"> CSS Selector to XPath Conversion Implementation Notes</a>     </li>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Dependencies" target="_blank"> Dependencies</a>	     </li>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Installation" target="_blank"> Installation </a>     </li>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Usage" target="_blank"> Usage</a>	     </li>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#Todos" target="_blank"> TODOs</a>	     </li>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#links" target="_blank"> Helpful Links/More Info</a>   </li>
-        <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#about" target="_blank"> About me </a>   </li>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md#license" target="_blank"> License</a>   </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Implementation" target="_blank"> CSS Selector to XPath Conversion Implementation Notes</a>     </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Dependencies" target="_blank"> Dependencies</a>	     </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Installation" target="_blank"> Installation </a>     </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Usage" target="_blank"> Usage</a>	     </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Todos" target="_blank"> TODOs</a>	     </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#links" target="_blank"> Helpful Links/More Info</a>   </li>
+        <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#about" target="_blank"> About me </a>   </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#license" target="_blank"> License</a>   </li>
   <ul>
 </h3>
 
@@ -98,4 +98,4 @@
 <a href="https://sam-rosenthal.github.io" target="_blank"> Sam Rosenthal - Cornell Engineering '21 </a>	
 
 <h2><a id="license"> License </h2>
-<p> This project is licensed under the <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/License.txt" target="_blank">MIT License. </a> </p>
+<p> This project is licensed under the <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/License.txt" target="_blank">MIT License. </a> </p>
