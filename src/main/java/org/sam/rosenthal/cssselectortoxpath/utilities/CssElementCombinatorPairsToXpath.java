@@ -176,8 +176,33 @@ public class CssElementCombinatorPairsToXpath
 
 		return xpath;
 	}	
+	public String niceConvertCssSelectorToXpathForOutput(String cssSelector) throws NiceCssSelectorStringForOutputException
+	{
+		try
+		{
+			return convertCssSelectorStringToXpathString(cssSelector);
+		}
+		catch (CssSelectorStringSplitterException | RuntimeException e)
+		{
+			String error;
+			if(e instanceof CssSelectorStringSplitterException)
+			{
+				if (e.getMessage().trim().length()>0) {
+					error="Error: "+e.getMessage();
+				} else {
+					error="Error:  Invalid CSS Selector";
+				}
+			}
+			else
+			{
+				error="Unexpected Error:  "+e;
+				e.printStackTrace();				
+			}
+			throw new NiceCssSelectorStringForOutputException(error,e);
+		}
+	}
 	
-	public String mainGo(String[] args)
+	public String mainGo(String[] args) throws NiceCssSelectorStringForOutputException
 	{
 		
 		if(args.length!=1)
@@ -192,24 +217,7 @@ public class CssElementCombinatorPairsToXpath
 		{
 			return getUsageString();
 		}
-		String error;
-		try
-		{
-			return "XPath = "+convertCssSelectorStringToXpathString(args[0]);
-		}
-		catch (CssSelectorStringSplitterException e)
-		{
-			if (e.getMessage().trim().length()>0) {
-				error="Error: "+e.getMessage();
-			} else {
-				error="Error:  Invalid CSS Selector";
-			}
-		}
-		catch (RuntimeException e)
-		{
-			error="Unexpected Error:  "+e;
-		}
-		throw new RuntimeException(error);
+		return "XPath = "+niceConvertCssSelectorToXpathForOutput(args[0]);
 	}
 
 	protected String getUsageString() {
@@ -230,7 +238,7 @@ public class CssElementCombinatorPairsToXpath
 		int exitValue=0;
 		try {
 		   System.out.println(new CssElementCombinatorPairsToXpath().mainGo(args));
-		} catch (RuntimeException e) {
+		} catch (RuntimeException | NiceCssSelectorStringForOutputException e) {
 			System.err.println(e.getMessage());
 			exitValue=1;
 		}

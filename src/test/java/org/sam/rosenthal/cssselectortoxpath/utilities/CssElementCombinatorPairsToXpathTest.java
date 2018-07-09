@@ -1,6 +1,7 @@
 package org.sam.rosenthal.cssselectortoxpath.utilities;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -163,7 +164,7 @@ public class CssElementCombinatorPairsToXpathTest
 	}
 	
 	@Test
-	public void mainGoTest()
+	public void mainGoTest() throws NiceCssSelectorStringForOutputException
 	{
 		String versionNumber = elementCombinatorPair.getVersionNumber();
 		testMainGo(new String[]{"-version"},versionNumber);
@@ -178,25 +179,28 @@ public class CssElementCombinatorPairsToXpathTest
 	@Test
 	public void mainGoBExceptionTest()
 	{
-		testMainGoException(new String[]{"A","test"});
-		testMainGoException(new String[]{"This", "is ","a ","test"});
-		testMainGoException(new String[]{"[]"});
-		testMainGoException(new String[]{});
-		testMainGoException(null);
+		testMainGoException(new String[]{"A","test"},true);
+		testMainGoException(new String[]{"This", "is ","a ","test"},true);
+		testMainGoException(new String[]{"[]"},false);
+		testMainGoException(new String[]{},true);
+		testMainGoException(null,true);
 	}
-	private void testMainGo(String[] args, String expected)
+	private void testMainGo(String[] args, String expected) throws NiceCssSelectorStringForOutputException
 	{
 		String version=elementCombinatorPair.mainGo(args);
 		assertTrue(args[0].toString(),version.contains(expected));
 		
 	}
 		
-	private void testMainGoException(String[] args) {
+	private void testMainGoException(String[] args, boolean isRuntimeException) {
 		try {
 			System.out.println(elementCombinatorPair.mainGo(args));
 			fail(""+args.length+((args.length>0)?args[0]:"no args"));
-		} catch (RuntimeException e) {
-			//success
+		} catch (NiceCssSelectorStringForOutputException e) {
+			assertFalse(isRuntimeException);
+		} catch(RuntimeException e)
+		{
+			assertTrue(isRuntimeException);
 		}
 	}
 		

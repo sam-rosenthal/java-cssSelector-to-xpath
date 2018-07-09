@@ -58,7 +58,6 @@
 		border-bottom: 1px #ccc solid;
 		margin-bottom: 10px;
 	}
-
 	form:not([invalid-xpath="true"]) i[class="fa fa-times-circle"]  {
 		display:none
 	}
@@ -71,7 +70,6 @@
 	form>i {
 		color: red;
 	}
-
 	input[name="cssSelectorInput"]::selection{
 		background-color:lightblue;
 		color:black;
@@ -85,8 +83,9 @@
    	 	border-width: 1px;
     	border-color: #013243;
 		word-wrap: break-word;
+		padding-left:5px;
+		padding-right:5px;
 	}
-	
 	table {
 		table-layout: fixed;
 		border-collapse: collapse;
@@ -95,8 +94,7 @@
 		display:none;
 	}
 	
-
-	 	
+	
 </style>
 	<div class="content">
 		<h1 style="text-align:center">
@@ -115,7 +113,7 @@
 				<tbody>
 					<tr>
 						<td style="white-space: nowrap;"> 
-							<b  class="cssselector" style="padding-right:5px">CSS Selector:</b>
+							<b  class="cssselector" style="padding-right:5px">CSS Selector</b>
 						</td>
 						<td>
 							<span  wicket:id="cssSelector"/>
@@ -123,7 +121,7 @@
 					</tr>
 					<tr>
 						<td> 
-							<b class="xpath" style="padding-right:5px">XPath:</b>
+							<b class="xpath" style="padding-right:5px">XPath</b>
 						</td>
 						<td>
 							<span  wicket:id="xPath"/>
@@ -134,7 +132,6 @@
 	   		<i class="fa fa-times-circle" aria-hidden="true"/><div class="error" wicket:id="error"/>
 		</form>
 	</div>
-
 <hr>
 <div id="footer">
 	<div style="float: left; width: 33%;">
