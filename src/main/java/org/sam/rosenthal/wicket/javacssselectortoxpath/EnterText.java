@@ -16,9 +16,6 @@
  */
 package org.sam.rosenthal.wicket.javacssselectortoxpath;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.behavior.AttributeAppender;
@@ -28,7 +25,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath;
-import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorStringSplitterException;
+import org.sam.rosenthal.cssselectortoxpath.utilities.NiceCssSelectorStringForOutputException;
 
 public class EnterText extends WebPage
 {
@@ -119,23 +116,20 @@ public class EnterText extends WebPage
 	{
 		error=null;
 		this.cssSelector = cssSelectorIn;
+		
 		try
 		{
 			xPath=null;
-			xPath=cssElementCombinatorPairsToXpath.convertCssSelectorStringToXpathString(cssSelector);
+			xPath=cssElementCombinatorPairsToXpath.niceConvertCssSelectorToXpathForOutput(cssSelector);
 		}
-		catch (CssSelectorStringSplitterException e)
+		catch (NiceCssSelectorStringForOutputException e)
 		{
-			if (e.getMessage().trim().length()>0) {
-				error="Error: "+e.getMessage();
-			} else {
-				error="Error:  Invalid CSS Selector";
-			}
+			error=e.getMessage();
 		}
 		catch (RuntimeException e)
 		{
 			error="Unexpected Error:  "+e;
-			Logger.getLogger(getClass().getCanonicalName()).log(Level.WARNING, error, e);
+			e.printStackTrace();
 		}
 	}
 	

@@ -58,7 +58,6 @@
 		border-bottom: 1px #ccc solid;
 		margin-bottom: 10px;
 	}
-
 	form:not([invalid-xpath="true"]) i[class="fa fa-times-circle"]  {
 		display:none
 	}
@@ -71,7 +70,6 @@
 	form>i {
 		color: red;
 	}
-
 	input[name="cssSelectorInput"]::selection{
 		background-color:lightblue;
 		color:black;
@@ -85,8 +83,9 @@
    	 	border-width: 1px;
     	border-color: #013243;
 		word-wrap: break-word;
+		padding-left:5px;
+		padding-right:5px;
 	}
-	
 	table {
 		table-layout: fixed;
 		border-collapse: collapse;
@@ -95,15 +94,14 @@
 		display:none;
 	}
 	
-
-	 	
+	
 </style>
 	<div class="content">
 		<h1 style="text-align:center">
 			CSS Selector to XPath Converter
 		</h1>
 		<h2 style="text-align:center">
-			(Powered by: <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath" target="_blank">java-cssSelector-to-xpath</a> <label wicket:id="version"/>)
+			(Powered by: <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md" target="_blank">java-cssSelector-to-xpath</a> <label wicket:id="version"/>)
 		</h2>
 		<form class="form" wicket:id="form">
 			<div style="display: flex" >
@@ -115,7 +113,7 @@
 				<tbody>
 					<tr>
 						<td style="white-space: nowrap;"> 
-							<b  class="cssselector" style="padding-right:5px">CSS Selector:</b>
+							<b  class="cssselector" style="padding-right:5px">CSS Selector</b>
 						</td>
 						<td>
 							<span  wicket:id="cssSelector"/>
@@ -123,7 +121,7 @@
 					</tr>
 					<tr>
 						<td> 
-							<b class="xpath" style="padding-right:5px">XPath:</b>
+							<b class="xpath" style="padding-right:5px">XPath</b>
 						</td>
 						<td>
 							<span  wicket:id="xPath"/>
@@ -134,7 +132,6 @@
 	   		<i class="fa fa-times-circle" aria-hidden="true"/><div class="error" wicket:id="error"/>
 		</form>
 	</div>
-
 <hr>
 <div id="footer">
 	<div style="float: left; width: 33%;">
@@ -174,7 +171,7 @@
 			<a style="font-size:24px" href="https://sam-rosenthal.github.io" target="_blank"> Need a 2019 summer intern? </a>		
 		</p>
 	</div>
-	<div style="float: right; width: 33%; ">
+	<div style="float: right; width: 33%;">
 		<fieldset class="links">
 		 <legend>Helpful Links/More Info</legend>
 			<ul>
@@ -185,9 +182,7 @@
 				<li><a href="https://developer.mozilla.org/en-US/docs/Web/XPath">MDN web docs XPath</a></li>
 				<li><a href="https://www.w3schools.com/cssref/trysel.asp" target="_blank">W3Schools CSS Reference</a></li>
 				<li><a href="https://css-tricks.com/almanac/" target="_blank">CSS Tricks Almanac</a></li>
-				<li><a href="https://yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/" target="_blank">Evaluate and validate XPath/CSS selectors in Chrome Developer Tools</a></li>
-				
-				
+				<li><a href="https://yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/" target="_blank">Evaluate and validate XPath/CSS selectors in Chrome Developer Tools</a></li>		
 			</ul>
 		</fieldset>	
 	</div>

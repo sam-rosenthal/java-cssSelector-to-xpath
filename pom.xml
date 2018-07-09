@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.sam.rosenthal</groupId>
 	<artifactId>org.sam.rosenthal.java-cssSelector-to-xpath</artifactId>
-	<version>v0.0.1-SNAPSHOT</version>
+	<version>v1.0.0.${git.commit.time}.${git.commit.id.abbrev}</version>
 	<name>java-cssSelector-to-xpath</name>
 	<description>java-cssSelector-to-xpath</description>
 
 	<properties>
-		<webpage.version>v0.0.1-webpage</webpage.version>
+		<webpage.version>v1.0.0.${git.commit.time}.${git.commit.id.abbrev}(webpage)</webpage.version>
 		<!--<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
 		<appengine.app.version>1</appengine.app.version>
 		<appengine.target.version>1.9.64</appengine.target.version>
@@ -134,6 +134,24 @@
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.1</version>
 			</plugin>			
+			<plugin>
+			    <groupId>pl.project13.maven</groupId>
+			    <artifactId>git-commit-id-plugin</artifactId>
+			    <version>2.2.1</version>
+			    <executions>
+			        <execution>
+			            <phase>validate</phase>
+			            <goals>
+			                <goal>revision</goal>
+			            </goals>
+			        </execution>
+			    </executions>
+			    <configuration>
+			        <dateFormat>yyyyMMdd-HHmmss</dateFormat><!--  human-readable part of the version number -->
+			        <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+			        <generateGitPropertiesFile>false</generateGitPropertiesFile><!-- somehow necessary. otherwise the variables are not available in the pom -->
+			    </configuration>
+			</plugin>		
 		</plugins>
 	</build>
 	<reporting>
@@ -149,7 +167,7 @@
 						</reports>
 					</reportSet>
 				</reportSets>
-			</plugin>
+			</plugin>	
 		</plugins>
 	</reporting>
 </project>
