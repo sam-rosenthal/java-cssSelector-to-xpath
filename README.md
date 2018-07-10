@@ -67,11 +67,11 @@
 <ul> <li> Usage as a Java Application: 
 <pre>
   <code> 
-    java -cp org.sam.rosenthal.java-cssSelector-to-xpath-<version number> org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath <CSS Selector String>
+    java -cp <b>org.sam.rosenthal.java-cssSelector-to-xpath-&ltversion number&gt.jar org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath</b> &ltCSS Selector String&gt 
     -	Converts a CSS Sector String to a Xpath String
-    java –cp org.sam.rosenthal.java-cssSelector-to-xpath-<version number> org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath -v{ersion}
+    java –cp <b>org.sam.rosenthal.java-cssSelector-to-xpath-&ltversion number&gt.jar  org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath</b> -v{ersion}
     -	Displays  the version number of java-cssSlector-to-xpath
-    Java –cp org.sam.rosenthal.java-cssSelector-to-xpath-<version number> org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath -h{elp}
+    Java –cp <b>org.sam.rosenthal.java-cssSelector-to-xpath-&ltversion number&gt.jar org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath</b> -h{elp}
     -	Displays this help usage text 
   </code>
 </pre> </li>
@@ -80,7 +80,7 @@
 	<code>
 	public String convertCssSelectorToXpath(String cssSelector) throws CssSelectorToXPathConverterException
 	{
-		return new CssElementCombinatorPairsToXpath.convertCssSelectorStringToXpathString(cssSelector)
+		return new <b>CssElementCombinatorPairsToXpath().convertCssSelectorStringToXpathString</b>(cssSelector);
 	}
 	</code>
 </pre>
