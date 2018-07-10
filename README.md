@@ -63,8 +63,8 @@
 </pre>
 <p> The jar file will be installed in <b>target</b> subdirectory and the name will include the corresponding version number of this project <p/>
 
-
 <h2 id="Usage"> Usage </h2>
+<ul> <li> Usage as a Java Application: 
 <pre>
   <code> 
     java -cp org.sam.rosenthal.java-cssSelector-to-xpath-<version number> org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath <CSS Selector String>
@@ -74,9 +74,18 @@
     Java –cp org.sam.rosenthal.java-cssSelector-to-xpath-<version number> org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath -h{elp}
     -	Displays this help usage text 
   </code>
+</pre> </li>
+<li> Usage as a Java method call:
+<pre>
+	<code>
+	public String convertCssSelectorToXpath(String cssSelector) throws CssSelectorToXPathConverterException
+	{
+		return new CssElementCombinatorPairsToXpath.convertCssSelectorStringToXpathString(cssSelector)
+	}
+	</code>
 </pre>
-  
-
+</li> 
+</ul>
 <h2><a id="TODOs"></a>Todos</h2>
 <ul>
   <li>Handle Psuedo-classes</li>
