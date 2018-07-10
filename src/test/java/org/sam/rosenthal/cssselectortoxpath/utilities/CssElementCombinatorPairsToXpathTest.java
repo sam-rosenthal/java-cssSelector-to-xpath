@@ -22,7 +22,7 @@ public class CssElementCombinatorPairsToXpathTest
 	}
 	
 	@Test
-	public void elementCombinatorPairListConversionTest() throws CssSelectorStringSplitterException
+	public void elementCombinatorPairListConversionTest() throws CssSelectorToXPathConverterException
 	{
 		testCssElementCombinatorPairsToXpath("//A", new CssElementCombinatorPair(null, "A"));
 		testCssElementCombinatorPairsToXpath("//A//B",new CssElementCombinatorPair(null, "A"), new CssElementCombinatorPair(CssCombinatorType.SPACE, "B"));
@@ -45,7 +45,7 @@ public class CssElementCombinatorPairsToXpathTest
 
 	}
 	
-	public void testCssElementCombinatorPairsToXpath(String expectedOutput, CssElementCombinatorPair... elementCombinatorPairsInput) throws CssSelectorStringSplitterException  {
+	public void testCssElementCombinatorPairsToXpath(String expectedOutput, CssElementCombinatorPair... elementCombinatorPairsInput) throws CssSelectorToXPathConverterException  {
 		String xpath=elementCombinatorPair.cssElementCombinatorPairListConversion(asList(elementCombinatorPairsInput));
 		//System.out.println(xpath);
 		assertEquals("CssElementCombinatorPairList="+asList(elementCombinatorPairsInput),expectedOutput,xpath);
@@ -53,7 +53,7 @@ public class CssElementCombinatorPairsToXpathTest
 
 	
 	@Test
-	public void elementCombinatorPairListListConversionTest() throws CssSelectorStringSplitterException
+	public void elementCombinatorPairListListConversionTest() throws CssSelectorToXPathConverterException
 	{
 		testCssElementCombinatorPairListListToXpath(asList(asList(new CssElementCombinatorPair(null, "A"))),"//A");
 		testCssElementCombinatorPairListListToXpath(asList(asList(new CssElementCombinatorPair(null, "A")), asList(new CssElementCombinatorPair(null, "B")), asList(new CssElementCombinatorPair(null, "C"))),"(//A)|(//B)|(//C)");
@@ -62,14 +62,14 @@ public class CssElementCombinatorPairsToXpathTest
 
 	}
 	
-	public void testCssElementCombinatorPairListListToXpath(List<List<CssElementCombinatorPair>> elementCombinatorPairListInput, String expectedOutput) throws CssSelectorStringSplitterException  {
+	public void testCssElementCombinatorPairListListToXpath(List<List<CssElementCombinatorPair>> elementCombinatorPairListInput, String expectedOutput) throws CssSelectorToXPathConverterException  {
 		String xpath=elementCombinatorPair.cssElementCombinatorPairListListConversion(elementCombinatorPairListInput);
 		//System.out.println(xpath);
 		assertEquals("CssElementCombinatorPairListList="+elementCombinatorPairListInput,expectedOutput,xpath);
 	}
 	
 	@Test
-	public void convertBasicCssStringToXpathStringTest() throws CssSelectorStringSplitterException
+	public void convertBasicCssStringToXpathStringTest() throws CssSelectorToXPathConverterException
 	{
 
 		testConvertCssStringToXpathString("A","//A");
@@ -99,7 +99,7 @@ public class CssElementCombinatorPairsToXpathTest
 	
 	
 	@Test
-	public void convertComplexCssStringToXpathStringTest() throws CssSelectorStringSplitterException
+	public void convertComplexCssStringToXpathStringTest() throws CssSelectorToXPathConverterException
 	{
 		testConvertCssStringToXpathString("A,B,C","(//A)|(//B)|(//C)");
 	
@@ -157,7 +157,7 @@ public class CssElementCombinatorPairsToXpathTest
 
 	}
 
-	protected void testConvertCssStringToXpathString(String cssSelector, String expectedOutput) throws CssSelectorStringSplitterException  {
+	protected void testConvertCssStringToXpathString(String cssSelector, String expectedOutput) throws CssSelectorToXPathConverterException  {
 		String xpath=elementCombinatorPair.convertCssSelectorStringToXpathString(cssSelector);
 		//System.out.println(xpath);
 		assertEquals("CssString="+cssSelector,expectedOutput,xpath);
