@@ -42,7 +42,7 @@ public class CssElementAttributeParser
 		return builder.toString();
 	}
 	
-	public void checkValid(String elementWithAttributesString) throws CssSelectorStringSplitterException
+	public void checkValid(String elementWithAttributesString) throws CssSelectorToXPathConverterException
 	{
 		int reIndexAttributeValueType=9;
 		int reIndexAttributeValue=16;
@@ -54,7 +54,7 @@ public class CssElementAttributeParser
 		Matcher match = cssElementAtributePattern.matcher(elementWithAttributesString);
 		if (!match.find())
 		{
-			throw new CssSelectorStringSplitterException("invalid element and/or attributes");
+			throw new CssSelectorToXPathConverterException("invalid element and/or attributes");
 		}
 		//System.out.println();
 		boolean cssAttributeValueTypeExists = match.group(reIndexAttributeValueType)!=null;
@@ -62,7 +62,7 @@ public class CssElementAttributeParser
 		//System.out.println("Type="+cssAttributeValueTypeExists+", Value="+cssAttributeValueExists);
 		if((cssAttributeValueTypeExists&&!cssAttributeValueExists)||(!cssAttributeValueTypeExists&&cssAttributeValueExists))
 		{
-				throw new CssSelectorStringSplitterException("invalid attribute value");
+				throw new CssSelectorToXPathConverterException("invalid attribute value");
 		}
 
 		String startQuote = match.group(reIndexStartingQuote);
@@ -71,12 +71,12 @@ public class CssElementAttributeParser
 		//note the only way startQuote could be null is that there no attribute value 
 		if(startQuoteExists && !(startQuote.equals(endQuote)))
 		{
-			throw new CssSelectorStringSplitterException("invalid quotations");
+			throw new CssSelectorToXPathConverterException("invalid quotations");
 		}
 		//System.out.println("Valid: "+elementWithAttributesString);
 	}
 	
-	public CssElementAttributes createElementAttribute(String elementWithAttributesString) throws CssSelectorStringSplitterException 
+	public CssElementAttributes createElementAttribute(String elementWithAttributesString) throws CssSelectorToXPathConverterException 
 	{
 		int rePseudoClass=2;
 		int reIndexAttributeName=5;
@@ -111,7 +111,7 @@ public class CssElementAttributeParser
 			String psuedoClass=match.group(rePseudoClass);
 			if(psuedoClass!=null)
 			{
-				throw new CssSelectorStringSplitterException("Unable to convert("+psuedoClass+").  A converter for CSS Seletor Psuedo-Classes has not been implement at this time.  TODO: A future capability.");
+				throw new CssSelectorToXPathConverterException("Unable to convert("+psuedoClass+").  A converter for CSS Seletor Psuedo-Classes has not been implement at this time.  TODO: A future capability.");
 			}
 			boolean attributeValueHasQuotes = match.group(reIndexAttributeValueWithQuotes)!=null;
 			attributeList.add(new CssAttribute(

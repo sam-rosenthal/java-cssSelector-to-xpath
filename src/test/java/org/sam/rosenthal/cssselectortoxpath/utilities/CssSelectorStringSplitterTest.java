@@ -43,13 +43,13 @@ public class CssSelectorStringSplitterTest {
 		try {
 			System.out.println(splitter.splitSelectors(selectorInput));			
 			fail("CssSelectorStringSplitterException not thrown for: "+selectorInput);
-		} catch (CssSelectorStringSplitterException e) {
+		} catch (CssSelectorToXPathConverterException e) {
 			//success
 		}
 	}
 
 	@Test
-	public void splitSelectorsTester() throws CssSelectorStringSplitterException
+	public void splitSelectorsTester() throws CssSelectorToXPathConverterException
 	{
 		testSelector("A","A"); //No commas, single letter
 		testSelector("ABCD","ABCD"); //No commas, only letters
@@ -67,7 +67,7 @@ public class CssSelectorStringSplitterTest {
 		testSelector("   1@A", "1@A"); //No comma, multiple spaces+characharacters+numbers+letters
 	}
 
-	public void testSelector(String selectorInput,String... expectedOutput) throws CssSelectorStringSplitterException 
+	public void testSelector(String selectorInput,String... expectedOutput) throws CssSelectorToXPathConverterException 
 	{
 		List<String> selectors=splitter.splitSelectors(selectorInput);
 		//System.out.println(selectors);
@@ -99,13 +99,13 @@ public class CssSelectorStringSplitterTest {
 		try {
 			splitter.removeNonCssSelectorWhiteSpaces(whitespacesInput);
 			fail("CssSelectorStringSplitterException not thrown for: "+whitespacesInput);
-		} catch (CssSelectorStringSplitterException e) {
+		} catch (CssSelectorToXPathConverterException e) {
 			assertEquals(expectedErrorMessage, e.getMessage());
 		}
 	}
 	
 	@Test
-	public void removeNonCssSelectorWhiteSpacesTester() throws CssSelectorStringSplitterException
+	public void removeNonCssSelectorWhiteSpacesTester() throws CssSelectorToXPathConverterException
 	{
 		testWhitespaces("		123", "123"); //tabs before 
 		testWhitespaces("123		", "123"); //tabs after
@@ -120,7 +120,7 @@ public class CssSelectorStringSplitterTest {
 
 	}
 
-	public void testWhitespaces(String whitespacesInput, String expectedOutput) throws CssSelectorStringSplitterException 
+	public void testWhitespaces(String whitespacesInput, String expectedOutput) throws CssSelectorToXPathConverterException 
 	{
 		String whitespaces=splitter.removeNonCssSelectorWhiteSpaces(whitespacesInput);
 		assertEquals("selectorInput="+whitespacesInput,expectedOutput,whitespaces);
@@ -155,13 +155,13 @@ public class CssSelectorStringSplitterTest {
 			List<CssElementCombinatorPair> elementCombinatorPair=splitter.splitSelectorsIntoElementCombinatorPairs(processedSelector);
 			fail("CssSelectorStringSplitterException not thrown for: "+processedSelector+" ElementCombinatorPair="+elementCombinatorPair);
 		} 
-		catch (CssSelectorStringSplitterException e) {
+		catch (CssSelectorToXPathConverterException e) {
 			//success
 		}
 	}
 	
 	@Test
-	public void splitSelectorsIntoElementCombinatorPairsTester() throws CssSelectorStringSplitterException
+	public void splitSelectorsIntoElementCombinatorPairsTester() throws CssSelectorToXPathConverterException
 	{
 		testSplitSelectorsIntoElementCombinatorPairs("X",new CssElementCombinatorPair(null, "X"));
 		testSplitSelectorsIntoElementCombinatorPairs("X Y",new CssElementCombinatorPair(null, "X"),new CssElementCombinatorPair(CssCombinatorType.SPACE, "Y"));
@@ -187,14 +187,14 @@ public class CssSelectorStringSplitterTest {
 
 	}
 
-	public void testSplitSelectorsIntoElementCombinatorPairs(String processedSelector,CssElementCombinatorPair... expectedOutput) throws CssSelectorStringSplitterException {
+	public void testSplitSelectorsIntoElementCombinatorPairs(String processedSelector,CssElementCombinatorPair... expectedOutput) throws CssSelectorToXPathConverterException {
 		List<CssElementCombinatorPair> elementCombinatorPairs=splitter.splitSelectorsIntoElementCombinatorPairs(processedSelector);
 		assertEquals("processedString="+processedSelector+"; elementCombinatorPairs="+elementCombinatorPairs.toString(),asList(expectedOutput),elementCombinatorPairs);
 	}
 	
 	
 	@Test
-	public void listSplitSelectorsIntoElementCombinatorPairsTester() throws CssSelectorStringSplitterException
+	public void listSplitSelectorsIntoElementCombinatorPairsTester() throws CssSelectorToXPathConverterException
 	{
 		testListSplitSelectorsIntoElementCombinatorPairs("X",asList(asList(new CssElementCombinatorPair(null, "X"))));
 		testListSplitSelectorsIntoElementCombinatorPairs("X,Y,Z,a",asList(asList(new CssElementCombinatorPair(null, "X")),asList(new CssElementCombinatorPair(null, "Y")),asList(new CssElementCombinatorPair(null, "Z")),asList(new CssElementCombinatorPair(null, "a"))));
@@ -216,14 +216,14 @@ public class CssSelectorStringSplitterTest {
 		
 	}
 
-	public void testListSplitSelectorsIntoElementCombinatorPairs(String selector,List<List<CssElementCombinatorPair>> expectedOutput) throws CssSelectorStringSplitterException {
+	public void testListSplitSelectorsIntoElementCombinatorPairs(String selector,List<List<CssElementCombinatorPair>> expectedOutput) throws CssSelectorToXPathConverterException {
 		List<List<CssElementCombinatorPair>> elementCombinatorPairs=splitter.listSplitSelectorsIntoElementCombinatorPairs(selector);
 		assertEquals("selectorString="+selector+"; elementCombinatorPairs="+elementCombinatorPairs.toString(),expectedOutput,elementCombinatorPairs);
 	}
 	
 	
 	@Test
-	public void cssElementAttributeParserTester() throws CssSelectorStringSplitterException
+	public void cssElementAttributeParserTester() throws CssSelectorToXPathConverterException
 	{
 		testCssElementAttributeParser("X",new CssElementAttributes("X",new ArrayList<>()));
 		testCssElementAttributeParser("x",new CssElementAttributes("x",new ArrayList<>()));
@@ -260,7 +260,7 @@ public class CssSelectorStringSplitterTest {
 
 	}
 
-	public void testCssElementAttributeParser(String elementAttributeString,CssElementAttributes expectedOutput ) throws CssSelectorStringSplitterException {
+	public void testCssElementAttributeParser(String elementAttributeString,CssElementAttributes expectedOutput ) throws CssSelectorToXPathConverterException {
 		CssElementAttributes elementAttributeList=attribute.createElementAttribute(elementAttributeString);
 		assertEquals("elementstringWithattributes="+elementAttributeString,expectedOutput,elementAttributeList);
 	}
@@ -322,7 +322,7 @@ public class CssSelectorStringSplitterTest {
 		try {
 			System.out.println(attribute.createElementAttribute(elementAttributeString));
 			fail("CssSelectorStringSplitterException not thrown for: "+elementAttributeString);
-		} catch (CssSelectorStringSplitterException e) {
+		} catch (CssSelectorToXPathConverterException e) {
 			//success
 		}
 	}

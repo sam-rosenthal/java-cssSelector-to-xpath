@@ -21,7 +21,7 @@ public class CssSelectorStringSplitter
 	public static final String ERROR_SELECTOR_STRING_IS_NULL = "Selector string is null";
 	private static final String WHITESPACE_PLACE_HOLDER = "~#_placeHolder_#";
 
-	protected String removeNonCssSelectorWhiteSpaces(String selectorString) throws CssSelectorStringSplitterException
+	protected String removeNonCssSelectorWhiteSpaces(String selectorString) throws CssSelectorToXPathConverterException
 	{
 //	This method should perform the following
 //	i.	Remove all leading and trailing white spaces
@@ -43,7 +43,7 @@ public class CssSelectorStringSplitter
 //	4.	Replace "~+_placeHolder_+" with " "
 		if(selectorString==null)
 		{
-			throw new CssSelectorStringSplitterException(ERROR_SELECTOR_STRING_IS_NULL);
+			throw new CssSelectorToXPathConverterException(ERROR_SELECTOR_STRING_IS_NULL);
 		}
 		else
 		{
@@ -71,24 +71,24 @@ public class CssSelectorStringSplitter
 	}
 	
 	
-	protected void invalClassIdPairCheck(String selectorString) throws CssSelectorStringSplitterException 
+	protected void invalClassIdPairCheck(String selectorString) throws CssSelectorToXPathConverterException 
 	{
 		String nextSelectorIdentifier="[.#\\[]";
 		Pattern pattern = Pattern.compile("#"+nextSelectorIdentifier);
 		Matcher match = pattern.matcher(selectorString);
 		if (match.find())
 		{
-			throw new CssSelectorStringSplitterException(ERROR_INVALID_ID_CSS_SELECTOR);
+			throw new CssSelectorToXPathConverterException(ERROR_INVALID_ID_CSS_SELECTOR);
 		}
 		pattern= Pattern.compile("[.]"+nextSelectorIdentifier);
 		match = pattern.matcher(selectorString);
 		if (match.find())
 		{
-			throw new CssSelectorStringSplitterException(ERROR_INVALID_CLASS_CSS_SELECTOR);
+			throw new CssSelectorToXPathConverterException(ERROR_INVALID_CLASS_CSS_SELECTOR);
 		}
 	}
 	
-	public List<String> splitSelectors(String selectorString) throws CssSelectorStringSplitterException
+	public List<String> splitSelectors(String selectorString) throws CssSelectorToXPathConverterException
 	{
 		selectorString=removeNonCssSelectorWhiteSpaces(selectorString);
 		//System.out.println("ADJUSTED="+selectorString);
@@ -97,7 +97,7 @@ public class CssSelectorStringSplitter
 		int index=selectorString.lastIndexOf(',');
 		if(index==(selectorString.length()-1))
 		{
-			throw new CssSelectorStringSplitterException("Invalid Css Selector, trailing ','");		
+			throw new CssSelectorToXPathConverterException("Invalid Css Selector, trailing ','");		
 		}
 		String[] selectorArray=selectorString.split(",");
 		List<String> selectorList=new ArrayList<>();
@@ -106,24 +106,24 @@ public class CssSelectorStringSplitter
 			selector=selector.trim();
 			if(selector.isEmpty())
 			{
-				throw new CssSelectorStringSplitterException("Empty CSS Selector");
+				throw new CssSelectorToXPathConverterException("Empty CSS Selector");
 			}
 			
 			selectorList.add(selector);
 		}
 		if(selectorList.isEmpty())
 		{
-			throw new CssSelectorStringSplitterException("No CSS Selectors");
+			throw new CssSelectorToXPathConverterException("No CSS Selectors");
 		}
 		return selectorList;
 	}
-	protected List<CssElementCombinatorPair> splitSelectorsIntoElementCombinatorPairs(String processedSelector) throws CssSelectorStringSplitterException
+	protected List<CssElementCombinatorPair> splitSelectorsIntoElementCombinatorPairs(String processedSelector) throws CssSelectorToXPathConverterException
 	{
 		List<CssElementCombinatorPair> selectorList=new ArrayList<>();
 		recursiveSelectorSplit(null,processedSelector,selectorList);
 		return selectorList;
 	}
-	protected void recursiveSelectorSplit(CssCombinatorType previousCombinatorType, String cssSelector,List<CssElementCombinatorPair> selectorList) throws CssSelectorStringSplitterException
+	protected void recursiveSelectorSplit(CssCombinatorType previousCombinatorType, String cssSelector,List<CssElementCombinatorPair> selectorList) throws CssSelectorToXPathConverterException
 	{ 
 
 		Pattern cssCombinator = Pattern.compile(XY);
@@ -139,7 +139,7 @@ public class CssSelectorStringSplitter
 				//System.out.println("firstcss"+firstCssSelector);
 				if(firstCssSelector.isEmpty())
 				{
-					throw new CssSelectorStringSplitterException("Empty Selector");
+					throw new CssSelectorToXPathConverterException("Empty Selector");
 				}
 				selectorList.add(new CssElementCombinatorPair(previousCombinatorType,firstCssSelector));
 				String nextCssSelector=match.group(6); 
@@ -147,7 +147,7 @@ public class CssSelectorStringSplitter
 
 				if(nextCssSelector.isEmpty())
 				{
-					throw new CssSelectorStringSplitterException("Empty Selector");
+					throw new CssSelectorToXPathConverterException("Empty Selector");
 				}
 				recursiveSelectorSplit(type,nextCssSelector,selectorList);
 			}
@@ -155,19 +155,19 @@ public class CssSelectorStringSplitter
 			{
 				if(cssSelector.isEmpty())
 				{
-					throw new CssSelectorStringSplitterException("Empty Selector");
+					throw new CssSelectorToXPathConverterException("Empty Selector");
 				}
 				selectorList.add(new CssElementCombinatorPair(previousCombinatorType,cssSelector));
 			}
 		}
 		else
 		{
-			throw new CssSelectorStringSplitterException("Invalid Selector");
+			throw new CssSelectorToXPathConverterException("Invalid Selector");
 
 		}
 	}
 	
-	public List<List<CssElementCombinatorPair>> listSplitSelectorsIntoElementCombinatorPairs(String selectorString) throws CssSelectorStringSplitterException
+	public List<List<CssElementCombinatorPair>> listSplitSelectorsIntoElementCombinatorPairs(String selectorString) throws CssSelectorToXPathConverterException
 	{
 		//System.out.println("###"+selectorString);
 

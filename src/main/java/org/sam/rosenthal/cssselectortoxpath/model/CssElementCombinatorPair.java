@@ -1,13 +1,13 @@
 package org.sam.rosenthal.cssselectortoxpath.model;
 
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssElementAttributeParser;
-import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorStringSplitterException;
+import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorToXPathConverterException;
 
 public class CssElementCombinatorPair {
 	private CssCombinatorType combinatorType;
 	private CssElementAttributes cssElementAttributes;
 	
-	public CssElementCombinatorPair(CssCombinatorType combinatorTypeIn, String cssElementAttributesStringIn) throws CssSelectorStringSplitterException
+	public CssElementCombinatorPair(CssCombinatorType combinatorTypeIn, String cssElementAttributesStringIn) throws CssSelectorToXPathConverterException
 	{
 		this.combinatorType=combinatorTypeIn;
 		this.cssElementAttributes=new CssElementAttributeParser().createElementAttribute(cssElementAttributesStringIn);

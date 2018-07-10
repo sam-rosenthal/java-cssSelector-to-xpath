@@ -2,7 +2,7 @@ package org.sam.rosenthal.cssselectortoxpath.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorStringSplitterException;
+import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorToXPathConverterException;
 //Take a string and the format of the string is...
 //xxx[yyy]...[zzz]
 //-->break it up into a list = xxx,[yyy],..,[zzz]
@@ -17,7 +17,7 @@ public class CssElementAttributes
 	private String element;
 	private List<CssAttribute> cssAttributeList;
 
-	public CssElementAttributes(String elementIn, List<CssAttribute> cssAttributeListIn) throws CssSelectorStringSplitterException
+	public CssElementAttributes(String elementIn, List<CssAttribute> cssAttributeListIn) throws CssSelectorToXPathConverterException
 	{
 		this.element=elementIn;
 		this.cssAttributeList=new ArrayList<>(cssAttributeListIn);

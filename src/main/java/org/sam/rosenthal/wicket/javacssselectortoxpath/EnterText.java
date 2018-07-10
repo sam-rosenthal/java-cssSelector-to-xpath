@@ -115,8 +115,12 @@ public class EnterText extends WebPage
 	public void setCssSelector(String cssSelectorIn)
 	{
 		error=null;
+		//since cssElementCombinstorPairToXPath is a transient, it may be null, even though it was created in the constructor.
+		//The GCP is serializing this class, therefore this is required.
+		if (cssElementCombinatorPairsToXpath==null) {
+			cssElementCombinatorPairsToXpath=new CssElementCombinatorPairsToXpath();
+		}
 		this.cssSelector = cssSelectorIn;
-		
 		try
 		{
 			xPath=null;

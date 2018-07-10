@@ -15,7 +15,7 @@ public class CssElementCombinatorPairsToXpath
 	
 	private CssSelectorStringSplitter cssSelectorString=new CssSelectorStringSplitter();
 	
-	public String cssElementCombinatorPairListConversion(List <CssElementCombinatorPair> elementCombinatorPairs) throws CssSelectorStringSplitterException
+	public String cssElementCombinatorPairListConversion(List <CssElementCombinatorPair> elementCombinatorPairs) throws CssSelectorToXPathConverterException
 	{
 		StringBuilder xpathBuilder=new StringBuilder();
 		
@@ -144,7 +144,7 @@ public class CssElementCombinatorPairsToXpath
 		xpathBuilder.append("\"]");
 	}
 	
-	public String cssElementCombinatorPairListListConversion(List<List<CssElementCombinatorPair>> cssElementCombinatorPairListList) throws CssSelectorStringSplitterException
+	public String cssElementCombinatorPairListListConversion(List<List<CssElementCombinatorPair>> cssElementCombinatorPairListList) throws CssSelectorToXPathConverterException
 	{
 		StringBuilder xpathBuilder=new StringBuilder();
 		boolean moreThanOne=cssElementCombinatorPairListList.size()>1;
@@ -168,12 +168,11 @@ public class CssElementCombinatorPairsToXpath
 		return xpathBuilder.toString();
 	}
 	
-	public String convertCssSelectorStringToXpathString(String selectorString) throws CssSelectorStringSplitterException
+	public String convertCssSelectorStringToXpathString(String selectorString) throws CssSelectorToXPathConverterException
 	{
 		List<List<CssElementCombinatorPair>> cssElementCombinatorPairListList=cssSelectorString.listSplitSelectorsIntoElementCombinatorPairs(selectorString);
 		String xpath=cssElementCombinatorPairListListConversion(cssElementCombinatorPairListList);
 		//System.out.println("CSS Selector="+selectorString+", Xpath string="+xpath);
-
 		return xpath;
 	}	
 	public String niceConvertCssSelectorToXpathForOutput(String cssSelector) throws NiceCssSelectorStringForOutputException
@@ -182,10 +181,10 @@ public class CssElementCombinatorPairsToXpath
 		{
 			return convertCssSelectorStringToXpathString(cssSelector);
 		}
-		catch (CssSelectorStringSplitterException | RuntimeException e)
+		catch (CssSelectorToXPathConverterException | RuntimeException e)
 		{
 			String error;
-			if(e instanceof CssSelectorStringSplitterException)
+			if(e instanceof CssSelectorToXPathConverterException)
 			{
 				if (e.getMessage().trim().length()>0) {
 					error="Error: "+e.getMessage();
