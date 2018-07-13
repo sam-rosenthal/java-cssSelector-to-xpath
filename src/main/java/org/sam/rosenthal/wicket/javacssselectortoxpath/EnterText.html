@@ -109,21 +109,21 @@
 				<input type="submit" wicket:id="convert" value="Convert"/>
 			</div>
 			<div style="clear:both; padding-bottom:15px"/> 
-			<table>
+			<table id="inputOutputTable">
 				<tbody>
-					<tr>
+					<tr id="cssInputRow">
 						<td style="white-space: nowrap;"> 
 							<b  class="cssselector" style="padding-right:5px">CSS Selector</b>
 						</td>
-						<td>
+						<td id="cssInputString">
 							<span  wicket:id="cssSelector"/>
 						</td>
 					</tr>
-					<tr>
+					<tr id="xpathOutputRow">
 						<td> 
 							<b class="xpath" style="padding-right:5px">XPath</b>
 						</td>
-						<td>
+						<td id="xpathOutputString">
 							<span  wicket:id="xPath"/>
 						</td>				
 					</tr>
