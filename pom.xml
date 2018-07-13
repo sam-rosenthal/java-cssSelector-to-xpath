@@ -4,16 +4,17 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.sam.rosenthal</groupId>
 	<artifactId>org.sam.rosenthal.java-cssSelector-to-xpath</artifactId>
-	<version>v1.0.1.${git.commit.time}.${git.commit.id.abbrev}</version>
+	<version>v1.0.2.${git.commit.time}.${git.commit.id.abbrev}</version>
 	<name>java-cssSelector-to-xpath</name>
 	<description>java-cssSelector-to-xpath</description>
 
 	<properties>
-		<webpage.version>v1.0.1.${git.commit.time}.${git.commit.id.abbrev}(webpage)</webpage.version>
+		<webpage.version>v1.0.2.${git.commit.time}.${git.commit.id.abbrev}(webpage)</webpage.version>
 		<!--<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
 		<appengine.app.version>1</appengine.app.version>
 		<appengine.target.version>1.9.64</appengine.target.version>
 		<appengine-maven-plugin-version>1.9.64</appengine-maven-plugin-version>
+		<jetty-version>9.4.8.v20171121</jetty-version>
 	</properties>
 
 	<dependencies>
@@ -30,12 +31,12 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-webapp</artifactId>
-			<version>9.4.7.v20170914</version>
+			<version>${jetty-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-jmx</artifactId>
-			<version>9.4.7.v20170914</version>
+			<version>${jetty-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -58,6 +59,18 @@
 			<artifactId>appengine-api-stubs</artifactId>
 			<version>${appengine.target.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-server -->
+		<dependency>
+		    <groupId>org.seleniumhq.selenium</groupId>
+		    <artifactId>selenium-server</artifactId>
+		    <version>3.13.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+		<dependency>
+		    <groupId>io.github.bonigarcia</groupId>
+		    <artifactId>webdrivermanager</artifactId>
+		    <version>2.2.4</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -83,7 +96,6 @@
 		      </resource>			
 			
 		</resources>
-
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
@@ -151,23 +163,30 @@
 			        <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
 			        <generateGitPropertiesFile>false</generateGitPropertiesFile><!-- somehow necessary. otherwise the variables are not available in the pom -->
 			    </configuration>
-			</plugin>		
+			</plugin>	
+	        <plugin>
+	          <groupId>org.apache.maven.plugins</groupId>
+	          <artifactId>maven-surefire-plugin</artifactId>
+	          <version>2.22.0</version>
+	          <configuration>
+		          <excludes>
+		          	<exclude>**/selenium/**</exclude>
+	    	      </excludes>
+	    	  </configuration>   
+	        </plugin>  				
+			<plugin>
+			<!-- To run selenium test, use the following command: //mvn failsafe:integration-test
+			     Using fail asfe to run sleenium as a failsafe integration test so that travis CI will
+			     not try to run selenium when it runs its unit tests -->
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-failsafe-plugin</artifactId>
+			  <version>2.22.0</version>
+	          <configuration>
+	          	<includes>
+	          		<include>**/selenium/**</include>
+	          	</includes>	
+	          </configuration>		  
+			</plugin>
 		</plugins>
 	</build>
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<!-- select non-aggregate reports -->
-							<report>report</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>	
-		</plugins>
-	</reporting>
 </project>
