@@ -95,7 +95,8 @@ public class CssSelectorStringSplitter
 		//selectorString=removeNonCssSelectorWhiteSpaces(selectorString);
 		//split() will not error out if there is a trailing ','
 		int index=selectorString.lastIndexOf(',');
-		if(index==(selectorString.length()-1))
+		int cssSelectorStringLength = selectorString.length();
+		if((cssSelectorStringLength>0)&&(index==(cssSelectorStringLength-1)))
 		{
 			throw new CssSelectorToXPathConverterException("Invalid Css Selector, trailing ','");		
 		}
