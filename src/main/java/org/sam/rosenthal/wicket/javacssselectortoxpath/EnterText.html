@@ -11,91 +11,94 @@
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 </head>
 <body> 
-
-<a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
-<style>
-	h1 {
-		color:#013243;
-		font-weight:bold;
-		font-size: 37px;
-		margin-bottom: 0px;
-	}
-	h2 {
-		color:#013243;
-		font-weight:bold;
-		font-size: 10px;
-		margin-top: 0px;
-		padding-bottom:10px;
-	}
-	p.developedBy {
-		font-weight:bold;
-		text-align: center;
-		font-size: 80%;
-		color: grey;
-	}
-	div.content {
-		border:black;
-		height:300px;	
-		margin: auto;
-		width:60%;
-		background:#b1c8d6;
-		border: 1px solid;
-    	padding: 5px;
-    	box-shadow: 5px 10px;
-    	margin-bottom: 35px;
-	}
-	div#footer ul{
-		margin: 0px;
-		padding-left: 15px;
-	}
-	div#footer fieldset{
-		border-color: black;
-	}
-	body {
-     	background-color: #87cefa;
-     }
-	footer{
-		border-bottom: 1px #ccc solid;
-		margin-bottom: 10px;
-	}
-	form:not([invalid-xpath="true"]) i[class="fa fa-times-circle"]  {
-		display:none
-	}
-	form[invalid-xpath="true"] b.xpath, form:not([invalid-xpath]) b.xpath{
-		display:none
-	}	
-	form:not([invalid-xpath]) b.cssselector{
-		display:none
-	}	
-	form>i {
-		color: red;
-	}
-	input[name="cssSelectorInput"]::selection{
-		background-color:lightblue;
-		color:black;
+	<style>
+		h1 {
+			color:#013243;
+			font-weight:bold;
+			font-size: 37px;
+			margin-bottom: 0px;
 		}
-	div.error{
-	    display: inline;
-	    padding-left:3px;
-	}
-	form:not([invalid-xpath="true"]) td {
-	    border-style: solid;
-   	 	border-width: 1px;
-    	border-color: #013243;
-		word-wrap: break-word;
-		padding-left:5px;
-		padding-right:5px;
-	}
-	table {
-		table-layout: fixed;
-		border-collapse: collapse;
-	}
-	form:not([invalid-xpath]) td{
-		display:none;
-	}
+		h2 {
+			color:#013243;
+			font-weight:bold;
+			font-size: 10px;
+			margin-top: 0px;
+			padding-bottom:10px;
+		}
+		p.developedBy {
+			font-weight:bold;
+			text-align: center;
+			font-size: 80%;
+			color: grey;
+		}
+		div.content {
+			border:black;
+			height:300px;	
+			margin: auto;
+			width:60%;
+			background:#b1c8d6;
+			border: 1px solid;
+	    	padding: 5px;
+	    	box-shadow: 5px 10px;
+	    	margin-bottom: 35px;
+		}
+		div#footer ul{
+			margin: 0px;
+			padding-left: 15px;
+		}
+		div#footer fieldset{
+			border-color: black;
+		}
+		body {
+	     	background-color: #87cefa;
+	     }
+		footer{
+			border-bottom: 1px #ccc solid;
+			margin-bottom: 10px;
+		}
+		form:not([invalid-xpath="true"]) i[class="fa fa-times-circle"]  {
+			display:none
+		}
+		form[invalid-xpath="true"] b.xpath, form:not([invalid-xpath]) b.xpath{
+			display:none
+		}	
+		form:not([invalid-xpath]) b.cssselector{
+			display:none
+		}	
+		form>i {
+			color: red;
+		}
+		input[name="cssSelectorInput"]::selection{
+			background-color:lightblue;
+			color:black;
+			}
+		div.error{
+		    display: inline;
+		    padding-left:3px;
+		}
+		form:not([invalid-xpath="true"]) td {
+		    border-style: solid;
+	   	 	border-width: 1px;
+	    	border-color: #013243;
+			word-wrap: break-word;
+			padding-left:5px;
+			padding-right:5px;
+		}
+		table {
+			table-layout: fixed;
+			border-collapse: collapse;
+		}
+		form:not([invalid-xpath]) td{
+			display:none;
+		}	
+	</style>
 	
+	<div id="forkme" style="float:right">
+		<a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath" target="_blank">
+			<img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub">
+		</a>
+	</div>
 	
-</style>
 	<div class="content">
 		<h1 style="text-align:center">
 			CSS Selector to XPath Converter
@@ -179,7 +182,7 @@
 				<li><a href="https://en.wikipedia.org/wiki/XPath" target="_blank">XPath-Wiki</a></li>
 				<li><a href="https://en.wikibooks.org/wiki/XPath/CSS_Equivalents" target="_blank">XPath/CSS Equivalents</a></li>
 				<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors" target="_blank">MDN web docs CSS Selectors</a></li>
-				<li><a href="https://developer.mozilla.org/en-US/docs/Web/XPath">MDN web docs XPath</a></li>
+				<li><a href="https://developer.mozilla.org/en-US/docs/Web/XPath" target="_blank">MDN web docs XPath</a></li>
 				<li><a href="https://www.w3schools.com/cssref/trysel.asp" target="_blank">W3Schools CSS Reference</a></li>
 				<li><a href="https://css-tricks.com/almanac/" target="_blank">CSS Tricks Almanac</a></li>
 				<li><a href="https://yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/" target="_blank">Evaluate and validate XPath/CSS selectors in Chrome Developer Tools</a></li>		
