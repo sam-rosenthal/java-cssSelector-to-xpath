@@ -10,17 +10,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath;
@@ -29,28 +28,49 @@ import org.sam.rosenthal.cssselectortoxpath.utilities.NiceCssSelectorStringForOu
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class ChromeCssSelectorToXpathTest {
+public abstract class AbstractCssSelectorToXpathTest {
 
 	private WebDriver driver;
 	
 	private static Properties properties;
+	
+	private WebDriverWait wait;
+
+	private By forkMeBy;
+
 
 	@BeforeClass
 	public static void setupClass() {
+		WebDriverManager.firefoxdriver().setup();
+		WebDriverManager.edgedriver().setup();
 		WebDriverManager.chromedriver().setup();
 		properties=new Properties();
 		
 		try {
-			properties.load(ChromeCssSelectorToXpathTest.class.getClassLoader().getResourceAsStream("org/sam/rosenthal/selenium/cssSelectorToXpathSelenium.properties"));
+			properties.load(AbstractCssSelectorToXpathTest.class.getClassLoader().getResourceAsStream("org/sam/rosenthal/selenium/cssSelectorToXpathSelenium.properties"));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	@Before
-	public void setupTest() {
-		driver = new ChromeDriver();
+	public void setupTest(BrowserType browserType) {
+		switch(browserType)
+		{
+		case CHROME:
+			driver = new ChromeDriver();
+			break;
+		case EDGE:
+			driver= new EdgeDriver();
+			break;
+		case FIREFOX:
+			driver= new FirefoxDriver();
+			break;
+		default:
+			throw new IllegalArgumentException(""+browserType);
+		}
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);				
+		wait = new WebDriverWait(driver, 10);
+		forkMeBy = getBy("div#forkme a img");
 
 	}
 
@@ -61,12 +81,12 @@ public class ChromeCssSelectorToXpathTest {
 		}
 	}
 
-	@Test
-	public void test() throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException {
+	protected void test(BrowserType browserType) throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException {
+		setupTest(browserType);
 		driver.get(properties.getProperty("selenium.CSS_TO_XPATH_URL"));
 		testText();
 
-		testWebLinks();
+		testWebLinks(browserType);
 
 		testConverterOutput();
 		
@@ -90,15 +110,19 @@ public class ChromeCssSelectorToXpathTest {
 
 	private void testText() {
 		assertEquals("CSS Selector to XPath",driver.getTitle());
-		assertEquals("CSS Selector to XPath Converter",driver.findElement(By.cssSelector("div.content h1")).getText());
-		assertEquals("Fork me on GitHub",driver.findElement(By.cssSelector("div#forkme a img")).getAttribute("alt"));
-		assertEquals("Implementation Notes",driver.findElement(By.cssSelector("div#footer fieldset.assumptions legend")).getText());
-		assertEquals("Helpful Links/More Info",driver.findElement(By.cssSelector("div#footer fieldset.links legend")).getText());
+		assertEquals("CSS Selector to XPath Converter",driver.findElement(getBy("div.content h1")).getText());
+		assertEquals("Fork me on GitHub",driver.findElement(forkMeBy).getAttribute("alt"));
+		assertEquals("Implementation Notes",driver.findElement(getBy("div#footer fieldset.assumptions legend")).getText());
+		assertEquals("Helpful Links/More Info",driver.findElement(getBy("div#footer fieldset.links legend")).getText());
 	}
 
-	private void testWebLinks() {
+	protected By getBy(String cssSelector) {
+		return By.cssSelector(cssSelector);
+	}
+
+	private void testWebLinks(BrowserType browserType) {
 		//didnt do the css selector "body a[href]" due to wicket ajax debug
-		List<WebElement> webLinks=driver.findElements(By.cssSelector("div#footer a, div.content a, div#forkme a"));
+		List<WebElement> webLinks=driver.findElements(getBy("div#footer a, div.content a, div#forkme a"));
 		Map<String,String> urlToPageTitleMap = getUrlToPageTitleMap();
 		assertEquals(urlToPageTitleMap.keySet().size(),webLinks.size());
 		for(WebElement element: webLinks)
@@ -116,13 +140,25 @@ public class ChromeCssSelectorToXpathTest {
 		    
 		    assertNotNull(title);
 		    
+		    //this is a workaround for firefox with a link surrounding an image not being clickable
+		    //https://sqa.stackexchange.com/questions/32697/webdriver-firefox-element-could-not-be-scrolled-into-view
+		    if(BrowserType.FIREFOX.equals(browserType)) {
+		    	if(element.getAttribute("href").equals("https://github.com/sam-rosenthal/java-cssSelector-to-xpath"))
+		    	{
+		    		element=driver.findElement(forkMeBy);
+		    	}
+		    }
 		    element.click();
 			
 			String winHandleBefore = driver.getWindowHandle();
-			Set<String> windowHandles = driver.getWindowHandles();
-			assertEquals(2,windowHandles.size());
+			assertTrue(wait.until((new ExpectedCondition<Boolean>() {
+		        public Boolean apply(WebDriver d) {
+		        	return 2==driver.getWindowHandles().size();
+		        }
+		    })));
+					
 			boolean found=false;
-			for(String winHandle : windowHandles)
+			for(String winHandle : driver.getWindowHandles())
 			{
 				if(!winHandleBefore.equals(winHandle)) {
 			       driver.switchTo().window(winHandle);
@@ -131,14 +167,18 @@ public class ChromeCssSelectorToXpathTest {
 				}
 			}
 			assertTrue(found);
-			assertEquals(title,driver.getTitle());
+			assertTrue(wait.until((new ExpectedCondition<Boolean>() {
+		        public Boolean apply(WebDriver d) {
+		        	return title.equals(driver.getTitle());
+		        }
+		    })));
 			int index=linkUrl.indexOf("#");
 			if(index>-1)
 			{
 				//Some links contain an id that directs the link to go directly to a specific text on the the page corresponding to
 				//the element withh that id.
 				String cssSelector=linkUrl.substring(index);
-				assertNotNull(driver.findElement(By.cssSelector(cssSelector)));
+				assertNotNull(driver.findElement(getBy(cssSelector)));
 			}
 			driver.close();
 			driver.switchTo().window(winHandleBefore);
@@ -153,21 +193,33 @@ public class ChromeCssSelectorToXpathTest {
 		assertTrue(expectedXpath.length()>0);
 		assertNotEquals(expectedXpath, cssSelector);
 		
-	    WebDriverWait wait = new WebDriverWait(driver, 10);
-	    assertTrue(wait.until((new ExpectedCondition<Boolean>() {
+	    assertTrue(wait.until(getWaitforExpectedText(expectedXpath,getBy("table#inputOutputTable tr#xpathOutputRow>td#xpathOutputString>span"))));
+	    assertTrue(cssSelector.equals(driver.findElement(getBy("table#inputOutputTable tr#cssInputRow>td#cssInputString>span")).getText()));
+	}
+	
+	private ExpectedCondition<Boolean> getWaitforExpectedText(String expectedText,By by) {
+    	return  new ExpectedCondition<Boolean>() {
 	        public Boolean apply(WebDriver d) {
-	            return expectedXpath.equals(driver.findElement(By.cssSelector("table#inputOutputTable tr#xpathOutputRow>td#xpathOutputString>span")).getText());
+	        	return edgeWorkaroundExpectedTextTest(expectedText,by);
 	        }
-	    })));
-	    assertTrue(cssSelector.equals(driver.findElement(By.cssSelector("table#inputOutputTable tr#cssInputRow>td#cssInputString>span")).getText()));
+	    };
+	}
+	
+	private  boolean edgeWorkaroundExpectedTextTest(String expectedText,By by) {
+		//I don't know why we have to wrap this with a try/catch.  The wai.until method has one
+    	try {
+		   return expectedText.equals(driver.findElement(by).getText());
+    	} catch (RuntimeException e) {
+			return false;
+		}		
 	}
 
 	private void submitCssSelector(String cssSelector) {
-		driver.findElement(By.cssSelector("div.content form input[type='text']")).sendKeys(cssSelector);
-		driver.findElement(By.cssSelector("div.content form input[type='submit']")).click();
+		driver.findElement(getBy("div.content form input[type='text']")).sendKeys(cssSelector);
+		driver.findElement(getBy("div.content form input[type='submit']")).click();
 	}
 	
-	public void testErrorMessage(String cssSelector) throws NiceCssSelectorStringForOutputException 
+	private void testErrorMessage(String cssSelector) throws NiceCssSelectorStringForOutputException 
 	{
 		submitCssSelector(cssSelector);
 		String err = null;
@@ -185,23 +237,20 @@ public class ChromeCssSelectorToXpathTest {
 		{
 			err=e.getMessage();
 		}
-	    final String error=err;
-		WebDriverWait wait = new WebDriverWait(driver, 10);
-	    assertTrue(wait.until((new ExpectedCondition<Boolean>() {
-	        public Boolean apply(WebDriver d) {
-	        	return error.equals(driver.findElement(By.cssSelector("div.content form div.error")).getText());
-	        }
-	    })));
-	    System.out.println(driver.findElement(By.cssSelector("table#inputOutputTable tr#cssInputRow>td#cssInputString>span")).getText()+"aaa");
+
+	    assertTrue(wait.until(getWaitforExpectedText(err,getBy("div.content form div.error"))));
+
+	    String cssInputRowString = driver.findElement(getBy("table#inputOutputTable tr#cssInputRow>td#cssInputString>span")).getText();
+		System.out.println("cssInputRowString="+cssInputRowString);
       	if(adjustedCssSelector!=null)
       	{
-      		assertTrue(adjustedCssSelector.equals(driver.findElement(By.cssSelector("table#inputOutputTable tr#cssInputRow>td#cssInputString>span")).getText()));
+      		assertTrue(adjustedCssSelector.equals(cssInputRowString));
       	}
       	else
       	{
-      		assertTrue(driver.findElement(By.cssSelector("table#inputOutputTable tr#cssInputRow>td#cssInputString>span")).getText().isEmpty());
+      		assertTrue(cssInputRowString.isEmpty());
       	}
-		assertTrue(driver.findElement(By.cssSelector("div.content form i[class='fa fa-times-circle']")).isDisplayed());
+		assertTrue(driver.findElement(getBy("div.content form i[class='fa fa-times-circle']")).isDisplayed());
 	}
 	
 	private Map<String,String> getUrlToPageTitleMap() {
