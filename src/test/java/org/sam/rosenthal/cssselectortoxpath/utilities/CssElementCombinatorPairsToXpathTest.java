@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.sam.rosenthal.cssselectortoxpath.model.CssCombinatorType;
@@ -71,33 +72,37 @@ public class CssElementCombinatorPairsToXpathTest
 	@Test
 	public void convertBasicCssStringToXpathStringTest() throws CssSelectorToXPathConverterException
 	{
-
-		testConvertCssStringToXpathString("A","//A");
-		testConvertCssStringToXpathString("*","//*");
-		testConvertCssStringToXpathString("A>B","//A/B");
-		testConvertCssStringToXpathString("A,B","(//A)|(//B)");		
-		testConvertCssStringToXpathString("A B","//A//B");
-		testConvertCssStringToXpathString("A+B","//A/following-sibling::*[1]/self::B");
-		testConvertCssStringToXpathString("A~B","//A/following-sibling::B");
-		
-		testConvertCssStringToXpathString("A#B","//A[@id=\"B\"]");
-		testConvertCssStringToXpathString("A[B=\"C\"]","//A[@B=\"C\"]");
-		testConvertCssStringToXpathString("A[B=C]","//A[@B=\"C\"]");
-		
-		testConvertCssStringToXpathString("A[B^=\"C\"]","//A[starts-with(@B,\"C\")]");
-		testConvertCssStringToXpathString("A[B*=\"C\"]","//A[contains(@B,\"C\")]");	
-		testConvertCssStringToXpathString("A[B$=\"C\"]","//A[substring(@B,string-length(@B)-string-length(\"C\")+1)=\"C\"]");	
-		testConvertCssStringToXpathString("A.B","//A[contains(concat(\" \",normalize-space(@class),\" \"),\" B \")]");	
-		testConvertCssStringToXpathString("A[B~=\"C\"]","//A[contains(concat(\" \",normalize-space(@B),\" \"),\" C \")]");	
-
-		//p[starts-with(@me,concat("you",'-'))]
-		testConvertCssStringToXpathString("A[B|=\"C\"]","//A[starts-with(@B,concat(\"C\",\"-\")) or @B=\"C\"]");	
-		testConvertCssStringToXpathString("[rel|=\"alternate\"]","//*[starts-with(@rel,concat(\"alternate\",\"-\")) or @rel=\"alternate\"]");
-		testConvertCssStringToXpathString("A[B]","//A[@B]");	
-
+		List<BaseCssSelectorToXpathTestCase> baseCases=BaseCssSelectorToXpathTestCase.getBaseCssSelectorToXpathTestCases(true);
+		for(BaseCssSelectorToXpathTestCase cssSelectorToXpathCase: baseCases)
+		{
+			testConvertCssStringToXpathString(cssSelectorToXpathCase.getCssSelector(),cssSelectorToXpathCase.getExpectedXpath());
+		}
 	}
 	
+	@Test
+	public void testCssToXpathBasicException() {
+		Map<String,String> baseCases=BaseCssSelectorToXpathTestCase.getBaseCssSelectorToXpathExceptionTestCases();
+		for(Map.Entry<String,String> baseExceptionCase:baseCases.entrySet())
+		{
+			String cssSelector=baseExceptionCase.getKey();
+			String expectedErrorMessage=baseExceptionCase.getValue();
+			System.out.println(expectedErrorMessage);
+			testCssToXpathBasicException(cssSelector, expectedErrorMessage);
+		}
+		
+	}
 	
+	private void testCssToXpathBasicException(String cssSelector, String expectedErrorMessage) {
+		try {
+			String xpath=elementCombinatorPair.convertCssSelectorStringToXpathString(cssSelector);
+			fail("CssSelector="+cssSelector+", should have been invalid, but xpath string return value="+xpath);
+		} catch (CssSelectorToXPathConverterException e) {
+			assertEquals(expectedErrorMessage,e.getMessage());
+			//success
+		}		
+	}
+	
+
 	@Test
 	public void convertComplexCssStringToXpathStringTest() throws CssSelectorToXPathConverterException
 	{
@@ -154,7 +159,6 @@ public class CssElementCombinatorPairsToXpathTest
 		testConvertCssStringToXpathString("A[B|=\"C\"],[D~=\"E\"]+F","(//A[starts-with(@B,concat(\"C\",\"-\")) or @B=\"C\"])|(//*[contains(concat(\" \",normalize-space(@D),\" \"),\" E \")]/following-sibling::*[1]/self::F)");
 		
 		testConvertCssStringToXpathString("[B][C]","//*[@B][@C]");	
-
 	}
 
 	protected void testConvertCssStringToXpathString(String cssSelector, String expectedOutput) throws CssSelectorToXPathConverterException  {
@@ -189,7 +193,6 @@ public class CssElementCombinatorPairsToXpathTest
 	{
 		String version=elementCombinatorPair.mainGo(args);
 		assertTrue(args[0].toString(),version.contains(expected));
-		
 	}
 		
 	private void testMainGoException(String[] args, boolean isRuntimeException) {
@@ -203,5 +206,4 @@ public class CssElementCombinatorPairsToXpathTest
 			assertTrue(isRuntimeException);
 		}
 	}
-		
 }
