@@ -53,7 +53,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 		}
 	}
 
-	public void setupTest(BrowserType browserType) {
+	protected void setupTest(BrowserType browserType) {
 		switch(browserType)
 		{
 		case CHROME:
@@ -71,7 +71,8 @@ public abstract class AbstractCssSelectorToXpathTest {
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);				
 		wait = new WebDriverWait(driver, 10);
 		forkMeBy = getBy("div#forkme a img");
-
+		driver.get(properties.getProperty("selenium.CSS_TO_XPATH_URL"));
+		assertEquals("CSS Selector to XPath",driver.getTitle());
 	}
 
 	@After
@@ -83,7 +84,6 @@ public abstract class AbstractCssSelectorToXpathTest {
 
 	protected void test(BrowserType browserType) throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException {
 		setupTest(browserType);
-		driver.get(properties.getProperty("selenium.CSS_TO_XPATH_URL"));
 		testText();
 
 		testWebLinks(browserType);
@@ -109,7 +109,6 @@ public abstract class AbstractCssSelectorToXpathTest {
 	}
 
 	private void testText() {
-		assertEquals("CSS Selector to XPath",driver.getTitle());
 		assertEquals("CSS Selector to XPath Converter",driver.findElement(getBy("div.content h1")).getText());
 		assertEquals("Fork me on GitHub",driver.findElement(forkMeBy).getAttribute("alt"));
 		assertEquals("Implementation Notes",driver.findElement(getBy("div#footer fieldset.assumptions legend")).getText());
@@ -186,7 +185,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 		assertTrue(urlToPageTitleMap.isEmpty());
 	}
 
-	private void testConverterOutput(String cssSelector) throws CssSelectorToXPathConverterException 
+	protected void testConverterOutput(String cssSelector) throws CssSelectorToXPathConverterException 
 	{
 		submitCssSelector(cssSelector);
 		String expectedXpath= new CssElementCombinatorPairsToXpath().convertCssSelectorStringToXpathString(cssSelector);
