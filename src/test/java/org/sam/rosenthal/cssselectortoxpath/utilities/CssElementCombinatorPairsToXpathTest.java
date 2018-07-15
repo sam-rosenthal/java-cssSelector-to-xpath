@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.sam.rosenthal.cssselectortoxpath.model.CssCombinatorType;
@@ -78,6 +79,30 @@ public class CssElementCombinatorPairsToXpathTest
 		}
 	}
 	
+	@Test
+	public void testCssToXpathBasicException() {
+		Map<String,String> baseCases=BaseCssSelectorToXpathTestCase.getBaseCssSelectorToXpathExceptionTestCases();
+		for(Map.Entry<String,String> baseExceptionCase:baseCases.entrySet())
+		{
+			String cssSelector=baseExceptionCase.getKey();
+			String expectedErrorMessage=baseExceptionCase.getValue();
+			System.out.println(expectedErrorMessage);
+			testCssToXpathBasicException(cssSelector, expectedErrorMessage);
+		}
+		
+	}
+	
+	private void testCssToXpathBasicException(String cssSelector, String expectedErrorMessage) {
+		try {
+			String xpath=elementCombinatorPair.convertCssSelectorStringToXpathString(cssSelector);
+			fail("CssSelector="+cssSelector+", should have been invalid, but xpath string return value="+xpath);
+		} catch (CssSelectorToXPathConverterException e) {
+			assertEquals(expectedErrorMessage,e.getMessage());
+			//success
+		}		
+	}
+	
+
 	@Test
 	public void convertComplexCssStringToXpathStringTest() throws CssSelectorToXPathConverterException
 	{

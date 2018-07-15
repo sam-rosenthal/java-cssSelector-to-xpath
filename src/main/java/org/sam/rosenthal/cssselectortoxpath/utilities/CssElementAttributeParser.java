@@ -18,7 +18,7 @@ public class CssElementAttributeParser
 	private static final String ATTRIBUTE_TYPE_RE = createElementAttributeNameRegularExpression();
 	private static final String ELEMENT_ATTRIBUTE_NAME_RE="(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)";
 	private static final String STARTING_ELEMENT_RE = "^("+ELEMENT_ATTRIBUTE_NAME_RE+"|([*]))?";
-	private static final String PSUEDO_RE = "(:[a-z]+([(][^)]+[)])?)";
+	private static final String PSUEDO_RE = "(:[a-z][a-z\\-]*([(][^)]+[)])?)";
 	private static final String ATTRIBUTE_RE = "("+PSUEDO_RE+"|(\\["+"\\s*"+ELEMENT_ATTRIBUTE_NAME_RE+"\\s*"+ATTRIBUTE_TYPE_RE+"\\s*"+"(("+QUOTES_RE+ATTRIBUTE_VALUE_RE+QUOTES_RE+")|("+ATTRIBUTE_VALUE_RE_NO_SPACES+"))?"+"\\s*"+"\\]))"; 
 	
 	
@@ -54,7 +54,7 @@ public class CssElementAttributeParser
 		Matcher match = cssElementAtributePattern.matcher(elementWithAttributesString);
 		if (!match.find())
 		{
-			throw new CssSelectorToXPathConverterException("invalid element and/or attributes");
+			throw new CssSelectorToXPathConverterException("Invalid element and/or attributes");
 		}
 		//System.out.println();
 		boolean cssAttributeValueTypeExists = match.group(reIndexAttributeValueType)!=null;
@@ -62,7 +62,7 @@ public class CssElementAttributeParser
 		//System.out.println("Type="+cssAttributeValueTypeExists+", Value="+cssAttributeValueExists);
 		if((cssAttributeValueTypeExists&&!cssAttributeValueExists)||(!cssAttributeValueTypeExists&&cssAttributeValueExists))
 		{
-				throw new CssSelectorToXPathConverterException("invalid attribute value");
+				throw new CssSelectorToXPathConverterException("Invalid attribute value");
 		}
 
 		String startQuote = match.group(reIndexStartingQuote);
@@ -71,7 +71,7 @@ public class CssElementAttributeParser
 		//note the only way startQuote could be null is that there no attribute value 
 		if(startQuoteExists && !(startQuote.equals(endQuote)))
 		{
-			throw new CssSelectorToXPathConverterException("invalid quotations");
+			throw new CssSelectorToXPathConverterException("Quotations mismatched");
 		}
 		//System.out.println("Valid: "+elementWithAttributesString);
 	}
@@ -111,7 +111,7 @@ public class CssElementAttributeParser
 			String psuedoClass=match.group(rePseudoClass);
 			if(psuedoClass!=null)
 			{
-				throw new CssSelectorToXPathConverterException("Unable to convert("+psuedoClass+").  A converter for CSS Seletor Psuedo-Classes has not been implement at this time.  TODO: A future capability.");
+				throw new CssSelectorToXPathConverterUnsupportedPseudoClassException(psuedoClass);
 			}
 			boolean attributeValueHasQuotes = match.group(reIndexAttributeValueWithQuotes)!=null;
 			attributeList.add(new CssAttribute(

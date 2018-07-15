@@ -307,15 +307,16 @@ public class CssSelectorStringSplitterTest {
 		testCheckInValidElementAttribute("x[[y]");
 		testCheckInValidElementAttribute("x[y]]");
 		testCheckInValidElementAttribute("x[[y]]");
-		
+	}
+	@Test
+	public void pseudoClassNotImplementedTest() {
+		//these pseudoclass tests are valid, but tool does not handle them yet
 		testCheckInValidElementAttribute(":lang(en)");
 		testCheckInValidElementAttribute("input:required");
 		testCheckInValidElementAttribute(":root");
 		testCheckInValidElementAttribute(":not([style='test'])");
 		testCheckInValidElementAttribute("div:first-child");
 		testCheckInValidElementAttribute(":test");
-
-
 	}
 	private void testCheckInValidElementAttribute(String elementAttributeString) 
 	{

@@ -30,13 +30,15 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public abstract class AbstractCssSelectorToXpathTest {
 
-	private WebDriver driver;
+	protected WebDriver driver;
 	
 	private static Properties properties;
 	
 	private WebDriverWait wait;
 
 	private By forkMeBy;
+
+	protected By errorMessageBy;
 
 
 	@BeforeClass
@@ -71,6 +73,8 @@ public abstract class AbstractCssSelectorToXpathTest {
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);				
 		wait = new WebDriverWait(driver, 10);
 		forkMeBy = getBy("div#forkme a img");
+	    errorMessageBy = getBy("div.content form div.error");
+
 		driver.get(properties.getProperty("selenium.CSS_TO_XPATH_URL"));
 		assertEquals("CSS Selector to XPath",driver.getTitle());
 	}
@@ -207,18 +211,21 @@ public abstract class AbstractCssSelectorToXpathTest {
 	private  boolean edgeWorkaroundExpectedTextTest(String expectedText,By by) {
 		//I don't know why we have to wrap this with a try/catch.  The wai.until method has one
     	try {
-		   return expectedText.equals(driver.findElement(by).getText());
+		   String text = driver.findElement(by).getText();
+		   System.out.println("expectedText="+expectedText);
+		   System.out.println("actualText="+text);
+		   return expectedText.equals(text);
     	} catch (RuntimeException e) {
 			return false;
 		}		
 	}
 
-	private void submitCssSelector(String cssSelector) {
+	protected void submitCssSelector(String cssSelector) {
 		driver.findElement(getBy("div.content form input[type='text']")).sendKeys(cssSelector);
 		driver.findElement(getBy("div.content form input[type='submit']")).click();
 	}
 	
-	private void testErrorMessage(String cssSelector) throws NiceCssSelectorStringForOutputException 
+	protected void testErrorMessage(String cssSelector) throws NiceCssSelectorStringForOutputException 
 	{
 		submitCssSelector(cssSelector);
 		String err = null;
@@ -237,7 +244,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 			err=e.getMessage();
 		}
 
-	    assertTrue(wait.until(getWaitforExpectedText(err,getBy("div.content form div.error"))));
+		assertTrue(wait.until(getWaitforExpectedText(err,errorMessageBy)));
 
 	    String cssInputRowString = driver.findElement(getBy("table#inputOutputTable tr#cssInputRow>td#cssInputString>span")).getText();
 		System.out.println("cssInputRowString="+cssInputRowString);

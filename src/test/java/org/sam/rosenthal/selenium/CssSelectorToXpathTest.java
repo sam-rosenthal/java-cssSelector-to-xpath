@@ -18,4 +18,6 @@ public class CssSelectorToXpathTest extends AbstractCssSelectorToXpathTest{
 			testConverterOutput(cssSelectorToXpathCase.getCssSelector());
 		}
 	}
+	
+	
 }
