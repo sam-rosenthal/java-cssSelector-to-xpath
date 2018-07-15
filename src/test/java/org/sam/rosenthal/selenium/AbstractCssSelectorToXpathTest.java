@@ -21,6 +21,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorToXPathConverterException;
@@ -195,7 +196,6 @@ public abstract class AbstractCssSelectorToXpathTest {
 		String expectedXpath= new CssElementCombinatorPairsToXpath().convertCssSelectorStringToXpathString(cssSelector);
 		assertTrue(expectedXpath.length()>0);
 		assertNotEquals(expectedXpath, cssSelector);
-		
 	    assertTrue(wait.until(getWaitforExpectedText(expectedXpath,getBy("table#inputOutputTable tr#xpathOutputRow>td#xpathOutputString>span"))));
 	    assertTrue(cssSelector.equals(driver.findElement(getBy("table#inputOutputTable tr#cssInputRow>td#cssInputString>span")).getText()));
 	}
@@ -221,8 +221,11 @@ public abstract class AbstractCssSelectorToXpathTest {
 	}
 
 	protected void submitCssSelector(String cssSelector) {
+		System.out.println(cssSelector);
 		driver.findElement(getBy("div.content form input[type='text']")).sendKeys(cssSelector);
-		driver.findElement(getBy("div.content form input[type='submit']")).click();
+		By submitButtonBy = getBy("div.content form input[type='submit']");
+		wait.until(ExpectedConditions.elementToBeClickable(submitButtonBy));
+		driver.findElement(submitButtonBy).click();
 	}
 	
 	protected void testErrorMessage(String cssSelector) throws NiceCssSelectorStringForOutputException 

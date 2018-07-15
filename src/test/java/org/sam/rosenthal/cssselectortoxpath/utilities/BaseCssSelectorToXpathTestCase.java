@@ -45,12 +45,13 @@ public class BaseCssSelectorToXpathTestCase {
 		addBaseCaseToXPath(baseCases,"attribute", "A[B]","//A[@B]");
 		addBaseCaseToXPath(baseCases,"attributeValueWithoutQuotes", "A[B=C]","//A[@B=\"C\"]");
 
-		addBaseCaseToXPath(baseCases,"equalAttribute", "A[B=C]","//A[@B=\"C\"]");
 		addBaseCaseToXPath(baseCases,"carrotEqualAttribute", "A[B^=\"C\"]","//A[starts-with(@B,\"C\")]");
 		addBaseCaseToXPath(baseCases,"starEqualAttribute", "A[B*=\"C\"]","//A[contains(@B,\"C\")]");
 		addBaseCaseToXPath(baseCases,"moneySignEqualAttribute", "A[B$=\"C\"]","//A[substring(@B,string-length(@B)-string-length(\"C\")+1)=\"C\"]");
 		addBaseCaseToXPath(baseCases,"tildaEqualAttribute", "A[B~=\"C\"]","//A[contains(concat(\" \",normalize-space(@B),\" \"),\" C \")]");
 		addBaseCaseToXPath(baseCases,"pipeEqualAttribute","A[B|=\"C\"]","//A[starts-with(@B,concat(\"C\",\"-\")) or @B=\"C\"]");
+		//moving this test so it it does not immediately follow similar test without quotes because in selenium test we did not want to put a sleep to prevent stale element from occuring
+		addBaseCaseToXPath(baseCases,"equalAttribute", "A[B='C']","//A[@B=\"C\"]");
 
 		//Combinators
 		addBaseCaseToXPath(baseCases,"descendantCombinator","A B","//A//B");

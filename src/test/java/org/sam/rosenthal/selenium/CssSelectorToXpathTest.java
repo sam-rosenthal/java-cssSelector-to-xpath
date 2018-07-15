@@ -15,6 +15,7 @@ public class CssSelectorToXpathTest extends AbstractCssSelectorToXpathTest{
 		List<BaseCssSelectorToXpathTestCase> baseCases=BaseCssSelectorToXpathTestCase.getBaseCssSelectorToXpathTestCases(true);
 		for(BaseCssSelectorToXpathTestCase cssSelectorToXpathCase: baseCases)
 		{
+			//System.out.println(cssSelectorToXpathCase.getCssSelector());
 			testConverterOutput(cssSelectorToXpathCase.getCssSelector());
 		}
 	}
