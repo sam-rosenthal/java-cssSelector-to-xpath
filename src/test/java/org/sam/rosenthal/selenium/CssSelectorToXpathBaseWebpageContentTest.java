@@ -18,9 +18,23 @@ public class CssSelectorToXpathBaseWebpageContentTest extends AbstractCssSelecto
 	}
 
 	@Test
-	public void testBasicExceptiobCasesWithSelenium() throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+	public void testBasicExceptiobCasesWithSeleniumChrome()  throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
 	{
-		setupTest(BrowserType.CHROME);
+		testBasicExceptiobCasesWithSelenium(BrowserType.CHROME);
+	}
+	@Test
+	public void testBasicExceptiobCasesWithSeleniumFirefox()  throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+	{
+		testBasicExceptiobCasesWithSelenium(BrowserType.FIREFOX);
+	}
+	@Test
+	public void testBasicExceptiobCasesWithSeleniumEdge()  throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+	{
+		testBasicExceptiobCasesWithSelenium(BrowserType.EDGE);
+	}
+	protected void testBasicExceptiobCasesWithSelenium(BrowserType browserType) throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+	{
+		setupTest(browserType);
 		//driver.get("http://localhost/css-selector-to-xpath-reference-cases");
 		List<BaseCssSelectorToXpathTestCase> baseCases=BaseCssSelectorToXpathTestCase.getBaseCssSelectorToXpathTestCases(false);
 		int i=0;
@@ -32,11 +46,11 @@ public class CssSelectorToXpathBaseWebpageContentTest extends AbstractCssSelecto
 
 			String cssSelectorWithDivId="div#"+name+" "+cssSelectorToXpathCase.getCssSelector();
 			System.out.println("cssSelector="+cssSelectorWithDivId);
-			assertEquals(name,driver.findElement(getBy(cssSelectorWithDivId)).getText());
+			assertEquals(name,driver.findElement(getBy(cssSelectorWithDivId)).getText().trim());
 			String xpathWithDivId="//div[@id=\""+name+"\"]"+ cssSelectorToXpathCase.getExpectedXpath();
 			System.out.println("xpath="+xpathWithDivId);
 
-			assertEquals(name,driver.findElement(By.xpath(xpathWithDivId)).getText());
+			assertEquals(name,driver.findElement(By.xpath(xpathWithDivId)).getText().trim());
 			assertEquals(xpathWithDivId, converter.convertCssSelectorStringToXpathString(cssSelectorWithDivId));
 			
 		}

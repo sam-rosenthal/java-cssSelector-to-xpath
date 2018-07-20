@@ -125,6 +125,8 @@ public abstract class AbstractCssSelectorToXpathTest {
 		assertEquals("Fork me on GitHub",driver.findElement(forkMeBy).getAttribute("alt"));
 		assertEquals("Implementation Notes",driver.findElement(getBy("div#footer fieldset.assumptions legend")).getText());
 		assertEquals("Helpful Links/More Info",driver.findElement(getBy("div#footer fieldset.links legend")).getText());
+		assertEquals("Testing Notes",driver.findElement(getBy("div#footer fieldset.Testing legend")).getText());
+
 	}
 
 	protected By getBy(String cssSelector) {
