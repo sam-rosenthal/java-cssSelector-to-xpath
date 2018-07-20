@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorToXPathConverterUnsupportedPseudoClassException;
+
 public class BaseCssSelectorToXpathTestCase {
 	private static final String ERROR_INVALID_ATTRIBUTE_VALUE = "Invalid attribute value";
 	private static final String ERROR_INVALID_ELEMENT_AND_OR_ATTRIBUTES = "Invalid element and/or attributes";
