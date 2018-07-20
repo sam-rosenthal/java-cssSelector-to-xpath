@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.sam.rosenthal.cssselectortoxpath.utilities.BaseCssSelectorToXpathTestCase;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorToXPathConverterException;
 
-public class CssSelectorToXpathTest extends AbstractCssSelectorToXpathTest{
+public class CssSelectorToXpathBasicCaseTest extends AbstractCssSelectorToXpathTest{
 	
 	@Test
 	public void testBasicCasesWithSelenium() throws CssSelectorToXPathConverterException

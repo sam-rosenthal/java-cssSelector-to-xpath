@@ -13,8 +13,8 @@ import org.sam.rosenthal.cssselectortoxpath.model.CssElementAttributes;
 public class CssElementAttributeParser 
 {
 	private static final String QUOTES_RE = "([\"\'])";
-	private static final String ATTRIBUTE_VALUE_RE = "([_a-zA-Z0-9- ]+)";
-	private static final String ATTRIBUTE_VALUE_RE_NO_SPACES = "([_a-zA-Z0-9-]+)";
+	private static final String ATTRIBUTE_VALUE_RE = "([-_.#a-zA-Z0-9:\\/ ]+)";
+	private static final String ATTRIBUTE_VALUE_RE_NO_SPACES = "([-_.#a-zA-Z0-9:\\/]+)";
 	private static final String ATTRIBUTE_TYPE_RE = createElementAttributeNameRegularExpression();
 	private static final String ELEMENT_ATTRIBUTE_NAME_RE="(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)";
 	private static final String STARTING_ELEMENT_RE = "^("+ELEMENT_ATTRIBUTE_NAME_RE+"|([*]))?";

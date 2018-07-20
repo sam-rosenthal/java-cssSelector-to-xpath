@@ -124,7 +124,7 @@ public class CssElementCombinatorPairsToXpathTest
 
 		testConvertCssStringToXpathString("A[B^=  C  ]","//A[starts-with(@B,\"C\")]");
 		testConvertCssStringToXpathString("A[B*= C]","//A[contains(@B,\"C\")]");	
-		testConvertCssStringToXpathString("A[B$=C ]","//A[substring(@B,string-length(@B)-string-length(\"C\")+1)=\"C\"]");	
+		testConvertCssStringToXpathString("A[B$=C]","//A[substring(@B,string-length(@B)-string-length(\"C\")+1)=\"C\"]");	
 		
 		testConvertCssStringToXpathString("A[B=  \"C\" ]","//A[@B=\"C\"]");
 		testConvertCssStringToXpathString("A[B=  \"C \" ]","//A[@B=\"C \"]");
@@ -159,6 +159,21 @@ public class CssElementCombinatorPairsToXpathTest
 		testConvertCssStringToXpathString("A[B|=\"C\"],[D~=\"E\"]+F","(//A[starts-with(@B,concat(\"C\",\"-\")) or @B=\"C\"])|(//*[contains(concat(\" \",normalize-space(@D),\" \"),\" E \")]/following-sibling::*[1]/self::F)");
 		
 		testConvertCssStringToXpathString("[B][C]","//*[@B][@C]");	
+		
+		testConvertCssStringToXpathString("a#b[c=#][d='a#b']","//a[@id=\"b\"][@c=\"#\"][@d=\"a#b\"]");	
+		testConvertCssStringToXpathString("a[b=#]>c[d='a#b']","//a[@b=\"#\"]/c[@d=\"a#b\"]");
+		testConvertCssStringToXpathString("a[b=##],c[d='a##b']","(//a[@b=\"##\"])|(//c[@d=\"a##b\"])");
+		testConvertCssStringToXpathString("a~b#c[d=#e],h#j[k='l#']>m[n='o#p']","(//a/following-sibling::b[@id=\"c\"][@d=\"#e\"])|(//h[@id=\"j\"][@k=\"l#\"]/m[@n=\"o#p\"])");	
+		
+		testConvertCssStringToXpathString("a[c$=.d.]","//a[substring(@c,string-length(@c)-string-length(\".d.\")+1)=\".d.\"]");	
+		testConvertCssStringToXpathString("a.b[c=.] d[e='f.']","//a[contains(concat(\" \",normalize-space(@class),\" \"),\" b \")][@c=\".\"]//d[@e=\"f.\"]");
+		testConvertCssStringToXpathString("a.bc[d*=.e], h.j[k='l']~m[n='o.p']","(//a[contains(concat(\" \",normalize-space(@class),\" \"),\" bc \")][contains(@d,\".e\")])|(//h[contains(concat(\" \",normalize-space(@class),\" \"),\" j \")][@k=\"l\"]/following-sibling::m[@n=\"o.p\"])");	
+		
+		testConvertCssStringToXpathString("a#b.c[d$='e.#f'], g[h='i...j'], k[l='m###n']","(//a[@id=\"b\"][contains(concat(\" \",normalize-space(@class),\" \"),\" c \")][substring(@d,string-length(@d)-string-length(\"e.#f\")+1)=\"e.#f\"])|(//g[@h=\"i...j\"])|(//k[@l=\"m###n\"])");	
+
+		
+		testConvertCssStringToXpathString("[B][C]","//*[@B][@C]");	
+
 	}
 
 	protected void testConvertCssStringToXpathString(String cssSelector, String expectedOutput) throws CssSelectorToXPathConverterException  {

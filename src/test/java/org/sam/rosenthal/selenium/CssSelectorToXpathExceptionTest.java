@@ -12,7 +12,7 @@ import org.sam.rosenthal.cssselectortoxpath.utilities.NiceCssSelectorStringForOu
 public class CssSelectorToXpathExceptionTest extends AbstractCssSelectorToXpathTest{
 		
 	@Test
-	public void testBasicExceptiobCasesWithSelenium() throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+	public void testBasicExceptionCasesWithSelenium() throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
 	{
 		setupTest(BrowserType.CHROME);
 		Map<String,String> baseCases=BaseCssSelectorToXpathTestCase.getBaseCssSelectorToXpathExceptionTestCases();

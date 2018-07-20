@@ -2,19 +2,16 @@ package org.sam.rosenthal.selenium;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorToXPathConverterException;
 import org.sam.rosenthal.cssselectortoxpath.utilities.NiceCssSelectorStringForOutputException;
 
 public class CssSelectorToXpathTestUsingXpath extends AbstractCssSelectorToXpathTest{
-	
-	private CssElementCombinatorPairsToXpath cssElementCombinatorPairsToXpath = new CssElementCombinatorPairsToXpath();
 
 	@Override
 	protected By getBy(String cssSelector){
 		String xpath = null;
 		try {
-			xpath = cssElementCombinatorPairsToXpath.convertCssSelectorStringToXpathString(cssSelector);
+			xpath = converter.convertCssSelectorStringToXpathString(cssSelector);
 		} 
 		catch (CssSelectorToXPathConverterException e) {
 			throw new RuntimeException(e);

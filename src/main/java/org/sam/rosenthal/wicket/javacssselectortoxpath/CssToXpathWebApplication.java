@@ -18,8 +18,10 @@ package org.sam.rosenthal.wicket.javacssselectortoxpath;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.sam.rosenthal.wicket.javacssselectortoxpath.homepage.Homepage;
+import org.sam.rosenthal.wicket.javacssselectortoxpath.referencecases.CssSelectorReferenceCasesTestPage;
 
-public class EnterTextApplication extends WebApplication
+public class CssToXpathWebApplication extends WebApplication
 {
 //	/**
 //	 * prevent wicket from launching a java application window on the desktop <br/>
@@ -31,9 +33,9 @@ public class EnterTextApplication extends WebApplication
 //		System.setProperty("java.awt.headless", "true");
 //	}
 //
-//	@Override
-//	protected void init()
-//	{
+	@Override
+	protected void init()
+	{
 //		// WARNING: DO NOT do this on a real world application unless
 //		// you really want your app's passwords all passed around and
 //		// stored in unencrypted browser cookies (BAD IDEA!)!!!
@@ -48,13 +50,15 @@ public class EnterTextApplication extends WebApplication
 //		getDebugSettings().setDevelopmentUtilitiesEnabled(true);
 //		
 //		getResourceSettings().setCssCompressor(new CssUrlReplacer());
-//	}
-
-	
+		//
+		super.init();
+		mountPage("/css-selector-to-xpath-reference-cases", CssSelectorReferenceCasesTestPage.class);
+	}
 	
 	@Override
 	public Class< ? extends Page> getHomePage()
 	{
-		return EnterText.class;
+		
+		return Homepage.class;
 	}
 }

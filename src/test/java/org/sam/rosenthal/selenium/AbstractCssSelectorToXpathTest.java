@@ -33,13 +33,15 @@ public abstract class AbstractCssSelectorToXpathTest {
 
 	protected WebDriver driver;
 	
-	private static Properties properties;
+	protected static Properties properties;
 	
-	private WebDriverWait wait;
+	protected WebDriverWait wait;
 
-	private By forkMeBy;
+	protected By forkMeBy;
 
 	protected By errorMessageBy;
+	
+	protected CssElementCombinatorPairsToXpath converter= new CssElementCombinatorPairsToXpath();
 
 
 	@BeforeClass
@@ -76,8 +78,13 @@ public abstract class AbstractCssSelectorToXpathTest {
 		forkMeBy = getBy("div#forkme a img");
 	    errorMessageBy = getBy("div.content form div.error");
 
-		driver.get(properties.getProperty("selenium.CSS_TO_XPATH_URL"));
-		assertEquals("CSS Selector to XPath",driver.getTitle());
+		String cssToXpathUrl = properties.getProperty("selenium.CSS_TO_XPATH_URL");
+		goToWebpage(cssToXpathUrl,"CSS Selector to XPath");
+	}
+
+	protected void goToWebpage(String cssToXpathUrl, String expectedTitle) {
+		driver.get(cssToXpathUrl);
+		assertEquals(expectedTitle,driver.getTitle());
 	}
 
 	@After
@@ -193,7 +200,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 	protected void testConverterOutput(String cssSelector) throws CssSelectorToXPathConverterException 
 	{
 		submitCssSelector(cssSelector);
-		String expectedXpath= new CssElementCombinatorPairsToXpath().convertCssSelectorStringToXpathString(cssSelector);
+		String expectedXpath= converter.convertCssSelectorStringToXpathString(cssSelector);
 		assertTrue(expectedXpath.length()>0);
 		assertNotEquals(expectedXpath, cssSelector);
 	    assertTrue(wait.until(getWaitforExpectedText(expectedXpath,getBy("table#inputOutputTable tr#xpathOutputRow>td#xpathOutputString>span"))));
@@ -240,7 +247,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 		}
 		try
 		{
-			new CssElementCombinatorPairsToXpath().niceConvertCssSelectorToXpathForOutput(adjustedCssSelector);
+			converter.niceConvertCssSelectorToXpathForOutput(adjustedCssSelector);
 		}
 		catch (NiceCssSelectorStringForOutputException e)
 		{
@@ -248,6 +255,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 		}
 
 		assertTrue(wait.until(getWaitforExpectedText(err,errorMessageBy)));
+		//System.out.println(driver.findElement(errorMessageBy).getText());
 
 	    String cssInputRowString = driver.findElement(getBy("table#inputOutputTable tr#cssInputRow>td#cssInputString>span")).getText();
 		System.out.println("cssInputRowString="+cssInputRowString);

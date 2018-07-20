@@ -12,7 +12,7 @@ public class BaseCssSelectorToXpathTestCase {
 	private static final String ERROR_INVALID_CSS_SELECTOR_TRAILING_COMMA = "Invalid CSS Selector, trailing ','";
 	private static final String ERROR_INVALID_ID_CSS_SELECTOR = "Invalid id CSS Selector";
 	private static final String ERROR_INVALID_CLASS_CSS_SELECTOR = "Invalid class CSS Selector";
-	private static final String ERROR_EMPTY_CSS_SELECTOR1 = "Empty CSS Selector1";
+	private static final String ERROR_EMPTY_CSS_SELECTOR1 = "Empty CSS Selector";
 	private static final String ERROR_CSS_SELECTOR_STRING_IS_NULL = "CSS Selector String is null";
 	private String name;
 	private String cssSelector;
@@ -28,36 +28,33 @@ public class BaseCssSelectorToXpathTestCase {
 	{
 		List<BaseCssSelectorToXpathTestCase> baseCases=new ArrayList<>();
 		//Simple selectors
-		addBaseCaseToXPath(baseCases,"typeSelector", "A","//A");
+		addBaseCaseToXPath(baseCases,"typeSelector", "div","//div");
 		if(includeOrCase)
 		{
-			addBaseCaseToXPath(baseCases,"or", "A,B","(//A)|(//B)");
+			addBaseCaseToXPath(baseCases,"orSelector", "A,B","(//A)|(//B)");
 		}
 
 		addBaseCaseToXPath(baseCases,"universalSelector", "*","//*");
-		addBaseCaseToXPath(baseCases,"idSelector", "#B","//*[@id=\"B\"]");
-		addBaseCaseToXPath(baseCases,"classSelector", ".B",	"//*[contains(concat(\" \",normalize-space(@class),\" \"),\" B \")]");
+		addBaseCaseToXPath(baseCases,"idSelector", "span#idSelector","//span[@id=\"idSelector\"]");
+		addBaseCaseToXPath(baseCases,"classSelector", "form.classSelector",	"//form[contains(concat(\" \",normalize-space(@class),\" \"),\" classSelector \")]");
 		
-		addBaseCaseToXPath(baseCases,"idSelector2", "A#B","//A[@id=\"B\"]");
-		addBaseCaseToXPath(baseCases,"classSelector2", "A.B","//A[contains(concat(\" \",normalize-space(@class),\" \"),\" B \")]");
-
 		//Atribute(simple) selectors
-		addBaseCaseToXPath(baseCases,"attribute", "A[B]","//A[@B]");
-		addBaseCaseToXPath(baseCases,"attributeValueWithoutQuotes", "A[B=C]","//A[@B=\"C\"]");
+		addBaseCaseToXPath(baseCases,"attribute", "a[href]","//a[@href]");
+		addBaseCaseToXPath(baseCases,"attributeValueWithoutQuotes", "li[type=text]","//li[@type=\"text\"]");
 
-		addBaseCaseToXPath(baseCases,"carrotEqualAttribute", "A[B^=\"C\"]","//A[starts-with(@B,\"C\")]");
-		addBaseCaseToXPath(baseCases,"starEqualAttribute", "A[B*=\"C\"]","//A[contains(@B,\"C\")]");
-		addBaseCaseToXPath(baseCases,"moneySignEqualAttribute", "A[B$=\"C\"]","//A[substring(@B,string-length(@B)-string-length(\"C\")+1)=\"C\"]");
-		addBaseCaseToXPath(baseCases,"tildaEqualAttribute", "A[B~=\"C\"]","//A[contains(concat(\" \",normalize-space(@B),\" \"),\" C \")]");
-		addBaseCaseToXPath(baseCases,"pipeEqualAttribute","A[B|=\"C\"]","//A[starts-with(@B,concat(\"C\",\"-\")) or @B=\"C\"]");
+		addBaseCaseToXPath(baseCases,"carrotEqualAttribute", "a[alt^=\"art\"]","//a[starts-with(@alt,\"art\")]");
+		addBaseCaseToXPath(baseCases,"starEqualAttribute", "a[alt*=\"art\"]","//a[contains(@alt,\"art\")]");
+		addBaseCaseToXPath(baseCases,"moneySignEqualAttribute", "a[href$=\"pdf\"]","//a[substring(@href,string-length(@href)-string-length(\"pdf\")+1)=\"pdf\"]");
+		addBaseCaseToXPath(baseCases,"tildaEqualAttribute", "a[alt~=\"art\"]","//a[contains(concat(\" \",normalize-space(@alt),\" \"),\" art \")]");
+		addBaseCaseToXPath(baseCases,"pipeEqualAttribute","li[data-years|=\"1900\"]","//li[starts-with(@data-years,concat(\"1900\",\"-\")) or @data-years=\"1900\"]");
 		//moving this test so it it does not immediately follow similar test without quotes because in selenium test we did not want to put a sleep to prevent stale element from occuring
-		addBaseCaseToXPath(baseCases,"equalAttribute", "A[B='C']","//A[@B=\"C\"]");
+		addBaseCaseToXPath(baseCases,"equalAttribute", "a[href=\"https://css-selector-to-xpath.appspot.com\"]","//a[@href=\"https://css-selector-to-xpath.appspot.com\"]");
 
 		//Combinators
-		addBaseCaseToXPath(baseCases,"descendantCombinator","A B","//A//B");
-		addBaseCaseToXPath(baseCases,"childCombinator","A>B","//A/B");
-		addBaseCaseToXPath(baseCases,"adjacentSiblingCombinator","A+B","//A/following-sibling::*[1]/self::B");
-		addBaseCaseToXPath(baseCases,"generalSiblingCombinator","A~B","//A/following-sibling::B");
+		addBaseCaseToXPath(baseCases,"descendantCombinator","div a","//div//a");
+		addBaseCaseToXPath(baseCases,"childCombinator","div>span","//div/span");
+		addBaseCaseToXPath(baseCases,"adjacentSiblingCombinator","div+span","//div/following-sibling::*[1]/self::span");
+		addBaseCaseToXPath(baseCases,"generalSiblingCombinator","div~h1","//div/following-sibling::h1");
 		return baseCases;
 	}
 	private static void addBaseCaseToXPath(List<BaseCssSelectorToXpathTestCase> baseCases,String name,String cssSelector, String expectedXpath) {
