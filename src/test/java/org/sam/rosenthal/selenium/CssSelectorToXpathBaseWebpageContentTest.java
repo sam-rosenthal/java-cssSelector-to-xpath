@@ -52,7 +52,6 @@ public class CssSelectorToXpathBaseWebpageContentTest extends AbstractCssSelecto
 
 			assertEquals(name,driver.findElement(By.xpath(xpathWithDivId)).getText().trim());
 			assertEquals(xpathWithDivId, converter.convertCssSelectorStringToXpathString(cssSelectorWithDivId));
-			
 		}
 	}
 }
