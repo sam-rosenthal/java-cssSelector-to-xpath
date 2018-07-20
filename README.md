@@ -48,7 +48,7 @@
 					<ul> 		
 						<li>All names and values (Elements and Attributes) are case sensitive</li>
 						<li>Element names and Attribute names are restricted to the following regular expression: -?[_a-zA-Z]+[_a-zA-Z0-9-]*</li>
-						<li>Attribute values are restricted to the following regular expression: [_a-zA-Z0-9- ]+</li>
+						<li>Attribute values are restricted to the following regular expression: [-_.#a-zA-Z0-9:\\/ ]+ </li>
 					</ul>
 			</ul>
 
