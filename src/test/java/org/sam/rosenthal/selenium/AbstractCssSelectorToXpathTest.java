@@ -21,6 +21,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorToXPathConverterException;
@@ -32,13 +33,17 @@ public abstract class AbstractCssSelectorToXpathTest {
 
 	protected WebDriver driver;
 	
-	private static Properties properties;
+	protected static Properties properties;
 	
-	private WebDriverWait wait;
+	protected WebDriverWait wait;
 
-	private By forkMeBy;
+	protected By forkMeBy;
 
 	protected By errorMessageBy;
+	
+	protected CssElementCombinatorPairsToXpath converter= new CssElementCombinatorPairsToXpath();
+
+	private String cssToXpathUrl;
 
 
 	@BeforeClass
@@ -75,8 +80,13 @@ public abstract class AbstractCssSelectorToXpathTest {
 		forkMeBy = getBy("div#forkme a img");
 	    errorMessageBy = getBy("div.content form div.error");
 
-		driver.get(properties.getProperty("selenium.CSS_TO_XPATH_URL"));
-		assertEquals("CSS Selector to XPath",driver.getTitle());
+	    cssToXpathUrl = properties.getProperty("selenium.CSS_TO_XPATH_URL");
+		goToWebpage(cssToXpathUrl,"CSS Selector to XPath");
+	}
+
+	protected void goToWebpage(String cssToXpathUrl, String expectedTitle) {
+		driver.get(cssToXpathUrl);
+		assertEquals(expectedTitle,driver.getTitle());
 	}
 
 	@After
@@ -117,6 +127,8 @@ public abstract class AbstractCssSelectorToXpathTest {
 		assertEquals("Fork me on GitHub",driver.findElement(forkMeBy).getAttribute("alt"));
 		assertEquals("Implementation Notes",driver.findElement(getBy("div#footer fieldset.assumptions legend")).getText());
 		assertEquals("Helpful Links/More Info",driver.findElement(getBy("div#footer fieldset.links legend")).getText());
+		assertEquals("Testing Notes",driver.findElement(getBy("div#footer fieldset.Testing legend")).getText());
+
 	}
 
 	protected By getBy(String cssSelector) {
@@ -192,10 +204,9 @@ public abstract class AbstractCssSelectorToXpathTest {
 	protected void testConverterOutput(String cssSelector) throws CssSelectorToXPathConverterException 
 	{
 		submitCssSelector(cssSelector);
-		String expectedXpath= new CssElementCombinatorPairsToXpath().convertCssSelectorStringToXpathString(cssSelector);
+		String expectedXpath= converter.convertCssSelectorStringToXpathString(cssSelector);
 		assertTrue(expectedXpath.length()>0);
 		assertNotEquals(expectedXpath, cssSelector);
-		
 	    assertTrue(wait.until(getWaitforExpectedText(expectedXpath,getBy("table#inputOutputTable tr#xpathOutputRow>td#xpathOutputString>span"))));
 	    assertTrue(cssSelector.equals(driver.findElement(getBy("table#inputOutputTable tr#cssInputRow>td#cssInputString>span")).getText()));
 	}
@@ -221,8 +232,11 @@ public abstract class AbstractCssSelectorToXpathTest {
 	}
 
 	protected void submitCssSelector(String cssSelector) {
+		System.out.println(cssSelector);
 		driver.findElement(getBy("div.content form input[type='text']")).sendKeys(cssSelector);
-		driver.findElement(getBy("div.content form input[type='submit']")).click();
+		By submitButtonBy = getBy("div.content form input[type='submit']");
+		wait.until(ExpectedConditions.elementToBeClickable(submitButtonBy));
+		driver.findElement(submitButtonBy).click();
 	}
 	
 	protected void testErrorMessage(String cssSelector) throws NiceCssSelectorStringForOutputException 
@@ -237,7 +251,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 		}
 		try
 		{
-			new CssElementCombinatorPairsToXpath().niceConvertCssSelectorToXpathForOutput(adjustedCssSelector);
+			converter.niceConvertCssSelectorToXpathForOutput(adjustedCssSelector);
 		}
 		catch (NiceCssSelectorStringForOutputException e)
 		{
@@ -245,6 +259,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 		}
 
 		assertTrue(wait.until(getWaitforExpectedText(err,errorMessageBy)));
+		//System.out.println(driver.findElement(errorMessageBy).getText());
 
 	    String cssInputRowString = driver.findElement(getBy("table#inputOutputTable tr#cssInputRow>td#cssInputString>span")).getText();
 		System.out.println("cssInputRowString="+cssInputRowString);
@@ -262,14 +277,12 @@ public abstract class AbstractCssSelectorToXpathTest {
 	private Map<String,String> getUrlToPageTitleMap() {
 		HashMap<String,String> urlToPageTitleMap = new HashMap<>();
 		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath","GitHub - sam-rosenthal/java-cssSelector-to-xpath");
-		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md","java-cssSelector-to-xpath/README.md at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
+		urlToPageTitleMap.put("1:https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md","java-cssSelector-to-xpath/README.md at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
 		urlToPageTitleMap.put("https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Simple_selectors","CSS selectors - CSS: Cascading Style Sheets | MDN");
 		urlToPageTitleMap.put("https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Combinators","CSS selectors - CSS: Cascading Style Sheets | MDN");
 		urlToPageTitleMap.put("https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Pseudo-classes","CSS selectors - CSS: Cascading Style Sheets | MDN");
-		
 		urlToPageTitleMap.put("https://yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/","Evaluate and validate XPath/CSS selectors in Chrome Developer Tools | Yi Zeng’s Blog");
 		urlToPageTitleMap.put("1:https://yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/","Evaluate and validate XPath/CSS selectors in Chrome Developer Tools | Yi Zeng’s Blog");
-
 		urlToPageTitleMap.put("https://github.com/sam-rosenthal","sam-rosenthal (Sam Rosenthal) · GitHub");
 		urlToPageTitleMap.put("https://sam-rosenthal.github.io/","Sam Rosenthal");
 		urlToPageTitleMap.put("https://en.wikipedia.org/wiki/Cascading_Style_Sheets","Cascading Style Sheets - Wikipedia");
@@ -279,6 +292,11 @@ public abstract class AbstractCssSelectorToXpathTest {
 		urlToPageTitleMap.put("https://developer.mozilla.org/en-US/docs/Web/XPath","XPath | MDN");
 		urlToPageTitleMap.put("https://www.w3schools.com/cssref/trysel.asp","Try CSS Selector");
 		urlToPageTitleMap.put("https://css-tricks.com/almanac/","CSS Almanac | CSS-Tricks");
+		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md","java-cssSelector-to-xpath/README.md at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
+		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath/tree/samdev/src/test/java/org/sam/rosenthal/cssselectortoxpath/utilities","java-cssSelector-to-xpath/src/test/java/org/sam/rosenthal/cssselectortoxpath/utilities at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
+		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath/tree/samdev/src/test/java/org/sam/rosenthal/selenium","java-cssSelector-to-xpath/src/test/java/org/sam/rosenthal/selenium at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
+		urlToPageTitleMap.put(cssToXpathUrl+"/css-selector-to-xpath-reference-cases","CSS Selector Reference Cases Test Page");
+
 		return urlToPageTitleMap;
 	}
 }

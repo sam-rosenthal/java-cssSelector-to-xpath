@@ -12,9 +12,13 @@ import org.sam.rosenthal.cssselectortoxpath.model.CssElementAttributes;
 
 public class CssElementAttributeParser 
 {
+	public static final String ERROR_INVALID_ATTRIBUTE_VALUE = "Invalid attribute value";
+	public static final String ERROR_INVALID_ELEMENT_AND_OR_ATTRIBUTES = "Invalid element and/or attributes";
+	public static final String ERROR_QUOTATIONS_MISMATCHED = "Quotations mismatched";
+
 	private static final String QUOTES_RE = "([\"\'])";
-	private static final String ATTRIBUTE_VALUE_RE = "([_a-zA-Z0-9- ]+)";
-	private static final String ATTRIBUTE_VALUE_RE_NO_SPACES = "([_a-zA-Z0-9-]+)";
+	private static final String ATTRIBUTE_VALUE_RE = "([-_.#a-zA-Z0-9:\\/ ]+)";
+	private static final String ATTRIBUTE_VALUE_RE_NO_SPACES = "([-_.#a-zA-Z0-9:\\/]+)";
 	private static final String ATTRIBUTE_TYPE_RE = createElementAttributeNameRegularExpression();
 	private static final String ELEMENT_ATTRIBUTE_NAME_RE="(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)";
 	private static final String STARTING_ELEMENT_RE = "^("+ELEMENT_ATTRIBUTE_NAME_RE+"|([*]))?";
@@ -54,7 +58,7 @@ public class CssElementAttributeParser
 		Matcher match = cssElementAtributePattern.matcher(elementWithAttributesString);
 		if (!match.find())
 		{
-			throw new CssSelectorToXPathConverterException("Invalid element and/or attributes");
+			throw new CssSelectorToXPathConverterException(ERROR_INVALID_ELEMENT_AND_OR_ATTRIBUTES);
 		}
 		//System.out.println();
 		boolean cssAttributeValueTypeExists = match.group(reIndexAttributeValueType)!=null;
@@ -62,7 +66,7 @@ public class CssElementAttributeParser
 		//System.out.println("Type="+cssAttributeValueTypeExists+", Value="+cssAttributeValueExists);
 		if((cssAttributeValueTypeExists&&!cssAttributeValueExists)||(!cssAttributeValueTypeExists&&cssAttributeValueExists))
 		{
-				throw new CssSelectorToXPathConverterException("Invalid attribute value");
+				throw new CssSelectorToXPathConverterException(ERROR_INVALID_ATTRIBUTE_VALUE);
 		}
 
 		String startQuote = match.group(reIndexStartingQuote);
@@ -71,7 +75,7 @@ public class CssElementAttributeParser
 		//note the only way startQuote could be null is that there no attribute value 
 		if(startQuoteExists && !(startQuote.equals(endQuote)))
 		{
-			throw new CssSelectorToXPathConverterException("Quotations mismatched");
+			throw new CssSelectorToXPathConverterException(ERROR_QUOTATIONS_MISMATCHED);
 		}
 		//System.out.println("Valid: "+elementWithAttributesString);
 	}

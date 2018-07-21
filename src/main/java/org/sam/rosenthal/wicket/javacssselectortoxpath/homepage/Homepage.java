@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.sam.rosenthal.wicket.javacssselectortoxpath;
+package org.sam.rosenthal.wicket.javacssselectortoxpath.homepage;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -27,7 +27,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath;
 import org.sam.rosenthal.cssselectortoxpath.utilities.NiceCssSelectorStringForOutputException;
 
-public class EnterText extends WebPage
+public class Homepage extends WebPage
 {
 
 	private static final long serialVersionUID = 1L;
@@ -44,7 +44,7 @@ public class EnterText extends WebPage
 	/**
 	 * Constructor.
 	 */
-	public EnterText()
+	public Homepage()
 	{
 		cssElementCombinatorPairsToXpath=new CssElementCombinatorPairsToXpath();
 

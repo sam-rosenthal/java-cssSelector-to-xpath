@@ -5,14 +5,14 @@ import static org.junit.Assert.assertEquals;
 import java.util.Map;
 
 import org.junit.Test;
-import org.sam.rosenthal.cssselectortoxpath.utilities.BaseCssSelectorToXpathTestCase;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorToXPathConverterException;
 import org.sam.rosenthal.cssselectortoxpath.utilities.NiceCssSelectorStringForOutputException;
+import org.sam.rosenthal.cssselectortoxpath.utilities.basetestcases.BaseCssSelectorToXpathTestCase;
 
 public class CssSelectorToXpathExceptionTest extends AbstractCssSelectorToXpathTest{
 		
 	@Test
-	public void testBasicExceptiobCasesWithSelenium() throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+	public void testBasicExceptionCasesWithSelenium() throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
 	{
 		setupTest(BrowserType.CHROME);
 		Map<String,String> baseCases=BaseCssSelectorToXpathTestCase.getBaseCssSelectorToXpathExceptionTestCases();

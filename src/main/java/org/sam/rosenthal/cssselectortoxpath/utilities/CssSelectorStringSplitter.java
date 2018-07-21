@@ -10,16 +10,21 @@ import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
 
 public class CssSelectorStringSplitter 
 {
+	public static final String ERROR_INVALID_SELECTOR = "Invalid Selector";
+	public static final String ERROR_NO_CSS_SELECTORS = "No CSS Selectors";
+	public static final String ERROR_EMPTY_CSS_SELECTOR = "Empty CSS Selector";
+	public static final String ERROR_INVALID_CSS_SELECTOR_TRAILING_COMMA = "Invalid CSS Selector, trailing ','";
+	public static final String ERROR_INVALID_CSS_SELECTOR_UNCLOSED = "Invalid CSS Selector, unclosed '['";
 	private static final String COMBINATORS = " ~+>";
 	private static final String COMBINATOR_RE = "["+COMBINATORS+"]";
 
-	private static final String X = "([^"+COMBINATORS+"\\[]*(\\[[^\\]]+\\])*)";
-	private static final String XY = "^"+X+"($|(\\s*("+COMBINATOR_RE+")\\s*"+"([^"+COMBINATORS+"].*)$))";
+	private static final String ELEMENT_AND_ATTRIBUTE = "([^"+COMBINATORS+"\\[]*(\\[[^\\]]+\\])*)";
+	private static final String ELEMENT_AND_ATTRIBUTE_FOLLOWED_BY_COMBINATOR_AND_REST_OF_LINE = "^"+ELEMENT_AND_ATTRIBUTE+"($|(\\s*("+COMBINATOR_RE+")\\s*"+"([^"+COMBINATORS+"].*)$))";
 
 	public static final String ERROR_INVALID_CLASS_CSS_SELECTOR = "Invalid class CSS Selector";
 	public static final String ERROR_INVALID_ID_CSS_SELECTOR = "Invalid id CSS Selector";
 	public static final String ERROR_SELECTOR_STRING_IS_NULL = "CSS Selector String is null";
-	private static final String WHITESPACE_PLACE_HOLDER = "~#_placeHolder_#";
+	private static final String PLACE_HOLDER = "~@_placeHolder_@";
 
 	protected String removeNonCssSelectorWhiteSpaces(String selectorString) throws CssSelectorToXPathConverterException
 	{
@@ -48,12 +53,11 @@ public class CssSelectorStringSplitter
 		else
 		{
 			selectorString=selectorString.trim();
-			selectorString=selectorString.replaceAll("[ \\t]+", WHITESPACE_PLACE_HOLDER);
+			selectorString=selectorString.replaceAll("[ \\t]+", PLACE_HOLDER);
 			selectorString=selectorString.replaceAll("\\s+","");
-			selectorString=selectorString.replaceAll("("+WHITESPACE_PLACE_HOLDER+")+", " ");
-			invalidClassIdPairCheck(selectorString);
-			selectorString=selectorString.replaceAll("#"+classIdCombinatorRE(),"[id=\"$1\"]");
-			selectorString=selectorString.replaceAll("[.]"+classIdCombinatorRE(),"[class~=\"$1\"]");
+			selectorString=selectorString.replaceAll("("+PLACE_HOLDER+")+", " ");
+			selectorString=classidAttributeIssueHandler(selectorString,"#","id=");
+			selectorString=classidAttributeIssueHandler(selectorString,".","class~=");
 			//System.out.println("STRING="+selectorString);
 			return selectorString;
 		}
@@ -70,22 +74,64 @@ public class CssSelectorStringSplitter
 		
 	}
 	
-	
-	protected void invalidClassIdPairCheck(String selectorString) throws CssSelectorToXPathConverterException 
+	protected void invalidClassIdPairCheck(String selectorString, boolean testId) throws CssSelectorToXPathConverterException 
 	{
 		String nextSelectorIdentifier="[.#\\[]";
-		Pattern pattern = Pattern.compile("#"+nextSelectorIdentifier);
+		if(testId)
+		{
+			Pattern pattern = Pattern.compile("#"+nextSelectorIdentifier);
+			Matcher match = pattern.matcher(selectorString);
+			if (match.find())
+			{
+				throw new CssSelectorToXPathConverterException(ERROR_INVALID_ID_CSS_SELECTOR);
+			}
+		}
+		else
+		{
+			Pattern pattern= Pattern.compile("[.]"+nextSelectorIdentifier);
+			Matcher match = pattern.matcher(selectorString);
+			if (match.find())
+			{
+				throw new CssSelectorToXPathConverterException(ERROR_INVALID_CLASS_CSS_SELECTOR);
+			}
+		}
+	}
+	private String classidAttributeIssueHandler(String selectorString, String classOrIdChar, String classOrIdPartialAttributeNameAndRelationship ) throws CssSelectorToXPathConverterException
+	{
+		//very special case where string ends with '['
+		if(selectorString.endsWith("["))
+		{
+			throw new CssSelectorToXPathConverterException(ERROR_INVALID_CSS_SELECTOR_UNCLOSED);
+		}
+		String classOrIdCharacterRE = "["+classOrIdChar+"]";
+		String attributeGeneralRE = "([^\\[]*)((\\[[^\\]]*\\])*)";
+		Pattern pattern = Pattern.compile(attributeGeneralRE);
 		Matcher match = pattern.matcher(selectorString);
-		if (match.find())
-		{
-			throw new CssSelectorToXPathConverterException(ERROR_INVALID_ID_CSS_SELECTOR);
+		//System.out.println(selectorString);
+		boolean found=false;
+		StringBuffer stringBuffer = new StringBuffer();
+		while(match.find()) {
+			//System.out.println("1="+match.group(1));
+			//System.out.println("2="+match.group(2));
+			//System.out.println("22="+match.group(2).replaceAll(classOrIdCharacterRE,PLACE_HOLDER));
+			
+			stringBuffer.append(match.group(1));
+			stringBuffer.append(match.group(2).replaceAll(classOrIdCharacterRE,PLACE_HOLDER));
+
+		    found=true;
 		}
-		pattern= Pattern.compile("[.]"+nextSelectorIdentifier);
-		match = pattern.matcher(selectorString);
-		if (match.find())
+		//System.out.println("SB"+stringBuffer);
+		selectorString=stringBuffer.toString();
+
+		selectorString=selectorString.replaceAll(classOrIdCharacterRE+classIdCombinatorRE(),"["+classOrIdPartialAttributeNameAndRelationship+"\"$1\"]");
+		invalidClassIdPairCheck(selectorString,"#".equals(classOrIdChar));
+
+		if(found)
 		{
-			throw new CssSelectorToXPathConverterException(ERROR_INVALID_CLASS_CSS_SELECTOR);
+			selectorString=selectorString.replaceAll(PLACE_HOLDER, classOrIdChar);
 		}
+
+		return selectorString;
 	}
 	
 	public List<String> splitSelectors(String selectorString) throws CssSelectorToXPathConverterException
@@ -98,7 +144,7 @@ public class CssSelectorStringSplitter
 		int cssSelectorStringLength = selectorString.length();
 		if((cssSelectorStringLength>0)&&(index==(cssSelectorStringLength-1)))
 		{
-			throw new CssSelectorToXPathConverterException("Invalid CSS Selector, trailing ','");		
+			throw new CssSelectorToXPathConverterException(ERROR_INVALID_CSS_SELECTOR_TRAILING_COMMA);		
 		}
 		String[] selectorArray=selectorString.split(",");
 		List<String> selectorList=new ArrayList<>();
@@ -107,14 +153,14 @@ public class CssSelectorStringSplitter
 			selector=selector.trim();
 			if(selector.isEmpty())
 			{
-				throw new CssSelectorToXPathConverterException("Empty CSS Selector1");
+				throw new CssSelectorToXPathConverterException(ERROR_EMPTY_CSS_SELECTOR);
 			}
 			
 			selectorList.add(selector);
 		}
 		if(selectorList.isEmpty())
 		{
-			throw new CssSelectorToXPathConverterException("No CSS Selectors");
+			throw new CssSelectorToXPathConverterException(ERROR_NO_CSS_SELECTORS);
 		}
 		return selectorList;
 	}
@@ -127,7 +173,7 @@ public class CssSelectorStringSplitter
 	protected void recursiveSelectorSplit(CssCombinatorType previousCombinatorType, String cssSelector,List<CssElementCombinatorPair> selectorList) throws CssSelectorToXPathConverterException
 	{ 
 
-		Pattern cssCombinator = Pattern.compile(XY);
+		Pattern cssCombinator = Pattern.compile(ELEMENT_AND_ATTRIBUTE_FOLLOWED_BY_COMBINATOR_AND_REST_OF_LINE);
 		Matcher match = cssCombinator.matcher(cssSelector);
 		//System.out.println(XY);
 		if(match.find())
@@ -140,7 +186,7 @@ public class CssSelectorStringSplitter
 				//System.out.println("firstcss"+firstCssSelector);
 				if(firstCssSelector.isEmpty())
 				{
-					throw new CssSelectorToXPathConverterException("Empty Selector2");
+					throw new CssSelectorToXPathConverterException(ERROR_EMPTY_CSS_SELECTOR);
 				}
 				selectorList.add(new CssElementCombinatorPair(previousCombinatorType,firstCssSelector));
 				String nextCssSelector=match.group(6); 
@@ -148,7 +194,7 @@ public class CssSelectorStringSplitter
 
 				if(nextCssSelector.isEmpty())
 				{
-					throw new CssSelectorToXPathConverterException("Empty Selector3");
+					throw new CssSelectorToXPathConverterException(ERROR_EMPTY_CSS_SELECTOR);
 				}
 				recursiveSelectorSplit(type,nextCssSelector,selectorList);
 			}
@@ -156,14 +202,14 @@ public class CssSelectorStringSplitter
 			{
 				if(cssSelector.isEmpty())
 				{
-					throw new CssSelectorToXPathConverterException("Empty Selector4");
+					throw new CssSelectorToXPathConverterException(ERROR_EMPTY_CSS_SELECTOR);
 				}
 				selectorList.add(new CssElementCombinatorPair(previousCombinatorType,cssSelector));
 			}
 		}
 		else
 		{
-			throw new CssSelectorToXPathConverterException("Invalid Selector");
+			throw new CssSelectorToXPathConverterException(ERROR_INVALID_SELECTOR);
 
 		}
 	}
