@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.sam.rosenthal.cssselectortoxpath.utilities.BaseCssSelectorToXpathTestCase;
+import org.sam.rosenthal.cssselectortoxpath.utilities.basetestcases.BaseCssSelectorToXpathTestCase;
 
 public class CssSelectorReferenceCasesTestPage extends WebPage{
 

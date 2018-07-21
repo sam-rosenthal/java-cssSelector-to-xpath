@@ -12,6 +12,7 @@ import java.util.Map;
 import org.junit.Test;
 import org.sam.rosenthal.cssselectortoxpath.model.CssCombinatorType;
 import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
+import org.sam.rosenthal.cssselectortoxpath.utilities.basetestcases.BaseCssSelectorToXpathTestCase;
 
 public class CssElementCombinatorPairsToXpathTest 
 {

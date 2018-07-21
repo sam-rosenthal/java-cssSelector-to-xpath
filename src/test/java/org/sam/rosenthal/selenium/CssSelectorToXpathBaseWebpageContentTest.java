@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.sam.rosenthal.cssselectortoxpath.utilities.BaseCssSelectorToXpathTestCase;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorToXPathConverterException;
 import org.sam.rosenthal.cssselectortoxpath.utilities.NiceCssSelectorStringForOutputException;
+import org.sam.rosenthal.cssselectortoxpath.utilities.basetestcases.BaseCssSelectorToXpathTestCase;
 
 public class CssSelectorToXpathBaseWebpageContentTest extends AbstractCssSelectorToXpathTest{
 	

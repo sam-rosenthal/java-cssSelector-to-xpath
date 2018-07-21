@@ -10,11 +10,11 @@ import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
 
 public class CssSelectorStringSplitter 
 {
-	private static final String ERROR_INVALID_SELECTOR = "Invalid Selector";
-	private static final String ERROR_NO_CSS_SELECTORS = "No CSS Selectors";
-	private static final String ERROR_EMPTY_CSS_SELECTOR = "Empty CSS Selector";
-	private static final String INVALID_CSS_SELECTOR_TRAILING_COMMA = "Invalid CSS Selector, trailing ','";
-	private static final String ERROR_INVALID_CSS_SELECTOR_UNCLOSED = "Invalid CSS Selector, unclosed '['";
+	public static final String ERROR_INVALID_SELECTOR = "Invalid Selector";
+	public static final String ERROR_NO_CSS_SELECTORS = "No CSS Selectors";
+	public static final String ERROR_EMPTY_CSS_SELECTOR = "Empty CSS Selector";
+	public static final String ERROR_INVALID_CSS_SELECTOR_TRAILING_COMMA = "Invalid CSS Selector, trailing ','";
+	public static final String ERROR_INVALID_CSS_SELECTOR_UNCLOSED = "Invalid CSS Selector, unclosed '['";
 	private static final String COMBINATORS = " ~+>";
 	private static final String COMBINATOR_RE = "["+COMBINATORS+"]";
 
@@ -144,7 +144,7 @@ public class CssSelectorStringSplitter
 		int cssSelectorStringLength = selectorString.length();
 		if((cssSelectorStringLength>0)&&(index==(cssSelectorStringLength-1)))
 		{
-			throw new CssSelectorToXPathConverterException(INVALID_CSS_SELECTOR_TRAILING_COMMA);		
+			throw new CssSelectorToXPathConverterException(ERROR_INVALID_CSS_SELECTOR_TRAILING_COMMA);		
 		}
 		String[] selectorArray=selectorString.split(",");
 		List<String> selectorList=new ArrayList<>();

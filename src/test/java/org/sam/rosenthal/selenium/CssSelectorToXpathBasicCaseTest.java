@@ -3,8 +3,8 @@ package org.sam.rosenthal.selenium;
 import java.util.List;
 
 import org.junit.Test;
-import org.sam.rosenthal.cssselectortoxpath.utilities.BaseCssSelectorToXpathTestCase;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorToXPathConverterException;
+import org.sam.rosenthal.cssselectortoxpath.utilities.basetestcases.BaseCssSelectorToXpathTestCase;
 
 public class CssSelectorToXpathBasicCaseTest extends AbstractCssSelectorToXpathTest{
 	

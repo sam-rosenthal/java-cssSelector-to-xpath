@@ -1,21 +1,15 @@
-package org.sam.rosenthal.cssselectortoxpath.utilities;
+package org.sam.rosenthal.cssselectortoxpath.utilities.basetestcases;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.sam.rosenthal.cssselectortoxpath.utilities.CssElementAttributeParser;
+import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorStringSplitter;
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorToXPathConverterUnsupportedPseudoClassException;
 
 public class BaseCssSelectorToXpathTestCase {
-	private static final String ERROR_INVALID_ATTRIBUTE_VALUE = "Invalid attribute value";
-	private static final String ERROR_INVALID_ELEMENT_AND_OR_ATTRIBUTES = "Invalid element and/or attributes";
-	private static final String ERROR_QUOTATIONS_MISMATCHED = "Quotations mismatched";
-	private static final String ERROR_INVALID_CSS_SELECTOR_TRAILING_COMMA = "Invalid CSS Selector, trailing ','";
-	private static final String ERROR_INVALID_ID_CSS_SELECTOR = "Invalid id CSS Selector";
-	private static final String ERROR_INVALID_CLASS_CSS_SELECTOR = "Invalid class CSS Selector";
-	private static final String ERROR_EMPTY_CSS_SELECTOR1 = "Empty CSS Selector";
-	private static final String ERROR_CSS_SELECTOR_STRING_IS_NULL = "CSS Selector String is null";
 	private String name;
 	private String cssSelector;
 	private String expectedXpath;
@@ -66,26 +60,26 @@ public class BaseCssSelectorToXpathTestCase {
 	public static Map<String,String> getBaseCssSelectorToXpathExceptionTestCases()
 	{
 		HashMap<String,String> baseCases=new HashMap<>();
-		baseCases.put(null,ERROR_CSS_SELECTOR_STRING_IS_NULL);
+		baseCases.put(null,CssSelectorStringSplitter.ERROR_SELECTOR_STRING_IS_NULL);
 		
-		baseCases.put("",ERROR_EMPTY_CSS_SELECTOR1);
-		baseCases.put(" ",ERROR_EMPTY_CSS_SELECTOR1);
-		baseCases.put("A,,B",ERROR_EMPTY_CSS_SELECTOR1);
+		baseCases.put("",CssSelectorStringSplitter.ERROR_EMPTY_CSS_SELECTOR);
+		baseCases.put(" ",CssSelectorStringSplitter.ERROR_EMPTY_CSS_SELECTOR);
+		baseCases.put("A,,B",CssSelectorStringSplitter.ERROR_EMPTY_CSS_SELECTOR);
 
 		
-		baseCases.put("A..B",ERROR_INVALID_CLASS_CSS_SELECTOR);
+		baseCases.put("A..B",CssSelectorStringSplitter.ERROR_INVALID_CLASS_CSS_SELECTOR);
 		
-		baseCases.put("A##B",ERROR_INVALID_ID_CSS_SELECTOR);
-		baseCases.put("A#[B]",ERROR_INVALID_ID_CSS_SELECTOR);
+		baseCases.put("A##B",CssSelectorStringSplitter.ERROR_INVALID_ID_CSS_SELECTOR);
+		baseCases.put("A#[B]",CssSelectorStringSplitter.ERROR_INVALID_ID_CSS_SELECTOR);
 		
-		baseCases.put("A,",ERROR_INVALID_CSS_SELECTOR_TRAILING_COMMA);
-		baseCases.put("A[B='C\"]",ERROR_QUOTATIONS_MISMATCHED);
+		baseCases.put("A,",CssSelectorStringSplitter.ERROR_INVALID_CSS_SELECTOR_TRAILING_COMMA);
+		baseCases.put("A[B='C\"]",CssElementAttributeParser.ERROR_QUOTATIONS_MISMATCHED);
 		
-		baseCases.put("A@!",ERROR_INVALID_ELEMENT_AND_OR_ATTRIBUTES);
-		baseCases.put("A[B='']",ERROR_INVALID_ELEMENT_AND_OR_ATTRIBUTES);
+		baseCases.put("A@!",CssElementAttributeParser.ERROR_INVALID_ELEMENT_AND_OR_ATTRIBUTES);
+		baseCases.put("A[B='']",CssElementAttributeParser.ERROR_INVALID_ELEMENT_AND_OR_ATTRIBUTES);
 		
-		baseCases.put("A[B=]",ERROR_INVALID_ATTRIBUTE_VALUE);
-		baseCases.put("A[B'C']",ERROR_INVALID_ATTRIBUTE_VALUE);
+		baseCases.put("A[B=]",CssElementAttributeParser.ERROR_INVALID_ATTRIBUTE_VALUE);
+		baseCases.put("A[B'C']",CssElementAttributeParser.ERROR_INVALID_ATTRIBUTE_VALUE);
 
 		String[] pseudoClasses=getPseudoClasses();
 		for(String pseudoClass:pseudoClasses)

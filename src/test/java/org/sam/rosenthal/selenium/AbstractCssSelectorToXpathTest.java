@@ -43,6 +43,8 @@ public abstract class AbstractCssSelectorToXpathTest {
 	
 	protected CssElementCombinatorPairsToXpath converter= new CssElementCombinatorPairsToXpath();
 
+	private String cssToXpathUrl;
+
 
 	@BeforeClass
 	public static void setupClass() {
@@ -78,7 +80,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 		forkMeBy = getBy("div#forkme a img");
 	    errorMessageBy = getBy("div.content form div.error");
 
-		String cssToXpathUrl = properties.getProperty("selenium.CSS_TO_XPATH_URL");
+	    cssToXpathUrl = properties.getProperty("selenium.CSS_TO_XPATH_URL");
 		goToWebpage(cssToXpathUrl,"CSS Selector to XPath");
 	}
 
@@ -275,14 +277,12 @@ public abstract class AbstractCssSelectorToXpathTest {
 	private Map<String,String> getUrlToPageTitleMap() {
 		HashMap<String,String> urlToPageTitleMap = new HashMap<>();
 		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath","GitHub - sam-rosenthal/java-cssSelector-to-xpath");
-		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md","java-cssSelector-to-xpath/README.md at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
+		urlToPageTitleMap.put("1:https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md","java-cssSelector-to-xpath/README.md at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
 		urlToPageTitleMap.put("https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Simple_selectors","CSS selectors - CSS: Cascading Style Sheets | MDN");
 		urlToPageTitleMap.put("https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Combinators","CSS selectors - CSS: Cascading Style Sheets | MDN");
 		urlToPageTitleMap.put("https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Pseudo-classes","CSS selectors - CSS: Cascading Style Sheets | MDN");
-		
 		urlToPageTitleMap.put("https://yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/","Evaluate and validate XPath/CSS selectors in Chrome Developer Tools | Yi Zeng’s Blog");
 		urlToPageTitleMap.put("1:https://yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/","Evaluate and validate XPath/CSS selectors in Chrome Developer Tools | Yi Zeng’s Blog");
-
 		urlToPageTitleMap.put("https://github.com/sam-rosenthal","sam-rosenthal (Sam Rosenthal) · GitHub");
 		urlToPageTitleMap.put("https://sam-rosenthal.github.io/","Sam Rosenthal");
 		urlToPageTitleMap.put("https://en.wikipedia.org/wiki/Cascading_Style_Sheets","Cascading Style Sheets - Wikipedia");
@@ -292,6 +292,11 @@ public abstract class AbstractCssSelectorToXpathTest {
 		urlToPageTitleMap.put("https://developer.mozilla.org/en-US/docs/Web/XPath","XPath | MDN");
 		urlToPageTitleMap.put("https://www.w3schools.com/cssref/trysel.asp","Try CSS Selector");
 		urlToPageTitleMap.put("https://css-tricks.com/almanac/","CSS Almanac | CSS-Tricks");
+		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md","java-cssSelector-to-xpath/README.md at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
+		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath/tree/samdev/src/test/java/org/sam/rosenthal/cssselectortoxpath/utilities","java-cssSelector-to-xpath/src/test/java/org/sam/rosenthal/cssselectortoxpath/utilities at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
+		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath/tree/samdev/src/test/java/org/sam/rosenthal/selenium","java-cssSelector-to-xpath/src/test/java/org/sam/rosenthal/selenium at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
+		urlToPageTitleMap.put(cssToXpathUrl+"/css-selector-to-xpath-reference-cases","CSS Selector Reference Cases Test Page");
+
 		return urlToPageTitleMap;
 	}
 }
