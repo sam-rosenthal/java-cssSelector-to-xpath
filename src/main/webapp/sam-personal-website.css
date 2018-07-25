@@ -1,0 +1,31 @@
+nav li{
+	padding-right: 10px;
+}
+nav a.navbar-brand.active{
+	background-color: #343a40;
+	padding-left:10px;
+}
+nav a.navbar-brand.active div{
+	color: white;
+}
+
+nav a.navbar-brand{
+	padding-left:10px;
+}
+nav a.navbar-brand img{
+	padding-top:5px;
+}
+nav a.navbar-brand div
+{
+	font-size: 24px;
+	font-weight: bold;
+	float: right; 
+	margin: 7px;
+}
+body{
+	background-image: url("background.jpg");
+	height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

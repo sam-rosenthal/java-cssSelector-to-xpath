@@ -23,7 +23,7 @@
 			<param-name>applicationClassName</param-name>
 			<!-- <param-value>org.sam.rosenthal.WicketApplication</param-value> -->
 			<!-- <param-value>org.apache.wicket.examples.helloworld.HelloWorldApplication</param-value> -->
-			<param-value>org.sam.rosenthal.wicket.javacssselectortoxpath.CssToXpathWebApplication</param-value>
+			<param-value>org.sam.rosenthal.wicket.personalwebsite.PersonalWebApplication</param-value>
 		</init-param>
 		
 	</filter>
