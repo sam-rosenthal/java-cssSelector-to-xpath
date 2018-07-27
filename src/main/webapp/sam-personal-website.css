@@ -8,7 +8,11 @@ nav a.navbar-brand.active{
 nav a.navbar-brand.active div{
 	color: white;
 }
-
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
 nav a.navbar-brand{
 	padding-left:10px;
 }
@@ -23,9 +27,15 @@ nav a.navbar-brand div
 	margin: 7px;
 }
 body{
-	background-image: url("background.jpg");
-	height: 100%; 
+	//background-image: url("background.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+ul.icons{
+	padding-left:0px;
+}
+ul.icons img{
+	margin-right:10px;
+	margin-top:5px;
 }
