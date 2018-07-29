@@ -13,8 +13,21 @@
 		<script> 
 			function pageSpecificAfterLoad(){
 				$('ul.navbar-nav #projects').addClass("active");
+				$('.after-sam').load("SeeKnowledgeMatrix");				
 			}
-		</script>		
+			function toggleShowDideDetailsText(selector) {
+				var newText='show details';
+				var showHide='hide';
+				var buttonSelector='button#'+selector+'-showhide';
+				var contentSelector='div#'+selector+'-details';
+				if ($(buttonSelector).text()=='show details') {
+					newText='hide details';
+					showHide='show';
+				} 
+				$(contentSelector).collapse(showHide);
+				$(buttonSelector).text(newText);
+			}
+		</script> 		
 	</head>
 	<body>
 		<div class="sam-navigation"/>
@@ -35,18 +48,67 @@
 		          <h5></h5>
 		          <p>This Open Source Software is written in Java and converts CSS Selector Strings to XPath Strings. To include this software in 3rd-party packages requires no additional external jar files.
 		            </p>
-		          <h5>Technologies:</h5>
+		          <h5>Technologies
+		          	(<button id="java-cssSelector-to-xpath-technology-showhide" class="btn btn-link showhideDetails" onclick="toggleShowDideDetailsText('java-cssSelector-to-xpath-technology')">show details</button>)
+		          	:</h5>
 		          <ul class="Icons">
-					<img src="Eclipse.png" width="170" height="40" alt="Eclipse IDE" title="Eclipse IDE"> 
-					<img src="https://img.shields.io/badge/jdk-8-lightgray.svg" alt="Java JDK 8" title="Java JDK 8"> 
-					<img src="https://img.shields.io/maven-central/v/org.apache.maven/apache-maven.svg" alt="Apache Maven" title="Apache Maven"> 		
-					<img src="https://img.shields.io/badge/Regular%20Expressions-Java-yellow.svg" alt="Regular Expressions" title="Regular Expressions"> 	
-					<img src="JUnit.png" width="54" height="40" alt="JUnit Test" title="JUnit"> 					
-					<img src="Git.png" width="100" height="40" alt="Github" title="Git"> 
-					<img src="Travis.png" width="128" height="40" alt="Travis CI" title="Travis CI"> 	
-				  </ul>		          
-		        </div>
-		      </div>	
+					<img src="Eclipse.png" width="170" height="40" alt="Eclipse IDE" data-toggle="tooltip" title="Eclipse IDE"> 
+					<img src="https://img.shields.io/badge/jdk-8-lightgray.svg" alt="Java JDK 8" data-toggle="tooltip" title="Java JDK 8"> 
+					<img src="https://img.shields.io/maven-central/v/org.apache.maven/apache-maven.svg" alt="Apache Maven" data-toggle="tooltip" title="Apache Maven"> 		
+					<img src="https://img.shields.io/badge/Regular%20Expressions-Java-yellow.svg" alt="Regular Expressions" data-toggle="tooltip" title="Regular Expressions"> 	
+					<img src="JUnit.png" width="54" height="40" alt="JUnit Test" data-toggle="tooltip" title="JUnit"> 					
+					<img src="Git.png" width="100" height="40" alt="Github" data-toggle="tooltip" title="Git"> 
+					<img src="Travis.png" width="128" height="40" alt="Travis CI" data-toggle="tooltip" title="Travis CI"> 	
+				  </ul>	
+				  <div id="java-cssSelector-to-xpath-technology-details" class="collapse in technologies">
+				    <h5>Technology Details: </h5> 
+				    <p><b>Regular Expressions</b> – Java Regex Utility classes  were used to validate and parse the CSS Selector strings.  
+				    I used the Matcher and Pattern classes to parse the selector into elements, attribute names, and attributes that make up the components of the CSS Selector String.
+				    Once the string was broken into  its components it was straight forward to  reconstruct the corresponding XPath String. Listed are some Regular Expressions that were used 
+				    to identify CSS Selector components:</p>
+				    <pre style="background-color:#f6f8fa"><code>private static final String QUOTES_RE = "([\"\'])"; 
+private static final String ATTRIBUTE_VALUE_RE = "([-_.#a-zA-Z0-9:\\/ ]+)"; 
+private static final String ATTRIBUTE_VALUE_RE_NO_SPACES = "([-_.#a-zA-Z0-9:\\/]+)";
+private static final String ELEMENT_ATTRIBUTE_NAME_RE="(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)";
+private static final String STARTING_ELEMENT_RE = "^("+ELEMENT_ATTRIBUTE_NAME_RE+"|([*]))?";
+private static final String PSUEDO_RE = "(:[a-z][a-z\\-]*([(][^)]+[)])?)";</code></pre> 
+					<p>Regular expressions were also used when  calling the replaceAll String method.  A simple example of a regex expression that was used to remove white spaces was:</p>
+				    <pre style="background-color:#f6f8fa"><code>selectorString=selectorString.replaceAll("\\s+","");</code></pre> 
+					<hr>
+					<p><b>Recursion</b> – A basic CSS Selector is made up of (0 or 1) elements associated with (0 or more) attributes. A basic CSS Selector can have a "combinator" relationship with 
+					another CSS selector which then can have a "combinator" relationship with another CSS Selector which… This is the “cascading” relationship of CSS. This pattern lent itself to recursion.
+					I created a recursive method, recursiveSelectorSplit, which takes a basic selector and looks for a combinator. If it finds one it adds the element/combinator pair to a list of these pairs and 
+					calls itself to find the next cascading relationship. The recursion is complete when there are no more "combinators".</p>
+					<hr>
+					<p><b>Junit Testing</b> - Individual classes and methods, end-to-end testing (CSS input String to XPath output String), invalid CSS Selector Strings, and 
+					unsupported CSS Selector Strings are all tested using the JUnit test framework.   
+					I currently have a ~17 JUnit tests and over 270 individual test cases and growing. </p>
+					<hr>
+					<p> <b>Selenium Testing</b> - Selenium Testing performs two types of testing. The obvious testing is to verify that my CSS Selector to XPATH website is working properly but my tests also verify that 
+					the actual output of my CSS Selector converter is producing correct and valid XPath. <br>
+					The basics about my selenium tests and the obvious test case. Selenium is driven by Junit tests. 
+					I test 3 browsers: Chrome, FireFox, and Edge.  Note: I develop on a Window PC that’s why I chose those three browsers to test. 
+					Basic Selenium testing is to verify that all expected text is displayed on my converter website. I verify that all links work and bring up the expected websites on a new tab. I verify through automated 
+					Selenium testing when CSS selectors are entered and the convert button is pressed that the expected results are properly displayed. I also check when invalid CSS Selectors are entered that the proper 
+					error messages are displayed.  I created an abstract Selenium test class that I extend for each test type of test I run. The abstract class includes setting up the browser specific drivers, methods to
+					go to webpages, test text, links, entering text and pressing the convert button, and error messages. </p>
+				  </div>
+				  <h5>Images</h5>
+				  <div id="#carouselA" class="carousel slide" data-ride="carousel" style="width:400px">
+					  <ol class="carousel-indicators">
+					    <li data-target="#carouselTry" data-slide-to="0" class="active"></li>
+					  </ol>
+					  <div class="carousel-inner" >
+						<div class="carousel-item active">
+						  <img src="GitReadme.JPG" alt="aaa" class="img-responsive">
+						  <div class="carousel-caption d-none d-md-block">
+						    <h5>Github Repository Readme</h5>
+						  </div>
+						</div>			
+					  </div>
+					</div>	
+			     </div>	
+			 </div>    
 		     <hr>
 		     <div class="row">
 		        <div class="col-md-3">
@@ -56,23 +118,90 @@
 		          <h3><a href="https://css-selector-to-xpath.appspot.com" target="_blank">CSS Selector to XPath Converter Website</a></h3>
 		          <h5>June 2018 - Present</h5>		        
 		          <p>Free online CSS Selector to XPath converter. This tool uses java-CssSelector-To-Xpath OSS to transform CSS Selector strings to XPath strings.</p>
-		          <h5>Technologies:</h5>
+		          <h5>Technologies
+		          	(<button id="java-cssSelector-to-xpath-website-technology-showhide" class="btn btn-link showhideDetails" onclick="toggleShowDideDetailsText('java-cssSelector-to-xpath-website-technology')">show details</button>)
+		          	:</h5>
 		          <ul class="Icons">
-		          	<img src="HTML5.svg" width="43" height="40" alt="HTML5 Powered with CSS3 / Styling" title="HTML5">
-					<img src="CSS3.svg" width="28.3" height="40" alt="CSS3" title="CSS3">
-					<img src="GCP.svg" width="70" height="40" alt="Google Cloud Platform" title="Google Cloud Platform">
-					<img src="Eclipse.png" width="170" height="40" alt="Eclipse IDE" title="Eclipse IDE"> 
-					<img src="https://img.shields.io/badge/jdk-8-lightgray.svg" alt="Java JDK 8" title="Java JDK 8"> 
-					<img src="https://img.shields.io/maven-central/v/org.apache.maven/apache-maven.svg" alt="Apache Maven" title="Apache Maven"> 		
-					<img src="Wicket.png"  width="40" height="40" alt="Apache Wicket" title="Apache Wicket"> 
-					<img src="https://img.shields.io/badge/Regular%20Expressions-Java-yellow.svg" alt="Regular Expressions" title="Regular Expressions"> 	
-					<img src="https://img.shields.io/badge/Semantic%20Versioning-%202.0.0-red.svg" alt="Semantic Versioning 2.0.0" title="Semantic Versioning 2.0.0"> 
-					<img src="Selenium.png" width="45" height="40" alt="Selenium" title="Selenium"> 
-					<img src="JUnit.png" width="54" height="40" alt="JUnit Test" title="JUnit"> 
-					<img src="Git.png" width="100" height="40" alt="Github" title="Git"> 
-					<img src="Travis.png" width="128" height="40" alt="Travis CI" title="Travis CI"> 	
+		          	<img src="HTML5.svg" width="43" height="40" alt="HTML5 Powered with CSS3 / Styling" data-toggle="tooltip" title="HTML5">
+					<img src="CSS3.svg" width="28.3" height="40" alt="CSS3" data-toggle="tooltip" title="CSS3">
+					<img src="GCP.svg" width="70" height="40" alt="Google Cloud Platform" data-toggle="tooltip" title="Google Cloud Platform">
+					<img src="Eclipse.png" width="170" height="40" alt="Eclipse IDE" data-toggle="tooltip" title="Eclipse IDE"> 
+					<img src="https://img.shields.io/badge/jdk-8-lightgray.svg" alt="Java JDK 8" data-toggle="tooltip" title="Java JDK 8"> 
+					<img src="https://img.shields.io/maven-central/v/org.apache.maven/apache-maven.svg" alt="Apache Maven" data-toggle="tooltip" title="Apache Maven"> 		
+					<img src="Wicket.png"  width="40" height="40" alt="Apache Wicket" data-toggle="tooltip" title="Apache Wicket"> 
+					<img src="https://img.shields.io/badge/Regular%20Expressions-Java-yellow.svg" alt="Regular Expressions" data-toggle="tooltip" title="Regular Expressions"> 	
+					<img src="https://img.shields.io/badge/Semantic%20Versioning-%202.0.0-red.svg" alt="Semantic Versioning 2.0.0" data-toggle="tooltip" title="Semantic Versioning 2.0.0"> 
+					<img src="Selenium.png" width="45" height="40" alt="Selenium" data-toggle="tooltip" title="Selenium"> 
+					<img src="JUnit.png" width="54" height="40" alt="JUnit Test" data-toggle="tooltip" title="JUnit"> 
+					<img src="Git.png" width="100" height="40" alt="Github" data-toggle="tooltip" title="Git"> 
+					<img src="Travis.png" width="128" height="40" alt="Travis CI" data-toggle="tooltip" title="Travis CI"> 	
 				  </ul>
-		        </div>
+				  <div id="java-cssSelector-to-xpath-website-technology-details" class="collapse in technologies">
+		          <h5>Technology Details:</h5>
+					<p> <b>Selenium Testing</b> - I implemented two types of Selenium Testing. The obvious testing is to verify that my CSS Selector to XPath website is working properly. My tests also verify that 
+					the actual output of my CSS Selector converter is producing correct and valid XPath. <br> <br>
+					All Selenium tests are driven by the JUnit test framework. 
+					I test 3 browsers: Chrome, FireFox, and Edge. <i>Note: I develop on a Window PC that’s why I chose those three browsers to test. </i>
+					My first set of Selenium tests verify that all expected text is displayed on my the converter website. I verify that all links work and bring up the expected websites on a new tab. 
+					Through automated Selenium testing, I verify that the expected results are properly displayed when CSS selectors are entered and the convert button is pressed. I also check when invalid CSS Selectors are entered that the proper 
+					error messages are displayed. I created an abstract Selenium test class that is extended by all tests. The abstract class includes setting up the browser, specific drivers, methods to
+					go to website URLs, test text and links, entering text, and pressing the convert button, and error messages. <br><br>
+					The second type of Selenium test verifies that conversions of CSS Selectors are correctly converted by my software.  Selenium can identify elements of a webpage by either CSS Selectors or XPath.
+					I have written all the Selenium tests exclusively using Selenium’s “By.cssSelector” method. 
+					I then rerun the tests using the same code except for the following change: the original test CSS Selector input is converted using my OSS software to an XPath which is then passed in as the argument for the “By.XPath” method.  
+					Both versions of the Selenium test work on all three browser types, demonstrating that the converter software is working properly. The final “special” test checks the contents of a webpage
+					(<a href="https://css-selector-to-xpath.appspot.com/css-selector-to-xpath-reference-cases">https://css-selector-to-xpath.appspot.com/css-selector-to-xpath-reference-cases</a>)
+					constructed with the same base-case CSS Selectors defined in a JUnit test written for the OSS converter software. The Selenium test and the JUnit test use the same inputs and outputs as part of the tests.
+					<br><br>The following is how I implemented the By.cssSelector and By.xpath Selenium tests:
+					<br><br>The abstract Selenium class has the following method:</p>
+<pre style="background-color:#f6f8fa"><code>protected By getBy(String cssSelector) {
+    return By.cssSelector(cssSelector);
+}</code></pre>				 					
+					<p>The By.xpath tests override this method with:</p>
+<pre style="background-color:#f6f8fa"><code>@Override
+protected By getBy(String cssSelector){
+    String xpath = null;
+    try{
+        xpath = converter.convertCssSelectorStringToXpathString(cssSelector);
+    } 
+    catch (CssSelectorToXPathConverterException e){
+        throw new RuntimeException(e);
+    }
+    System.out.println("original cssSelector="+cssSelector+", using xpath="+xpath);
+    return By.xpath(xpath);
+}</code></pre>
+					
+				  </div>
+				  <h5>Images:</h5>
+				  <div id="carouselB" class="carousel slide" data-ride="carousel" style="width:400px">
+					  <ol class="carousel-indicators">
+					    <li data-target="#carouselB" data-slide-to="0" class="active"></li>
+					    <li data-target="#carouselB" data-slide-to="1"></li>
+					  </ol>
+					  <div class="carousel-inner" role="listbox">
+						<div class="carousel-item active">
+						  <img src="Website.JPG" alt="aaa" class="img-responsive">
+						  <div class="carousel-caption d-none d-md-block">
+						    <h5>GCP Website</h5>
+						  </div>
+						</div>	
+						<div class="carousel-item">
+						  <img src="App Engine.JPG" alt="aaa" class="img-responsive">
+						  <div class="carousel-caption d-none d-md-block">
+						    <h5>GCP Website</h5>
+						  </div>
+						</div>						
+					  </div>
+					  <a class="carousel-control-prev" href="#carouselB" role="button" data-slide="prev">
+					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					    <span class="sr-only">Previous</span>
+					  </a>
+					  <a class="carousel-control-next" href="#carouselB" role="button" data-slide="next">
+					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					    <span class="sr-only">Next</span>
+					  </a>
+				   </div>			 				        
+			     </div>	
 		     </div>
 		     <hr>
 			 <div class="row">
@@ -85,10 +214,10 @@
 		          <p>This website was developed without templates or publishing tools. I used Eclipse as my editor. </p>		          
 		          <h5>Technologies:</h5>
 		          <ul class="Icons">
-		          	<img src="HTML5.svg" width="43" height="40" alt="HTML5 Powered with CSS3 / Styling" title="HTML5">
-					<img src="CSS3.svg" width="28.3" height="40" alt="CSS3" title="CSS3">
-					<img src="Bootstrap.svg" width="35" height="35" alt="Bootstrap" title="Bootstrap">
-					<img src="FA.png" width="35" height="35" alt="Font Awesome" title="Font Awesome">
+		          	<img src="HTML5.svg" width="43" height="40" alt="HTML5 Powered with CSS3 / Styling" data-toggle="tooltip" title="HTML5">
+					<img src="CSS3.svg" width="28.3" height="40" alt="CSS3" data-toggle="tooltip" title="CSS3">
+					<img src="Bootstrap.svg" width="35" height="35" alt="Bootstrap" data-toggle="tooltip" title="Bootstrap">
+					<img src="FA.png" width="35" height="35" alt="Font Awesome" data-toggle="tooltip" title="Font Awesome">
 				  </ul>
 		        </div>
 		     </div>   
@@ -113,12 +242,92 @@
 		             Programs working with graphical templates and creating rules and procedures. Campers typically had 0-1 years of Logo programming experience.</p>		        
 		          <h5>Technologies:</h5>
 		          <ul class="Icons">
-		          	<img src="Microworlds.ico" width="40" height="40" alt="Microworlds EX" title="Microworlds EX">
-					<img src="Eclipse.png" width="170" height="40" alt="Eclipse IDE" title="Eclipse IDE"> 
-					<img src="https://img.shields.io/badge/jdk-8-lightgray.svg" alt="Java JDK 8" title="Java JDK 8"> 
-					<img src="https://i.vimeocdn.com/portrait/10124081_300x300.webp" width="40" height="40" alt="Processing" title="Processing"> 
+		          	<img src="Microworlds.ico" width="40" height="40" alt="Microworlds EX" data-toggle="tooltip" title="Microworlds EX">
+					<img src="Eclipse.png" width="170" height="40" alt="Eclipse IDE" data-toggle="tooltip" title="Eclipse IDE"> 
+					<img src="https://img.shields.io/badge/jdk-8-lightgray.svg" alt="Java JDK 8" data-toggle="tooltip" title="Java JDK 8"> 
+					<img src="https://i.vimeocdn.com/portrait/10124081_300x300.webp" width="40" height="40" alt="Processing" data-toggle="tooltip" title="Processing"> 
 		          </ul>
-		        </div>
+		          <div class="container" style="padding-left:0px;">	
+					<div class="row">
+						<div class="col-md-6">
+						  <h5>Java Projects:</h5>
+						  <div id="carouselC" class="carousel slide" data-ride="carousel" style="width:400px">
+							  <ol class="carousel-indicators">
+							    <li data-target="#carouselC" data-slide-to="0" class="active"></li>
+							    <li data-target="#carouselC" data-slide-to="1"></li>
+							    <li data-target="#carouselC" data-slide-to="2"></li>
+							  </ol>
+							  <div class="carousel-inner" role="listbox">
+								<div class="carousel-item active">
+								  <img src="Tron.JPG" alt="aaa" class="img-responsive">
+								  <div class="carousel-caption d-none d-md-block">
+								    <h5>Tron</h5>
+								  </div>
+								</div>	
+								<div class="carousel-item">
+								  <img src="DoodleJump.JPG" alt="aaa" class="img-responsive">
+								  <div class="carousel-caption d-none d-md-block">
+								    <h5>1v1 Doodle Jump</h5>
+								  </div>
+								</div>	
+								<div class="carousel-item">
+								  <img src="Chicken.JPG" alt="aaa" class="img-responsive">
+								  <div class="carousel-caption d-none d-md-block">
+								    <h5>Chicken Little</h5>
+								  </div>
+								</div>	
+							  </div>
+							  <a class="carousel-control-prev" href="#carouselC" role="button" data-slide="prev">
+							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							    <span class="sr-only">Previous</span>
+							  </a>
+							  <a class="carousel-control-next" href="#carouselC" role="button" data-slide="next">
+							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							    <span class="sr-only">Next</span>
+							  </a>
+						   </div>		
+						 </div>	 
+						<div class="col-md-6">
+						  <h5>Logo Projects:</h5>
+						  <div id="carouselD" class="carousel slide" data-ride="carousel" style="width:400px">
+							  <ol class="carousel-indicators">
+							    <li data-target="#carouselD" data-slide-to="0" class="active"></li>
+							    <li data-target="#carouselD" data-slide-to="1"></li>
+							    <li data-target="#carouselD" data-slide-to="2"></li>
+							  </ol>
+							  <div class="carousel-inner" role="listbox">
+								<div class="carousel-item active">
+								  <img src="Tron.JPG" alt="aaa" class="img-responsive">
+								  <div class="carousel-caption d-none d-md-block">
+								    <h5>Tron</h5>
+								  </div>
+								</div>	
+								<div class="carousel-item">
+								  <img src="DoodleJump.JPG" alt="aaa" class="img-responsive">
+								  <div class="carousel-caption d-none d-md-block">
+								    <h5>1v1 Doodle Jump</h5>
+								  </div>
+								</div>	
+								<div class="carousel-item">
+								  <img src="Chicken.JPG" alt="aaa" class="img-responsive">
+								  <div class="carousel-caption d-none d-md-block">
+								    <h5>Chicken Little</h5>
+								  </div>
+								</div>	
+							  </div>
+							  <a class="carousel-control-prev" href="#carouselD" role="button" data-slide="prev">
+							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							    <span class="sr-only">Previous</span>
+							  </a>
+							  <a class="carousel-control-next" href="#carouselD" role="button" data-slide="next">
+							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							    <span class="sr-only">Next</span>
+							  </a>
+						   </div>		
+						 </div>	
+					  </div> 
+					</div>
+				</div>	
 		     </div>
 		     <hr>
 			 <div class="row">
@@ -128,13 +337,82 @@
 		        <div class="col-md-9">
 		          <h3><a href="https://www.nist.gov/mml" target="_blank">Science Internship - Material Measurements Lab</a></h3>
 		          <h5>Sept 2016 - May 2017</h5>		        
-		          <p>Extracted individual fibers from dyed fabrics to collect data using a microspectrophotometer on the occurrence of photofading in fiber trace evidence. 
-		          Compiled data into Excel spreadsheets to facilitate visual presentations of the results</p>
+		          <p>Helped collect data on the occurrence of photofading. <b>photofading</b> is the loss of color (decrease in absorbance levels) in the 
+		          trace fiber evidence due to the exposure to ultraviolet light by the microspectrophotometer. My data contributed to the Material Measurement Laboratory’s efforts to 
+		          improve the accuracy of forensic examination by raising awareness of the occurrence of photofading.
+		          <br><br>
+		          To collect the data to demonstate the occurence of photofading, I extracted individual fibers from dyed fabrics onto slides for examination. 
+		          I then put the slide under the <b> microspectrophotometer (MSP)</b> measured the fiber’s absorbance levels every minute for 15 minutes.
+		          <br><br>
+		          I combined all the data collected from CSV files into one full Excel spreadsheet with all the absorbance levels from time 0-15. I made a baseline correction for all the points,
+		          looked at the specific wavelength of the peak we were observing, calculated the %retained, and then made a graph of the data.
+		          <br><br>
+		          The results showed the gradual decrease in absorbance levels (loss of color) of the trace fiber evidence. In only 15 minutes of examination under the MSP, 
+		          fibers lost anywhere from 5% to 45% of their initial absorbance peak.
+		          <br>
+		          <br>
+		          For further research, I began using the FTIR for Dr. Forster's research on other fibers like Polyester, Nylon, and Olefine after their exposure to uv, heat, and moisture.
+		          </p>
+		          <h5>Publication:</h5>
+		          <p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5729760"  target="_blank">Forster, A.L., Bitter, J.L, Rosenthal, S., Brooks S., and Watson, S.S. “Photofading in cotton fibers dyed using red, yellow, and blue direct dyes during examination with Microspectrophotometry (MSP).” 
+				  <i>Forensic chemistry 5 (2017): 72–78. PMC. </i></a></p>		          
 		          <h5>Technologies:</h5>
 		          <ul class="Icons">
-		          
+		          	<img src="LambdaFire.jpg" width="29" height="40" alt="Lambdafire Spectroscopy Software" data-toggle="tooltip" title="Lambdafire Spectroscopy Software">
+					<img src="Craic.png" width="95" height="40" alt="CRAIC Microspectrophotometer" data-toggle="tooltip" title="CRAIC Microspectrophotometer"> 
+					<img src="Excel.png" width="40" height="40" alt="Microsoft Excel" data-toggle="tooltip" title="Microsoft Excel"> 
 		          </ul>
-		        </div>
+				  <h5>Photos:</h5>
+				  <div id="carouselE" class="carousel slide" data-ride="carousel" style="width:400px">
+					  <ol class="carousel-indicators">
+					    <li data-target="#carouselE" data-slide-to="0" class="active"></li>
+					    <li data-target="#carouselE" data-slide-to="1"></li>
+					    <li data-target="#carouselE" data-slide-to="2"></li>
+					    <li data-target="#carouselE" data-slide-to="3"></li>
+					    <li data-target="#carouselE" data-slide-to="4"></li>
+					    <li data-target="#carouselE" data-slide-to="2"></li>					    
+					  </ol>
+					  <div class="carousel-inner" role="listbox">
+						<div class="carousel-item active">
+						  <img src="NIST1.png" alt="aaa" class="img-responsive">
+						  <div class="carousel-caption d-none d-md-block">
+						    <h5>Nist Sign</h5>
+						  </div>
+						</div>	
+						<div class="carousel-item">
+						  <img src="NIST2.png" alt="aaa" class="img-responsive">
+						  <div class="carousel-caption d-none d-md-block">
+						    <h5>Dyed Fibers</h5>
+						  </div>
+						</div>	
+						<div class="carousel-item">
+						  <img src="NIST3.png" alt="aaa" class="img-responsive">
+						  <div class="carousel-caption d-none d-md-block">
+						    <h5>MSP</h5>
+						  </div>
+						</div>	
+						<div class="carousel-item">
+						  <img src="NIST4.png" alt="aaa" class="img-responsive">
+						  <div class="carousel-caption d-none d-md-block">
+						    <h5>Lambdafire Software</h5>
+						  </div>
+						</div>	
+						<div class="carousel-item">
+						  <img src="NIST5.png" alt="aaa" class="img-responsive">
+						  <div class="carousel-caption d-none d-md-block">
+						    <h5>Image of fiber underneath MSP after 30min</h5>
+						  </div>
+						</div>	
+					  </div>
+					  <a class="carousel-control-prev" href="#carouselE" role="button" data-slide="prev">
+					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					    <span class="sr-only">Previous</span>
+					  </a>
+					  <a class="carousel-control-next" href="#carouselE" role="button" data-slide="next">
+					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					    <span class="sr-only">Next</span>
+					  </a>
+				   </div>			        </div>
 		      </div>
 		      
 		      <div class="row" style="margin-top: 75px;">
@@ -154,49 +432,118 @@
 		          </p>
 		          <h5>Technologies:</h5>
 		          <ul class="Icons">
-					<img src="Python.png" width="170" height="40" alt="Python 3.3" title="Python 3.3"> 
-					<img src="Matlab.png" width="170" height="40" alt="Matlab" title="Matlab"> 
+					<img src="Python.png" width="170" height="40" alt="Python 3.3" data-toggle="tooltip" title="Python 3.3"> 
+					<img src="Matlab.png" width="170" height="40" alt="Matlab" data-toggle="tooltip" title="Matlab"> 
 		          </ul>
-		          <h5>Projects</h5>
-					<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width:400px">
-					  <ol class="carousel-indicators">
-					    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-					    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-					    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-					  </ol>
-					  <div class="carousel-inner" >
-						<div class="carousel-item active">
-						  <img src="me.jpg" alt="aaa" class="img-responsive">
-						  <div class="carousel-caption d-none d-md-block">
-						    <h5>Test1</h5>
-						    <p>This</p>
-						  </div>
+				  <div class="container" style="padding-left:0px;">	
+						<div class="row">
+							<div class="col-md-6">
+								<h5>Matlab Projects:</h5>
+								<div id="carouselF" class="carousel slide" data-ride="carousel">
+								  <ol class="carousel-indicators">
+								    <li data-target="#carouselF" data-slide-to="0" class="active"></li>
+								    <li data-target="#carouselF" data-slide-to="1"></li>
+								    <li data-target="#carouselF" data-slide-to="2"></li>
+								    <li data-target="#carouselF" data-slide-to="3"></li>
+								    <li data-target="#carouselF" data-slide-to="4"></li>
+								  </ol>
+								  <div class="carousel-inner" >
+									<div class="carousel-item active">
+									  <img src="2DPlots.JPG" alt="aaa" class="img-responsive" onclick="alert('hello')">
+									  <div class="carousel-caption d-none d-md-block">
+									    <h5>2D Plots</h5>
+									  </div>
+									</div>
+									<div class="carousel-item" >
+									  <img src="3DPlots.JPG" alt="aaa" class="img-responsive">
+									  <div class="carousel-caption d-none d-md-block">
+										<h5>3D Plots</h5>
+									  </div>
+									</div>
+									<div class="carousel-item">
+									  <img src="Euler's Method.JPG" alt="aaa" class="img-responsive">
+									  <div class="carousel-caption d-none d-md-block">
+									    <h5>Euler's Method</h5>
+									  </div>
+									</div>			
+									<div class="carousel-item">
+									  <img src="DiffEqCalculator.JPG" alt="aaa" class="img-responsive">
+									  <div class="carousel-caption d-none d-md-block">
+									    <h5>Differential EQuations Calculator</h5>
+									  </div>
+									</div>	
+									<div class="carousel-item">
+									  <img src="FourierSeries.JPG" alt="aaa" class="img-responsive">
+									  <div class="carousel-caption d-none d-md-block">
+									    <h5>Fourier Series</h5>
+									  </div>
+									</div>				
+								  </div>
+								  <a class="carousel-control-prev" href="#carouselF" role="button" data-slide="prev">
+								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								    <span class="sr-only">Previous</span>
+								  </a>
+								  <a class="carousel-control-next" href="#carouselF" role="button" data-slide="next">
+								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+								    <span class="sr-only">Next</span>
+								  </a>
+								</div>	
+							</div>
+							<div class="col-md-6">
+								<h5>Python Projects:</h5>
+								<div id="carouselG" class="carousel slide" data-ride="carousel">
+								  <ol class="carousel-indicators">
+								    <li data-target="#carouselG" data-slide-to="0" class="active"></li>
+								    <li data-target="#carouselG" data-slide-to="1"></li>
+								    <li data-target="#carouselG" data-slide-to="2"></li>
+								    <li data-target="#carouselG" data-slide-to="3"></li>
+								    <li data-target="#carouselG" data-slide-to="4"></li>
+								  </ol>
+								  <div class="carousel-inner" >
+									<div class="carousel-item active">
+									  <img src="2DPlots.JPG" alt="aaa" class="img-responsive">
+									  <div class="carousel-caption d-none d-md-block">
+									    <h5>2D Plots</h5>
+									  </div>
+									</div>
+									<div class="carousel-item" >
+									  <img src="3DPlots.JPG" alt="aaa" class="img-responsive">
+									  <div class="carousel-caption d-none d-md-block">
+										<h5>3D Plots</h5>
+									  </div>
+									</div>
+									<div class="carousel-item">
+									  <img src="Euler's Method.JPG" alt="aaa" class="img-responsive">
+									  <div class="carousel-caption d-none d-md-block">
+									    <h5>Euler's Method</h5>
+									  </div>
+									</div>			
+									<div class="carousel-item">
+									  <img src="DiffEqCalculator.JPG" alt="aaa" class="img-responsive">
+									  <div class="carousel-caption d-none d-md-block">
+									    <h5>Differential EQuations Calculator</h5>
+									  </div>
+									</div>	
+									<div class="carousel-item">
+									  <img src="FourierSeries.JPG" alt="aaa" class="img-responsive">
+									  <div class="carousel-caption d-none d-md-block">
+									    <h5>Fourier Series</h5>
+									  </div>
+									</div>				
+								  </div>
+								  <a class="carousel-control-prev" href="#carouselG" role="button" data-slide="prev">
+								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								    <span class="sr-only">Previous</span>
+								  </a>
+								  <a class="carousel-control-next" href="#carouselG" role="button" data-slide="next">
+								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+								    <span class="sr-only">Next</span>
+								  </a>
+								</div>	
+							</div>
 						</div>
-						<div class="carousel-item" >
-						  <img src="cornell.png" alt="aaa" class="img-responsive">
-						  <div class="carousel-caption d-none d-md-block">
-						    <h5>Test2</h5>
-						    <p>is</p>
-						  </div>
-						</div>
-						<div class="carousel-item">
-						  <img src="me.jpg" alt="aaa" class="img-responsive">
-						  <div class="carousel-caption d-none d-md-block">
-						    <h5>Test3</h5>
-						    <p>a test</p>
-						  </div>
-						</div>						
-					  </div>
-					  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					    <span class="sr-only">Previous</span>
-					  </a>
-					  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-					    <span class="sr-only">Next</span>
-					  </a>
-					</div>			 		
-			 	</div>
+					</div>	 
+				</div>
 			 </div>	  		
 			 <div style="clear:both;"/>	
 			 <hr>

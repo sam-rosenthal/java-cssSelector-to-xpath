@@ -1,0 +1,22 @@
+<script> 
+	function showHideAllDetails(newText) {
+		if(newText=='show details')
+		{
+			$('.technologies').collapse('hide');
+		}
+		else{
+			$('.technologies').collapse('show');
+		}
+		$(".showhideDetails").text(newText);
+	}
+</script> 		
+
+<div class="card" style="width: 200px; margin:60px;">
+  <div class="card-body">
+    <p class="card-text"><i>Go to the <a href="Skills">Knowledge Matrix</a> page to view a table of my knowledge (high medium low) of the technologies listed.</i></p>
+  </div>
+</div>
+<button type="button" class="btn btn-primary toggle-all-technologies" onclick="showHideAllDetails('hide details')"> Show all technologies details</button>
+<div style="clear:both; padding:5px; "/>
+<button type="button" class="btn btn-primary toggle-all-technologies" onclick="showHideAllDetails('show details')"> Hide all technologies details</button>
+
