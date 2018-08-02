@@ -1,3 +1,9 @@
+div.sam-navigation{
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0; /* required */
+  z-index: 1
+}
 nav li{
 	padding-right: 10px;
 }
@@ -27,7 +33,7 @@ nav a.navbar-brand div
 	margin: 7px;
 }
 body{
-	background-color:seashell;
+	background-color:#ffff99;
 	//background-image: url("background.jpg");
     background-position: center;
     background-repeat: no-repeat;
@@ -61,4 +67,32 @@ button.showhideDetails{
 	margin-bottom:8px;
 	border:0px;
 	font-size:20px;
+}
+table tr, table td.col-md-2{
+	border-left:2px solid black;
+	border-right:2px solid black;
+}
+table tr{
+	border-top:2px solid black;
+}
+th[scope="row"]~td{
+	padding:0px;
+}
+th[scope="row"]~td li{
+	height:60px;
+	margin-bottom:0px;
+	text-align:center;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+li.skill-name h5{
+	margin-top:.5rem;
+	margin-bottom:.5rem;
+}
+tr#high .skill-icon:nth-of-type(odd),tr#medium .skill-icon:nth-of-type(odd),tr#low .skill-icon:nth-of-type(even),
+tr#high .skill-name:nth-of-type(odd),tr#medium .skill-name:nth-of-type(odd),tr#low .skill-name:nth-of-type(even){
+	background: #d6d8db;
+}
+ul.list-group {
+  list-style-type: none;
 }
