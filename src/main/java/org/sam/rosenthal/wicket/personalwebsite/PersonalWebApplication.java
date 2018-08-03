@@ -53,6 +53,7 @@ public class PersonalWebApplication extends WebApplication
 		mountPage("/AboutMe", AboutMe.class);
 		mountPage("/Projects", Projects.class);
 		mountPage("/Navigation", Navigation.class);
+		mountPage("/Card", Card.class);
 		mountPage("/Skills", Skills.class);
 		mountPage("/SeeKnowledgeMatrix", SeeKnowledgeMatrix.class);
 	}
