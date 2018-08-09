@@ -56,6 +56,8 @@ public class PersonalWebApplication extends WebApplication
 		mountPage("/Card", Card.class);
 		mountPage("/Skills", Skills.class);
 		mountPage("/SeeKnowledgeMatrix", SeeKnowledgeMatrix.class);
+		mountPage("/Resume", Resume.class);
+
 	}
 	
 	@Override

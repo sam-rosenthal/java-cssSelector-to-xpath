@@ -32,11 +32,9 @@ nav a.navbar-brand div
 	margin: 7px;
 }
 body{
-	background-color:#ffff99;
-	//background-image: url("background.jpg");
+	//background-color:#ffff99;
+	background-image: url("y.jpg");
     background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 ul.icons{
 	padding-left:0px;
@@ -105,4 +103,10 @@ div.flex-container{
 div.container:
 {
 	width:100%;
+}
+ul#about-me-list li p{
+	margin:0px;
+}
+div#about-me-info p{
+	font-size:20px;
 }

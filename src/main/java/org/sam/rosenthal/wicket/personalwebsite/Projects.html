@@ -46,9 +46,9 @@
 			        </div>
 			        <div class="col-md-9">
 			          <h3><a href="https://GitHub.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md" target="_blank">java-cssSelector-to-xpath OSS Project</a></h3>
-			          <h5>July 2018 - Present</h5>		        		          
+			          <h5>June 2018 - Present</h5>		        		          
 			          <h5></h5>
-			          <p>This Open Source Software is written in Java and converts CSS Selector Strings to XPath Strings. To include this software in 3rd-party packages requires no additional external jar files.
+			          <p>I developed this Open Source Software (<a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/License.txt" target="_blank">MIT License</a>) which is written in Java and converts CSS Selector Strings to XPath Strings. To include this software in 3rd-party packages requires no additional external jar files.
 			            </p>
 			          <h5>Technologies
 			          	(<button id="java-cssSelector-to-xpath-technology-showhide" class="btn btn-link showhideDetails" onclick="toggleShowDideDetailsText('java-cssSelector-to-xpath-technology')">show details</button>)
@@ -60,6 +60,7 @@
 						<img src="https://img.shields.io/badge/Regular%20Expressions-Java-yellow.svg" alt="Regular Expressions" data-toggle="tooltip" title="Regular Expressions"> 	
 						<img src="JUnit.png" width="54" height="40" alt="JUnit Test" data-toggle="tooltip" title="JUnit"> 					
 						<img src="Git.png" width="40" height="40" alt="Git" data-toggle="tooltip" title="Git"> 
+						<img src="TortoiseGit.png" width="72" height="40" alt="Tortoise Git" data-toggle="tooltip" title="Tortoise Git"> 
 					  	<img src="Github.png" width="40" height="40" alt="GitHub" data-toggle="tooltip" title="GitHub"> 
 						<img src="Travis.png" width="40" height="40" alt="Travis CI" data-toggle="tooltip" title="Travis CI"> 	
 					  </ul>	
@@ -90,6 +91,15 @@
 						<p> <b><a href="https://www.seleniumhq.org/" target="_blank">Selenium Testing</a></b> - I used Selenium testing to verify that the actual output of my CSS Selector converter is producing correct and valid XPath.
 						Please see <a href="#java-cssSelector-to-xpath-website-technology-details" onclick="$('#java-cssSelector-to-xpath-website-technology-details').collapse('show');$('#java-cssSelector-to-xpath-website-technology-showhide').text('hide details');">Selenium testing details</a> of the CSS Selector to XPath Converter Website.</p>
 					  	<hr>
+					  	<p><b>GitHub, Git, <a href="https://tortoisegit.org/" target="_blank">Tortoise Git</a></b> - Used Git as my version control system. GitHub was my code repository. Used Eclipse’s Git-plugin and Tortoise Git to manage my source code on my PC.</p>
+					  	<hr>
+					  	<p><b><a href="https://maven.apache.org/" target="_blank">Apache Maven</a></b> - Used Maven as the build automation tool. Configured POM file to pull all required software and dependencies. 
+					  	The POM file also included plugins to run unit and integration (Selenium) tests. Maven was used for development, continuous integration, and deployment of the software. </p>
+					  	<hr>
+					  	<p><b>Continuous Integration</b> - Continuous Integration – Used <a href="https://travis-ci.org/" target="_blank">Travis CI</a> as the continuous integration service for this project. 
+					  	When changes are committed to GitHub (Branches and Master), the CI pipeline is started. The code is checked out from Github, compiled, and all unit tests are run. 
+					  	<i>Note: I have set up all selenium tests as integration-tests so they are not run as part of CI.</i></p>
+					  	<hr>
 					  </div>
 					  <h5>Images</h5>
 					  <div id="#carouselA" class="carousel slide" data-ride="carousel" style="width:400px">
@@ -98,7 +108,7 @@
 						  </ol>
 						  <div class="carousel-inner">
 							<div class="carousel-item active">
-							  <img src="GitReadme.JPG" alt="aaa" class="img-responsive">
+							  <img src="GitReadme.png" alt="aaa" class="img-responsive">
 							  <div class="carousel-caption d-none d-md-block">
 							    <h5>GitHub Repository Readme</h5>
 							  </div>
@@ -114,7 +124,7 @@
 			        </div>
 			        <div class="col-md-9">
 			          <h3><a href="https://css-selector-to-xpath.appspot.com" target="_blank">CSS Selector to XPath Converter Website</a></h3>
-			          <h5>June 2018 - Present</h5>		        
+			          <h5>July 2018 - Present</h5>		        
 			          <p>Free online CSS Selector to XPath converter. This tool uses java-CssSelector-To-Xpath OSS to transform CSS Selector strings to XPath strings.</p>
 			          <h5>Technologies
 			          	(<button id="java-cssSelector-to-xpath-website-technology-showhide" class="btn btn-link showhideDetails" onclick="toggleShowDideDetailsText('java-cssSelector-to-xpath-website-technology')">show details</button>)
@@ -132,6 +142,7 @@
 						<img src="Selenium.png" width="45" height="40" alt="Selenium" data-toggle="tooltip" title="Selenium"> 
 						<img src="JUnit.png" width="54" height="40" alt="JUnit Test" data-toggle="tooltip" title="JUnit"> 
 						<img src="Git.png" width="40" height="40" alt="Git" data-toggle="tooltip" title="Git"> 
+						<img src="TortoiseGit.png" width="72" height="40" alt="Tortoise Git" data-toggle="tooltip" title="Tortoise Git"> 
 					  	<img src="Github.png" width="40" height="40" alt="GitHub" data-toggle="tooltip" title="GitHub"> 
 						<img src="Travis.png" width="40" height="40" alt="Travis CI" data-toggle="tooltip" title="Travis CI"> 	
 						<img src="Linux.png" width="33" height="40" alt="Linux (Debian)" data-toggle="tooltip" title="Linux (Debian)"> 	
@@ -140,7 +151,7 @@
 					  <div id="java-cssSelector-to-xpath-website-technology-details" class="collapse in technologies">
 			          <h5>Technology Details:</h5>
 						<p> <b>Selenium Testing</b> - I implemented two types of Selenium Testing. The obvious testing is to verify that my CSS Selector to XPath website is working properly. My tests also verify that 
-						the actual output of my CSS Selector converter is producing correct and valid XPath. <br> <br>
+						the actual output of my CSS Selector converter is producing correct and valid XPaths. <br> <br>
 						All Selenium tests are driven by the JUnit test framework. 
 						I test 3 browsers: Chrome, FireFox, and Edge. <i>Note: I develop on a Window PC that’s why I chose those three browsers to test. </i>
 						My first set of Selenium tests verify that all expected text is displayed on my the converter website. I verify that all links work and bring up the expected websites on a new tab. 
@@ -172,40 +183,34 @@
 	    return By.xpath(xpath);
 	}</code></pre>
 					  	<hr>
-					  	<p><b><a href="https://wicket.apache.org/" target="_blank">Apache Wicket</a></b> – Used wicket as  the web application framework for the website. I modified one of Wicket’s example programs, 
+					  	<p><b><a href="https://wicket.apache.org/" target="_blank">Apache Wicket</a></b> – Used Wicket as the web application framework for the website. I modified one of Wicket’s example programs, 
 					  	<a href="http://examples8x.wicket.apache.org/echo/" target="_blank"> echo </a> which consisted of a text field and a submit button. 
 					  	Since Wicket uses HTML file for templating, I was able to easily add custom static content, including links, to the website. </p>
 					  	<hr> 
-					  	<p><b>GitHub, Git, <a href="https://tortoisegit.org/" target="_blank">Tortoise Git</a></b> - Used Git as my version control system. GitHub was my code repository. Used Eclipse’s Git-plugin and Tortoise Git to manage my source code on my PC.</p>
-					  	<hr>
-					  	<p><b><a href="https://maven.apache.org/" target="_blank">Apache Maven</a></b> - Used Maven as the build automation tool. Configured POM file to pull all required software and dependencies. 
-					  	The POM file also included plugins to run unit and integration (Selenium) tests. Maven was used for development, continuous integration, and deployment of the software. </p>
-					  	<hr>
-					  	<p><b>Continous Integration</b> - Continuous Integration – Used <a href="https://travis-ci.org/" target="_blank">Travis CI</a> as the continuous integration service for this project. 
-					  	When changes are committed to GitHub (Branches and Master), the CI pipeline is started. The code is checked out from Github, compiled, and all unit tests are run. 
-					  	<i>Note: I have set up all selenium tests as integration-tests so they are not run as part of CI.</i></p>
-					  	<hr>
-					  	<p><b><a href="https://console.cloud.google.com/appengine" target="_blank">GCP App Engine</a></b> - <a href="https://console.cloud.google.com" target="_blank">Google Cloud Platform</a>’s App Engine was used to host CSS Selector to XPath Converter Website. I created a GCP account and project.
+					  	<p><b><a href="https://console.cloud.google.com/appengine" target="_blank">GCP App Engine</a></b> - Used <a href="https://console.cloud.google.com" target="_blank"> Google Cloud Platform’s App Engine</a> to host CSS Selector to XPath Converter Website. I created a GCP account and project.
 					  	 I used GCP’s sweet tools to deploy, monitor, and manage the website.</p>
 					  	<hr>	
 						<p><b><a href="https://www.debian.org/" target="_blank">Linux (Debian)</a></b> – Used Google’s Cloud Shell (a bash shell) to compile, test deploy, and deploy webapp on the GCP App Engine.</p>
 						<hr>
+					  	<p><b>GitHub, Git, Apache Maven, Continuous Integration</b> - This Website's source code is maintained as part of the java-csSelector-to-xpath repository (See previous section for 
+						<a href="#java-cssSelector-to-xpath-technology-details" onclick="$('#java-cssSelector-to-xpath-technology-details').collapse('show');$('#java-cssSelector-to-xpath-website-technology-showhide').text('hide details');">technical details</a>). </p>
+					  	<hr>
 					  </div>
 					  <h5>Images:</h5>
-					  <div id="carouselB" class="carousel slide" data-ride="carousel" style="width:400px">
+					  <div id="carouselB" class="carousel slide" data-ride="carousel" style="width:400px;">
 						  <ol class="carousel-indicators">
 						    <li data-target="#carouselB" data-slide-to="0" class="active"></li>
 						    <li data-target="#carouselB" data-slide-to="1"></li>
 						  </ol>
 						  <div class="carousel-inner" role="listbox">
 							<div class="carousel-item active">
-							  <img src="Website.JPG" alt="aaa" class="img-responsive">
+							  <img src="Website.png" alt="aaa" class="img-responsive">
 							  <div class="carousel-caption d-none d-md-block">
 							    <h5>GCP Website</h5>
 							  </div>
 							</div>	
 							<div class="carousel-item">
-							  <img src="App Engine.JPG" alt="aaa" class="img-responsive">
+							  <img src="App Engine.png" alt="aaa" class="img-responsive">
 							  <div class="carousel-caption d-none d-md-block">
 							    <h5>GCP Website</h5>
 							  </div>
@@ -229,7 +234,7 @@
 			        </div>
 			        <div class="col-md-9">
 			          <h3>Personal Website</h3>
-			          <h5>June 2018-present</h5>		        		          
+			          <h5>July 2018-Present</h5>		        		          
 			          <p>This website was developed without templates or publishing tools. I used Eclipse as my editor. Bootstrap was used as the front-end component library. 
 			          I used Font-Awesome for some icons. Javascript and jQuery were used to supplement Bootstrap to provide additional dynamic behavior. </p>		          
 	 				  <h5>Technologies
@@ -242,7 +247,9 @@
 						<img src="jquery.png" width="42" height="40" alt="jQuery" data-toggle="tooltip" title="jQuery"> 
 						<img src="Javascript.png" width="28.3" height="40" alt="Javascript" data-toggle="tooltip" title="Javascript"> 
 						<img src="FA.png" width="35" height="35" alt="Font Awesome" data-toggle="tooltip" title="Font Awesome">
+						<img src="Eclipse.png" width="43" height="40" alt="Eclipse IDE" data-toggle="tooltip" title="Eclipse IDE"> 
 						<img src="Git.png" width="40" height="40" alt="Git" data-toggle="tooltip" title="Git"> 
+						<img src="TortoiseGit.png" width="72" height="40" alt="Tortoise Git" data-toggle="tooltip" title="Tortoise Git"> 
 					  	<img src="Github.png" width="40" height="40" alt="GitHub" data-toggle="tooltip" title="GitHub"> 
 					  </ul>
 					  <div id="personal-website-technology-details" class="collapse in technologies">
@@ -286,17 +293,18 @@
 			          <h3><a href="http://ticcamp.com/" target="_blank">TIC Camp Programming Counselor</a></h3>
 			          <h5>Summer 2017, Summer 2018</h5>		        
 			          <p>Taught Java and <a href="https://www.terrapinlogo.com/" target="_blank">Terrapin Logo</a> programming to campers ages 7 to 14. Worked with groups of 2-4 campers to develop games and applications. <br/> <br/> Java programs were written in Swing and 
-			             utilized <a href="https://processing.org/" target="_blank">Processing</a>'s graphic framework. Graphical programs would often use awt Graphics, awt Shapes, BufferedIO, ImageIO, events, event listeners. Text-based programs would use Scanner and JOptionPanes.
+			             utilized <a href="https://processing.org/" target="_blank">Processing</a>'s graphic framework. Graphical programs would often use AWT Graphics, AWT Shapes, BufferedIO, ImageIO, events, event listeners. Text-based programs would use Scanner and JOptionPanes.
 			             All software developement was written using the Eclipse IDE. Campers typically had 0-3 years of prior java programming experience. 
 			             <br/> <br/>
 			             Logo programs were written using <a href="http://www.microworlds.com/solutions/mwex.html" target="_blank">Microworlds EX IDE</a>. All programs used the <a href="https://en.wikipedia.org/wiki/Turtle_graphics" target="_blank">turtle-graphics</a> as a graphical user interface. 
 			             Programs working with graphical templates and creating rules and procedures. Campers typically had 0-1 years of Logo programming experience.</p>		        
 			          <h5>Technologies:</h5>
 			          <ul class="Icons">
-			          	<img src="Microworlds.ico" width="40" height="40" alt="Microworlds EX" data-toggle="tooltip" title="Microworlds EX">
 						<img src="Eclipse.png" width="43" height="40" alt="Eclipse IDE" data-toggle="tooltip" title="Eclipse IDE"> 
 						<img src="https://img.shields.io/badge/jdk-8-lightgray.svg" alt="Java JDK 8" data-toggle="tooltip" title="Java JDK 8"> 
 						<img src="https://i.vimeocdn.com/portrait/10124081_300x300.webp" width="40" height="40" alt="Processing" data-toggle="tooltip" title="Processing"> 
+						<img src="Microworlds.ico" width="40" height="40" alt="Microworlds EX" data-toggle="tooltip" title="Microworlds EX">
+						<img src="https://img.shields.io/badge/Terrapin%20Logo-%20-yellowgreen.svg" alt="Terrapin Logo" data-toggle="tooltip" title="Terrapin Logo">
 			          </ul>
 			          <div class="container" style="padding-left:0px;">	
 						<div class="row">
@@ -314,42 +322,42 @@
 								  </ol>
 								  <div class="carousel-inner" role="listbox">
 									<div class="carousel-item active">
-									  <img src="Tron.JPG" alt="aaa" class="img-responsive">
+									  <img src="Tron.png" alt="aaa" class="img-responsive">
 									  <div class="carousel-caption d-none d-md-block">
 									    <h5>Tron</h5>
 									  </div>
 									</div>	
 									<div class="carousel-item">
-									  <img src="DoodleJump.JPG" alt="aaa" class="img-responsive">
+									  <img src="DoodleJump.png" alt="aaa" class="img-responsive">
 									  <div class="carousel-caption d-none d-md-block">
 									    <h5>1v1 Doodle Jump</h5>
 									  </div>
 									</div>	
 									<div class="carousel-item">
-									  <img src="Chicken.JPG" alt="aaa" class="img-responsive">
+									  <img src="Chicken.png" alt="aaa" class="img-responsive">
 									  <div class="carousel-caption d-none d-md-block">
 									    <h5>Chicken Little</h5>
 									  </div>
 									</div>	
 									<div class="carousel-item">
-									  <img src="Pong.JPG" alt="aaa" class="img-responsive">
+									  <img src="Pong.png" alt="aaa" class="img-responsive">
 									  <div class="carousel-caption d-none d-md-block">
 									    <h5>Pong</h5>
 									  </div>
 									</div>	
 									<div class="carousel-item">
-									  <img src="Balls.JPG" alt="aaa" class="img-responsive">
+									  <img src="Balls.png" alt="aaa" class="img-responsive">
 									  <div class="carousel-caption d-none d-md-block">
 									    <h5>Games Hub</h5>
 									  </div>
 									</div>	
 									<div class="carousel-item">
-									  <img src="Surrealifier.JPG" alt="aaa" class="img-responsive">
+									  <img src="Surrealifier.png" alt="aaa" class="img-responsive">
 									  <div class="carousel-caption d-none d-md-block">
 									    <h5>Text Surrealifier</h5>
 									  </div>
 									</div>									<div class="carousel-item">
-									  <img src="Quiz.JPG" alt="aaa" class="img-responsive">
+									  <img src="Quiz.png" alt="aaa" class="img-responsive">
 									  <div class="carousel-caption d-none d-md-block">
 									    <h5>Trivia Quiz</h5>
 									  </div>
@@ -378,31 +386,31 @@
 								  </ol>
 								  <div class="carousel-inner" role="listbox">
 									<div class="carousel-item active">
-									  <img src="Trivia.JPG" alt="aaa" class="img-responsive">
+									  <img src="Trivia.png" alt="aaa" class="img-responsive">
 									  <div class="carousel-caption d-none d-md-block">
 									    <h5>Trivia Quiz</h5>
 									  </div>
 									</div>	
 									<div class="carousel-item">
-									  <img src="Jaguar.JPG" alt="aaa" class="img-responsive">
+									  <img src="Jaguar.png" alt="aaa" class="img-responsive">
 									  <div class="carousel-caption d-none d-md-block">
 									    <h5>Jaguar dodge</h5>
 									  </div>
 									</div>	
 									<div class="carousel-item">
-									  <img src="Firefront.JPG" alt="aaa" class="img-responsive">
+									  <img src="Firefront.png" alt="aaa" class="img-responsive">
 									  <div class="carousel-caption d-none d-md-block">
 									    <h5>firefront</h5>
 									  </div>
 									</div>	
 									<div class="carousel-item">
-									  <img src="CrossyRoad.JPG" alt="aaa" class="img-responsive">
+									  <img src="CrossyRoad.png" alt="aaa" class="img-responsive">
 									  <div class="carousel-caption d-none d-md-block">
 									    <h5>Crossy Road</h5>
 									  </div>
 									</div>	
 									<div class="carousel-item">
-									  <img src="MazeMan.JPG" alt="aaa" class="img-responsive">
+									  <img src="MazeMan.png" alt="aaa" class="img-responsive">
 									  <div class="carousel-caption d-none d-md-block">
 									    <h5>Maze Man</h5>
 									  </div>
@@ -447,7 +455,7 @@
 					  <i>Forensic chemistry 5 (2017): 72–78. PMC. </i></a></p>		          
 			          <h5>Technologies:</h5>
 			          <ul class="Icons">
-			          	<img src="LambdaFire.jpg" width="29" height="40" alt="Lambdafire Spectroscopy Software" data-toggle="tooltip" title="Lambdafire Spectroscopy Software">
+			          	<img src="LambdaFire.png" width="29" height="40" alt="Lambdafire Spectroscopy Software" data-toggle="tooltip" title="Lambdafire Spectroscopy Software">
 						<img src="Craic.png" width="95" height="40" alt="CRAIC Microspectrophotometer" data-toggle="tooltip" title="CRAIC Microspectrophotometer"> 
 						<img src="Excel.png" width="40" height="40" alt="Microsoft Excel" data-toggle="tooltip" title="Microsoft Excel"> 
 			          </ul>
@@ -517,8 +525,7 @@
 				    <div class="col-md-9">
 			          <h3><a href="https://www.engineering.cornell.edu/programs-departments/computer-science" target="_blank">Cornell University - College of Engineering, Computer Science</a></h3>
 			          <h5>Sept 2017 - Present</h5>		        
-			          <p><b>CS 110</b>:  Introduction to Computing Using Python, <b>CS 1132</b>:  Short Course in MATLAB, <b>ENGRD 1132</b>:  Applications of Matlab
-			          </p>
+			          <p><b>CS 110</b>:  Introduction to Computing Using Python; <b>CS 1132</b>:  Short Course in MATLAB; <b>ENGRG/MAE 1112</b>: Practical Computing for Engineering Applications of Matlab</p>
 			          <h5>Technologies:</h5>
 			          <ul class="Icons">
 						<img src="Python.png" width="170" height="40" alt="Python 3.3" data-toggle="tooltip" title="Python 3.3"> 
@@ -535,13 +542,13 @@
 									  </ol>
 									  <div class="carousel-inner" >
 										<div class="carousel-item active">
-										  <img src="Imager.JPG" alt="aaa" class="img-responsive" onclick="alert('hello')">
+										  <img src="Imager.png" alt="aaa" class="img-responsive" onclick="alert('hello')">
 										  <div class="carousel-caption d-none d-md-block">
 										    <h5>Image editor</h5>
 										  </div>
 										</div>
 										<div class="carousel-item" >
-										  <img src="SpaceInvaders.JPG" alt="aaa" class="img-responsive">
+										  <img src="SpaceInvaders.png" alt="aaa" class="img-responsive">
 										  <div class="carousel-caption d-none d-md-block">
 											<h5>Space Invaders</h5>
 										  </div>
@@ -569,31 +576,31 @@
 									  </ol>
 									  <div class="carousel-inner" >
 										<div class="carousel-item active">
-										  <img src="2DPlots.JPG" alt="aaa" class="img-responsive">
+										  <img src="2DPlots.png" alt="aaa" class="img-responsive">
 										  <div class="carousel-caption d-none d-md-block">
 										    <h5>2D Plots</h5>
 										  </div>
 										</div>
 										<div class="carousel-item" >
-										  <img src="3DPlots.JPG" alt="aaa" class="img-responsive">
+										  <img src="3DPlots.png" alt="aaa" class="img-responsive">
 										  <div class="carousel-caption d-none d-md-block">
 											<h5>3D Plots</h5>
 										  </div>
 										</div>
 										<div class="carousel-item">
-										  <img src="Euler's Method.JPG" alt="aaa" class="img-responsive">
+										  <img src="Euler's Method.png" alt="aaa" class="img-responsive">
 										  <div class="carousel-caption d-none d-md-block">
 										    <h5>Euler's Method</h5>
 										  </div>
 										</div>			
 										<div class="carousel-item">
-										  <img src="DiffEqCalculator.JPG" alt="aaa" class="img-responsive">
+										  <img src="DiffEqCalculator.png" alt="aaa" class="img-responsive">
 										  <div class="carousel-caption d-none d-md-block">
 										    <h5>Differential EQuations Calculator</h5>
 										  </div>
 										</div>	
 										<div class="carousel-item">
-										  <img src="FourierSeries.JPG" alt="aaa" class="img-responsive">
+										  <img src="FourierSeries.png" alt="aaa" class="img-responsive">
 										  <div class="carousel-caption d-none d-md-block">
 										    <h5>Fourier Series</h5>
 										  </div>
