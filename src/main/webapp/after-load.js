@@ -1,5 +1,14 @@
 function adjustTopOfCard(){
-	var newTop= 60+$(".sam-navigation").height(); 
+	if(screen.width<=1280){
+		var newTop= 30+$(".sam-navigation").height(); 
+		$('.sambox').css('margin-left',30);
+		$('.sambox').css('margin-right',30);
+	}
+	else{
+		var newTop= 60+$(".sam-navigation").height();
+		$('.sambox').css('margin-left',60);
+		$('.sambox').css('margin-right',60);
+	} 
 	$('.sambox').css('top',newTop);
 }
 $(document).ready(function(){

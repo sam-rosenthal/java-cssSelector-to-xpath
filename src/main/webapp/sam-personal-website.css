@@ -1,7 +1,7 @@
 div.sam-navigation, div.sambox{
   position: sticky;
-  top: 0; /* required */
-  z-index: 1
+  top: 0;
+  z-index: 20;
 }
 nav li{
 	padding-right: 10px;
@@ -30,6 +30,14 @@ nav a.navbar-brand div
 	font-weight: bold;
 	float: right; 
 	margin: 7px;
+}
+div.sam-card{
+	min-width:300px;
+}
+div.sambox{
+	bottom:25px;
+	position:fixed;
+	overflow-y:auto;
 }
 body{
 	//background-color:#ffff99;

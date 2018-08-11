@@ -70,14 +70,14 @@
 					    I used the Matcher and Pattern classes to parse the selector into elements, attribute names, and attributes that make up the components of the CSS Selector String.
 					    Once the string was broken into  its components it was straight forward to  reconstruct the corresponding XPath String. Listed are some Regular Expressions that were used 
 					    to identify CSS Selector components:</p>
-					    <pre style="background-color:#f6f8fa"><code>private static final String QUOTES_RE = "([\"\'])"; 
-	private static final String ATTRIBUTE_VALUE_RE = "([-_.#a-zA-Z0-9:\\/ ]+)"; 
-	private static final String ATTRIBUTE_VALUE_RE_NO_SPACES = "([-_.#a-zA-Z0-9:\\/]+)";
-	private static final String ELEMENT_ATTRIBUTE_NAME_RE="(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)";
-	private static final String STARTING_ELEMENT_RE = "^("+ELEMENT_ATTRIBUTE_NAME_RE+"|([*]))?";
-	private static final String PSUEDO_RE = "(:[a-z][a-z\\-]*([(][^)]+[)])?)";</code></pre> 
+					    <pre style="background-color:#f6f8fa"><code>  private static final String QUOTES_RE = "([\"\'])"; 
+  private static final String ATTRIBUTE_VALUE_RE = "([-_.#a-zA-Z0-9:\\/ ]+)"; 
+  private static final String ATTRIBUTE_VALUE_RE_NO_SPACES = "([-_.#a-zA-Z0-9:\\/]+)";
+  private static final String ELEMENT_ATTRIBUTE_NAME_RE="(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)";
+  private static final String STARTING_ELEMENT_RE = "^("+ELEMENT_ATTRIBUTE_NAME_RE+"|([*]))?";
+  private static final String PSUEDO_RE = "(:[a-z][a-z\\-]*([(][^)]+[)])?)";</code></pre> 
 						<p>Regular expressions were also used when  calling the replaceAll String method.  A simple example of a regex expression that was used to remove white spaces was:</p>
-					    <pre style="background-color:#f6f8fa"><code>selectorString=selectorString.replaceAll("\\s+","");</code></pre> 
+					    <pre style="background-color:#f6f8fa"><code>  selectorString=selectorString.replaceAll("\\s+","");</code></pre> 
 						<hr>
 						<p><b>Recursion</b> – A basic CSS Selector is made up of (0 or 1) elements associated with (0 or more) attributes. A basic CSS Selector can have a "combinator" relationship with 
 						another CSS selector which then can have a "combinator" relationship with another CSS Selector which… This is the “cascading” relationship of CSS. This pattern lent itself to recursion.
@@ -166,22 +166,22 @@
 						constructed with the same base-case CSS Selectors defined in a JUnit test written for the OSS converter software. The Selenium test and the JUnit test use the same inputs and outputs as part of the tests.
 						<br><br>The following is how I implemented the By.cssSelector and By.xpath Selenium tests:
 						<br><br>The abstract Selenium class has the following method:</p>
-	<pre style="background-color:#f6f8fa"><code>protected By getBy(String cssSelector) {
-	    return By.cssSelector(cssSelector);
-	}</code></pre>				 					
+	<pre style="background-color:#f6f8fa"><code>  protected By getBy(String cssSelector) {
+    return By.cssSelector(cssSelector);
+  }</code></pre>				 					
 						<p>The By.xpath tests override this method with:</p>
-	<pre style="background-color:#f6f8fa"><code>@Override
-	protected By getBy(String cssSelector){
-	    String xpath = null;
-	    try{
-	        xpath = converter.convertCssSelectorStringToXpathString(cssSelector);
-	    } 
-	    catch (CssSelectorToXPathConverterException e){
-	        throw new RuntimeException(e);
-	    }
-	    System.out.println("original cssSelector="+cssSelector+", using xpath="+xpath);
-	    return By.xpath(xpath);
-	}</code></pre>
+	<pre style="background-color:#f6f8fa"><code>  @Override
+  protected By getBy(String cssSelector) {
+    String xpath = null;
+    try {
+      xpath = converter.convertCssSelectorStringToXpathString(cssSelector);
+    } 
+    catch (CssSelectorToXPathConverterException e) {
+      throw new RuntimeException(e);
+    }
+    System.out.println("original cssSelector="+cssSelector+", using xpath="+xpath);
+    return By.xpath(xpath);
+  }</code></pre>
 					  	<hr>
 					  	<p><b><a href="https://wicket.apache.org/" target="_blank">Apache Wicket</a></b> – Used Wicket as the web application framework for the website. I modified one of Wicket’s example programs, 
 					  	<a href="http://examples8x.wicket.apache.org/echo/" target="_blank"> echo </a> which consisted of a text field and a submit button. 
