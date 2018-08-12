@@ -86,7 +86,7 @@
 </pre>
 </li> 
 </ul>
-<h2><a id="TODOs"></a>Todos</h2>
+<h2><a id="TODOs"></a>TODOs</h2>
 <ul>
   <li>Handle Psuedo-classes</li>
 </ul>
