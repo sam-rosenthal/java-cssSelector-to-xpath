@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.sam.rosenthal</groupId>
 	<artifactId>org.sam.rosenthal.java-cssSelector-to-xpath</artifactId>
-	<version>v1.0.3.${git.commit.time}.${git.commit.id.abbrev}</version>
+	<version>v1.0.4.${git.commit.time}.${git.commit.id.abbrev}</version>
 	<name>java-cssSelector-to-xpath</name>
 	<description>java-cssSelector-to-xpath</description>
 
