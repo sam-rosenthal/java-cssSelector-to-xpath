@@ -18,21 +18,21 @@ public class CssSelectorToXpathBaseWebpageContentTest extends AbstractCssSelecto
 	}
 
 	@Test
-	public void testBasicExceptiobCasesWithSeleniumChrome()  throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+	public void testBasicExceptionCasesWithSeleniumChrome()  throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
 	{
-		testBasicExceptiobCasesWithSelenium(BrowserType.CHROME);
+		testBasicExceptionCasesWithSelenium(BrowserType.CHROME);
 	}
 	@Test
-	public void testBasicExceptiobCasesWithSeleniumFirefox()  throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+	public void testBasicExceptionCasesWithSeleniumFirefox()  throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
 	{
-		testBasicExceptiobCasesWithSelenium(BrowserType.FIREFOX);
+		testBasicExceptionCasesWithSelenium(BrowserType.FIREFOX);
 	}
 	@Test
-	public void testBasicExceptiobCasesWithSeleniumEdge()  throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+	public void testBasicExceptionCasesWithSeleniumEdge()  throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
 	{
-		testBasicExceptiobCasesWithSelenium(BrowserType.EDGE);
+		testBasicExceptionCasesWithSelenium(BrowserType.EDGE);
 	}
-	protected void testBasicExceptiobCasesWithSelenium(BrowserType browserType) throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+	protected void testBasicExceptionCasesWithSelenium(BrowserType browserType) throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
 	{
 		setupTest(browserType);
 		//driver.get("http://localhost/css-selector-to-xpath-reference-cases");

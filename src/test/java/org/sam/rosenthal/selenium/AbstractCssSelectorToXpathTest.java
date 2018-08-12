@@ -33,7 +33,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 
 	protected WebDriver driver;
 	
-	protected static Properties properties;
+	protected static final Properties PROPERTIES=getProperties();
 	
 	protected WebDriverWait wait;
 
@@ -45,19 +45,18 @@ public abstract class AbstractCssSelectorToXpathTest {
 
 	private String cssToXpathUrl;
 
-
-	@BeforeClass
-	public static void setupClass() {
+	public static Properties getProperties() {
 		WebDriverManager.firefoxdriver().setup();
 		WebDriverManager.edgedriver().setup();
 		WebDriverManager.chromedriver().setup();
-		properties=new Properties();
+		Properties prop=new Properties();
 		
 		try {
-			properties.load(AbstractCssSelectorToXpathTest.class.getClassLoader().getResourceAsStream("org/sam/rosenthal/selenium/cssSelectorToXpathSelenium.properties"));
+			prop.load(AbstractCssSelectorToXpathTest.class.getClassLoader().getResourceAsStream("org/sam/rosenthal/selenium/cssSelectorToXpathSelenium.properties"));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+		return prop;
 	}
 
 	protected void setupTest(BrowserType browserType) {
@@ -80,7 +79,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 		forkMeBy = getBy("div#forkme a img");
 	    errorMessageBy = getBy("div.content form div.error");
 
-	    cssToXpathUrl = properties.getProperty("selenium.CSS_TO_XPATH_URL");
+	    cssToXpathUrl = PROPERTIES.getProperty("selenium.CSS_TO_XPATH_URL");
 		goToWebpage(cssToXpathUrl,"CSS Selector to XPath");
 	}
 

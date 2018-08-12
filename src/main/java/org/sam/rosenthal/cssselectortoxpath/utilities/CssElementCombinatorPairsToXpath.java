@@ -11,7 +11,7 @@ import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
 
 public class CssElementCombinatorPairsToXpath 
 {
-	public static Properties VERSION_PROPERTIES=getVersionProperties();
+	public static final Properties VERSION_PROPERTIES=getVersionProperties();
 	
 	private CssSelectorStringSplitter cssSelectorString=new CssSelectorStringSplitter();
 	
