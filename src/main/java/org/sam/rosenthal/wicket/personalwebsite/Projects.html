@@ -2,7 +2,7 @@
 	<head>
 		<meta name="google-site-verification" content="vMvUvqYH97YQGa6AFQMX7wo5GDFh6SKAWOaAFeACsBo">
 		<title> Sam Rosenthal </title>
-		<link rel="shortcut icon" type="image/png" href="logo.png">
+		<link rel="shortcut icon" type="image/png" href="sam/logo.png">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
 		<link rel="stylesheet" href="css/sam-personal-website.css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
@@ -66,7 +66,7 @@
 					  </ul>	
 					  <div id="java-cssSelector-to-xpath-technology-details" class="collapse in technologies">
 					    <h5>Technology Details: </h5> 
-					    <p><b>Regular Expressions</b> – Java Regex Utility classes  were used to validate and parse the CSS Selector strings.  
+					    <p><b>Regular Expressions</b> - Java Regex Utility classes  were used to validate and parse the CSS Selector strings.  
 					    I used the Matcher and Pattern classes to parse the selector into elements, attribute names, and attributes that make up the components of the CSS Selector String.
 					    Once the string was broken into  its components it was straight forward to  reconstruct the corresponding XPath String. Listed are some Regular Expressions that were used 
 					    to identify CSS Selector components:</p>
@@ -79,8 +79,8 @@
 						<p>Regular expressions were also used when  calling the replaceAll String method.  A simple example of a regex expression that was used to remove white spaces was:</p>
 					    <pre style="background-color:#f6f8fa"><code>  selectorString=selectorString.replaceAll("\\s+","");</code></pre> 
 						<hr>
-						<p><b>Recursion</b> – A basic CSS Selector is made up of (0 or 1) elements associated with (0 or more) attributes. A basic CSS Selector can have a "combinator" relationship with 
-						another CSS selector which then can have a "combinator" relationship with another CSS Selector which… This is the “cascading” relationship of CSS. This pattern lent itself to recursion.
+						<p><b>Recursion</b> - A basic CSS Selector is made up of (0 or 1) elements associated with (0 or more) attributes. A basic CSS Selector can have a "combinator" relationship with 
+						another CSS selector which then can have a "combinator" relationship with another CSS Selector which ... This is the "cascading" relationship of CSS. This pattern lent itself to recursion.
 						I created a recursive method, recursiveSelectorSplit, which takes a basic selector and looks for a combinator. If it finds one it adds the element/combinator pair to a list of these pairs and 
 						calls itself to find the next cascading relationship. The recursion is complete when there are no more "combinators".</p>
 						<hr>
@@ -91,12 +91,12 @@
 						<p> <b><a href="https://www.seleniumhq.org/" target="_blank">Selenium Testing</a></b> - I used Selenium testing to verify that the actual output of my CSS Selector converter is producing correct and valid XPath.
 						Please see <a href="#java-cssSelector-to-xpath-website-technology-details" onclick="$('#java-cssSelector-to-xpath-website-technology-details').collapse('show');$('#java-cssSelector-to-xpath-website-technology-showhide').text('hide details');">Selenium testing details</a> of the CSS Selector to XPath Converter Website.</p>
 					  	<hr>
-					  	<p><b>GitHub, Git, <a href="https://tortoisegit.org/" target="_blank">Tortoise Git</a></b> - Used Git as my version control system. GitHub was my code repository. Used Eclipse’s Git-plugin and Tortoise Git to manage my source code on my PC.</p>
+					  	<p><b>GitHub, Git, <a href="https://tortoisegit.org/" target="_blank">Tortoise Git</a></b> - Used Git as my version control system. GitHub was my code repository. Used Eclipse's Git-plugin and Tortoise Git to manage my source code on my PC.</p>
 					  	<hr>
 					  	<p><b><a href="https://maven.apache.org/" target="_blank">Apache Maven</a></b> - Used Maven as the build automation tool. Configured POM file to pull all required software and dependencies. 
 					  	The POM file also included plugins to run unit and integration (Selenium) tests. Maven was used for development, continuous integration, and deployment of the software. </p>
 					  	<hr>
-					  	<p><b>Continuous Integration</b> - Continuous Integration – Used <a href="https://travis-ci.org/" target="_blank">Travis CI</a> as the continuous integration service for this project. 
+					  	<p><b>Continuous Integration</b> - Continuous Integration - Used <a href="https://travis-ci.org/" target="_blank">Travis CI</a> as the continuous integration service for this project. 
 					  	When changes are committed to GitHub (Branches and Master), the CI pipeline is started. The code is checked out from Github, compiled, and all unit tests are run. 
 					  	<i>Note: I have set up all selenium tests as integration-tests so they are not run as part of CI.</i></p>
 					  	<hr>
@@ -153,15 +153,15 @@
 						<p> <b>Selenium Testing</b> - I implemented two types of Selenium Testing. The obvious testing is to verify that my CSS Selector to XPath website is working properly. My tests also verify that 
 						the actual output of my CSS Selector converter is producing correct and valid XPaths. <br> <br>
 						All Selenium tests are driven by the JUnit test framework. 
-						I test 3 browsers: Chrome, FireFox, and Edge. <i>Note: I develop on a Window PC that’s why I chose those three browsers to test. </i>
+						I test 3 browsers: Chrome, FireFox, and Edge. <i>Note: I develop on a Window PC that's why I chose those three browsers to test. </i>
 						My first set of Selenium tests verify that all expected text is displayed on my the converter website. I verify that all links work and bring up the expected websites on a new tab. 
 						Through automated Selenium testing, I verify that the expected results are properly displayed when CSS selectors are entered and the convert button is pressed. I also check when invalid CSS Selectors are entered that the proper 
 						error messages are displayed. I created an abstract Selenium test class that is extended by all tests. The abstract class includes setting up the browser, specific drivers, methods to
 						go to website URLs, test text and links, entering text, and pressing the convert button, and error messages. <br><br>
 						The second type of Selenium test verifies that conversions of CSS Selectors are correctly converted by my software.  Selenium can identify elements of a webpage by either CSS Selectors or XPath.
-						I have written all the Selenium tests exclusively using Selenium’s “By.cssSelector” method. 
-						I then rerun the tests using the same code except for the following change: the original test CSS Selector input is converted using my OSS software to an XPath which is then passed in as the argument for the “By.XPath” method.  
-						Both versions of the Selenium test work on all three browser types, demonstrating that the converter software is working properly. The final “special” test checks the contents of a
+						I have written all the Selenium tests exclusively using Selenium's "By.cssSelector" method. 
+						I then rerun the tests using the same code except for the following change: the original test CSS Selector input is converted using my OSS software to an XPath which is then passed in as the argument for the "By.xpath" method.  
+						Both versions of the Selenium test work on all three browser types, demonstrating that the converter software is working properly. The final "special" test checks the contents of a
 						(<a href="https://css-selector-to-xpath.appspot.com/css-selector-to-xpath-reference-cases" target="_blank">test webpage</a>)
 						constructed with the same base-case CSS Selectors defined in a JUnit test written for the OSS converter software. The Selenium test and the JUnit test use the same inputs and outputs as part of the tests.
 						<br><br>The following is how I implemented the By.cssSelector and By.xpath Selenium tests:
@@ -183,14 +183,14 @@
     return By.xpath(xpath);
   }</code></pre>
 					  	<hr>
-					  	<p><b><a href="https://wicket.apache.org/" target="_blank">Apache Wicket</a></b> – Used Wicket as the web application framework for the website. I modified one of Wicket’s example programs, 
+					  	<p><b><a href="https://wicket.apache.org/" target="_blank">Apache Wicket</a></b> - Used Wicket as the web application framework for the website. I modified one of Wicket's example programs, 
 					  	<a href="http://examples8x.wicket.apache.org/echo/" target="_blank"> echo </a> which consisted of a text field and a submit button. 
 					  	Since Wicket uses HTML file for templating, I was able to easily add custom static content, including links, to the website. </p>
 					  	<hr> 
-					  	<p><b><a href="https://console.cloud.google.com/appengine" target="_blank">GCP App Engine</a></b> - Used <a href="https://console.cloud.google.com" target="_blank"> Google Cloud Platform’s App Engine</a> to host CSS Selector to XPath Converter Website. I created a GCP account and project.
-					  	 I used GCP’s sweet tools to deploy, monitor, and manage the website.</p>
+					  	<p><b><a href="https://console.cloud.google.com/appengine" target="_blank">GCP App Engine</a></b> - Used <a href="https://console.cloud.google.com" target="_blank"> Google Cloud Platform's App Engine</a> to host CSS Selector to XPath Converter Website. I created a GCP account and project.
+					  	 I used GCP's sweet tools to deploy, monitor, and manage the website.</p>
 					  	<hr>	
-						<p><b><a href="https://www.debian.org/" target="_blank">Linux (Debian)</a></b> – Used Google’s Cloud Shell (a bash shell) to compile, test deploy, and deploy webapp on the GCP App Engine.</p>
+						<p><b><a href="https://www.debian.org/" target="_blank">Linux (Debian)</a></b> - Used Google's Cloud Shell (a bash shell) to compile, test deploy, and deploy webapp on the GCP App Engine.</p>
 						<hr>
 					  	<p><b>GitHub, Git, Apache Maven, Continuous Integration</b> - This Website's source code is maintained as part of the java-csSelector-to-xpath repository (See previous section for 
 						<a href="#java-cssSelector-to-xpath-technology-details" onclick="$('#java-cssSelector-to-xpath-technology-details').collapse('show');$('#java-cssSelector-to-xpath-website-technology-showhide').text('hide details');">technical details</a>). </p>
@@ -254,7 +254,7 @@
 					  </ul>
 					  <div id="personal-website-technology-details" class="collapse in technologies">
 			          	<h5>Technology Details:</h5>
-					  	<p><b><a href="https://jquery.com/" target="_blank">jQuery</a> (and Javascript)</b> – jQuery was used in multiple ways in this website. jquery was used so that I could create Reusable web content.
+					  	<p><b><a href="https://jquery.com/" target="_blank">jQuery</a> (and Javascript)</b> - jQuery was used in multiple ways in this website. jquery was used so that I could create Reusable web content.
 					  	 <br>The navigation bar was a single html file that I loaded on each page, using the following code:</p>
 	<pre style="background-color:#f6f8fa"><code> $(document).ready(function(){
 	    $('.sam-navigation').load("Navigation", function(){ 
@@ -439,11 +439,11 @@
 			          <h3><a href="https://www.nist.gov/mml" target="_blank">Science Internship - Material Measurements Lab</a></h3>
 			          <h5>Sept 2016 - May 2017</h5>		        
 			          <p>Helped collect data on the occurrence of photofading. <b>photofading</b> is the loss of color (decrease in absorbance levels) in the 
-			          trace fiber evidence due to the exposure to ultraviolet light by the microspectrophotometer. My data contributed to the Material Measurement Laboratory’s efforts to 
+			          trace fiber evidence due to the exposure to ultraviolet light by the microspectrophotometer. My data contributed to the Material Measurement Laboratory's efforts to 
 			          improve the accuracy of forensic examination by raising awareness of the occurrence of photofading.
 			          <br><br>
 			          To collect the data to demonstate the occurence of photofading, I extracted individual fibers from dyed fabrics onto slides for examination. 
-			          I then put the slide under the <b> microspectrophotometer (MSP)</b> measured the fiber’s absorbance levels every minute for 15 minutes.
+			          I then put the slide under the <b> microspectrophotometer (MSP)</b> measured the fiber's absorbance levels every minute for 15 minutes.
 			          <br><br>
 			          I combined all the data collected from CSV files into one full Excel spreadsheet with all the absorbance levels from time 0-15. I made a baseline correction for all the points,
 			          looked at the specific wavelength of the peak we were observing, calculated the %retained, and then made a graph of the data.
@@ -451,8 +451,8 @@
 			          The results showed the gradual decrease in absorbance levels (loss of color) of the trace fiber evidence. In only 15 minutes of examination under the MSP, 
 			          fibers lost anywhere from 5% to 45% of their initial absorbance peak.</p>
 			          <h5>Publication:</h5>
-			          <p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5729760"  target="_blank">Forster, A.L., Bitter, J.L, Rosenthal, S., Brooks S., and Watson, S.S. “Photofading in cotton fibers dyed using red, yellow, and blue direct dyes during examination with Microspectrophotometry (MSP).” 
-					  <i>Forensic chemistry 5 (2017): 72–78. PMC. </i></a></p>		          
+			          <p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5729760"  target="_blank">Forster, A.L., Bitter, J.L, Rosenthal, S., Brooks S., and Watson, S.S. "Photofading in cotton fibers dyed using red, yellow, and blue direct dyes during examination with Microspectrophotometry (MSP)." 
+					  <i>Forensic chemistry 5 (2017): 72-78. PMC. </i></a></p>		          
 			          <h5>Technologies:</h5>
 			          <ul class="Icons">
 			          	<img src="techicons/LambdaFire.png" width="29" height="40" alt="Lambdafire Spectroscopy Software" data-toggle="tooltip" title="Lambdafire Spectroscopy Software">

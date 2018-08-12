@@ -3,6 +3,7 @@ function adjustTopOfCard(){
 		var newTop= 30+$(".sam-navigation").height(); 
 		$('.sambox').css('margin-left',30);
 		$('.sambox').css('margin-right',30);
+		$('.skill-matrix').css('margin-right',30);
 	}
 	else{
 		var newTop= 60+$(".sam-navigation").height();
