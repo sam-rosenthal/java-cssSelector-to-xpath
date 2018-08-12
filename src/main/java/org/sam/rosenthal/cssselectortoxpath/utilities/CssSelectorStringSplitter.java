@@ -56,8 +56,8 @@ public class CssSelectorStringSplitter
 			selectorString=selectorString.replaceAll("[ \\t]+", PLACE_HOLDER);
 			selectorString=selectorString.replaceAll("\\s+","");
 			selectorString=selectorString.replaceAll("("+PLACE_HOLDER+")+", " ");
-			selectorString=classidAttributeIssueHandler(selectorString,"#","id=");
-			selectorString=classidAttributeIssueHandler(selectorString,".","class~=");
+			selectorString=classIdAttributeIssueHandler(selectorString,"#","id=");
+			selectorString=classIdAttributeIssueHandler(selectorString,".","class~=");
 			//System.out.println("STRING="+selectorString);
 			return selectorString;
 		}
@@ -96,7 +96,7 @@ public class CssSelectorStringSplitter
 			}
 		}
 	}
-	private String classidAttributeIssueHandler(String selectorString, String classOrIdChar, String classOrIdPartialAttributeNameAndRelationship ) throws CssSelectorToXPathConverterException
+	private String classIdAttributeIssueHandler(String selectorString, String classOrIdChar, String classOrIdPartialAttributeNameAndRelationship ) throws CssSelectorToXPathConverterException
 	{
 		//very special case where string ends with '['
 		if(selectorString.endsWith("["))
