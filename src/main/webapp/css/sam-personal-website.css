@@ -73,20 +73,20 @@ button.showhideDetails{
 	border:0px;
 	font-size:20px;
 }
-table th.col-md-6, table td.col-md-3{
+table.skillsTable th.col-md-6, table.skillsTable td.col-md-3{
 	border-left:2px solid black;
 	border-top:0px solid black;
 	
 }
-table tr{
+table.skillsTable tr{
 	border-top:2px solid black;
 	border-right:2px solid black;
 	
 }
-th[scope="row"]~td{
+table.skillsTable th[scope="row"]~td{
 	padding:0px;
 }
-th[scope="row"]~td li{
+table.skillsTable th[scope="row"]~td li{
 	height:60px;
 	margin-bottom:0px;
 	text-align:center;
@@ -97,8 +97,8 @@ li.skill-name h5{
 	margin-top:.5rem;
 	margin-bottom:.5rem;
 }
-tr#high .skill-icon:nth-of-type(odd),tr#medium .skill-icon:nth-of-type(odd),tr#low .skill-icon:nth-of-type(odd),
-tr#high .skill-name:nth-of-type(odd),tr#medium .skill-name:nth-of-type(odd),tr#low .skill-name:nth-of-type(odd){
+tr#high .skill-icon:nth-of-type(odd),tr#medium .skill-icon:nth-of-type(even),tr#low .skill-icon:nth-of-type(odd),
+tr#high .skill-name:nth-of-type(odd),tr#medium .skill-name:nth-of-type(even),tr#low .skill-name:nth-of-type(odd){
 	background: #d6d8db;
 }
 ul.list-group {
