@@ -51,6 +51,10 @@ public class BaseCssSelectorToXpathTestCase {
 		addBaseCaseToXPath(baseCases,"childCombinator","div>span","//div/span");
 		addBaseCaseToXPath(baseCases,"adjacentSiblingCombinator","div+span","//div/following-sibling::*[1]/self::span");
 		addBaseCaseToXPath(baseCases,"generalSiblingCombinator","div~h1","//div/following-sibling::h1");
+		
+		//Implemented psuedo classes
+		addBaseCaseToXPath(baseCases,"empty","span:empty","//span[not(*) and .=\"\"]");	
+
 		return baseCases;
 	}
 	private static void addBaseCaseToXPath(List<BaseCssSelectorToXpathTestCase> baseCases,String name,String cssSelector, String expectedXpath) {
@@ -81,7 +85,7 @@ public class BaseCssSelectorToXpathTestCase {
 		baseCases.put("A[B=]",CssElementAttributeParser.ERROR_INVALID_ATTRIBUTE_VALUE);
 		baseCases.put("A[B'C']",CssElementAttributeParser.ERROR_INVALID_ATTRIBUTE_VALUE);
 
-		String[] pseudoClasses=getPseudoClasses();
+		String[] pseudoClasses=getUnimplementedPseudoClasses();
 		for(String pseudoClass:pseudoClasses)
 		{
 			baseCases.put(pseudoClass,CssSelectorToXPathConverterUnsupportedPseudoClassException.getPseudoClassUnsupportedError(pseudoClass));
@@ -90,7 +94,7 @@ public class BaseCssSelectorToXpathTestCase {
 		return baseCases;
 	}
 	
-	public static String[] getPseudoClasses()
+	public static String[] getUnimplementedPseudoClasses()
 	{
 		//listing every pseudo class in: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors
 		//so that in the future there will be some we can't handle
@@ -103,7 +107,7 @@ public class BaseCssSelectorToXpathTestCase {
 				":defined",
 				":dir(A)",
 				":disabled",
-				":empty",
+//				":empty",   implemented
 				":enabled",
 				":first",
 				":first-child",

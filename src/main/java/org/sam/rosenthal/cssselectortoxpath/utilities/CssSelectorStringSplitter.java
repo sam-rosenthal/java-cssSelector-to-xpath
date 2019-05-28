@@ -18,7 +18,7 @@ public class CssSelectorStringSplitter
 	private static final String COMBINATORS = " ~+>";
 	private static final String COMBINATOR_RE = "["+COMBINATORS+"]";
 
-	private static final String ELEMENT_AND_ATTRIBUTE = "([^"+COMBINATORS+"\\[]*(\\[[^\\]]+\\])*)";
+	private static final String ELEMENT_AND_ATTRIBUTE = "([^"+COMBINATORS+"\\[]*((\\[[^\\]]+\\])|"+CssElementAttributeParser.PSUEDO_RE+")*)";
 	private static final String ELEMENT_AND_ATTRIBUTE_FOLLOWED_BY_COMBINATOR_AND_REST_OF_LINE = "^"+ELEMENT_AND_ATTRIBUTE+"($|(\\s*("+COMBINATOR_RE+")\\s*"+"([^"+COMBINATORS+"].*)$))";
 
 	public static final String ERROR_INVALID_CLASS_CSS_SELECTOR = "Invalid class CSS Selector";
@@ -178,7 +178,7 @@ public class CssSelectorStringSplitter
 		//System.out.println(XY);
 		if(match.find())
 		{
-			CssCombinatorType type= CssCombinatorType.combinatorTypeChar(match.group(5));
+			CssCombinatorType type= CssCombinatorType.combinatorTypeChar(match.group(8));
 			//System.out.println("TYPE:"+type);
 			if(type!=null)
 			{	
@@ -189,7 +189,7 @@ public class CssSelectorStringSplitter
 					throw new CssSelectorToXPathConverterException(ERROR_EMPTY_CSS_SELECTOR);
 				}
 				selectorList.add(new CssElementCombinatorPair(previousCombinatorType,firstCssSelector));
-				String nextCssSelector=match.group(6); 
+				String nextCssSelector=match.group(9); 
 				//System.out.println("nextcss="+nextCssSelector+"; type"+type);
 
 				if(nextCssSelector.isEmpty())

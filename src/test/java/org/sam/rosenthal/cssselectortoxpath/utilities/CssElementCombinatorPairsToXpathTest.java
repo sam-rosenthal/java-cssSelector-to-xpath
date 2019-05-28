@@ -172,8 +172,13 @@ public class CssElementCombinatorPairsToXpathTest
 		
 		testConvertCssStringToXpathString("a#b.c[d$='e.#f'], g[h='i...j'], k[l='m###n']","(//a[@id=\"b\"][contains(concat(\" \",normalize-space(@class),\" \"),\" c \")][substring(@d,string-length(@d)-string-length(\"e.#f\")+1)=\"e.#f\"])|(//g[@h=\"i...j\"])|(//k[@l=\"m###n\"])");	
 
-		
 		testConvertCssStringToXpathString("[B][C]","//*[@B][@C]");	
+		
+		testConvertCssStringToXpathString(":empty:empty","//*[not(*) and .=\"\"][not(*) and .=\"\"]");
+		testConvertCssStringToXpathString("a:empty b:empty","//a[not(*) and .=\"\"]//b[not(*) and .=\"\"]");
+		testConvertCssStringToXpathString("div:empty","//div[not(*) and .=\"\"]");
+		testConvertCssStringToXpathString("div:empty:empty","//div[not(*) and .=\"\"][not(*) and .=\"\"]");
+		testConvertCssStringToXpathString(":empty[id=\"6\"]","//*[not(*) and .=\"\"][@id=\"6\"]");
 
 	}
 
