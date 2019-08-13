@@ -20,6 +20,12 @@
 </head>
 <body> 
 	<style>
+		body {
+			background-image: url("website-background.jpg");
+			background-size: cover;
+			background-attachment: fixed;
+			background-position: center;
+		}
 		h1 {
 			color:#013243;
 			font-weight:bold;
@@ -48,7 +54,8 @@
 			border: 1px solid;
 	    	padding: 5px;
 	    	box-shadow: 5px 10px;
-	    	margin-bottom: 35px;
+	    	margin-top: 75px;
+	    	margin-bottom: 75px;
 		}
 		div#footer ul{
 			margin: 0px;
@@ -79,7 +86,7 @@
 		input[name="cssSelectorInput"]::selection{
 			background-color:lightblue;
 			color:black;
-			}
+		}
 		div.error{
 		    display: inline;
 		    padding-left:3px;
@@ -113,7 +120,7 @@
 			(Powered by: <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md" target="_blank">java-cssSelector-to-xpath</a> <label wicket:id="version"/>)
 		</h2>
 		<form class="form" wicket:id="form">
-			<div style="display: flex" >
+			<div style="display: flex;">
 				<input type="text" wicket:id="cssSelectorInput" style="flex:1" onfocus="this.select()" placeholder="Enter a CSS Selector to convert to XPath"/> 
 				<input type="submit" wicket:id="convert" value="Convert"/>
 			</div>
