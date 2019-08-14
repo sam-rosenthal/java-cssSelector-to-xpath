@@ -323,7 +323,7 @@ public class CssSelectorStringSplitterTest {
 		testCheckInValidElementAttribute("input:required");
 		testCheckInValidElementAttribute(":root");
 		testCheckInValidElementAttribute(":not([style='test'])");
-		testCheckInValidElementAttribute("div:first-child");
+		testCheckInValidElementAttribute("div:enabled");
 		testCheckInValidElementAttribute(":test");
 	}
 	private void testCheckInValidElementAttribute(String elementAttributeString) 

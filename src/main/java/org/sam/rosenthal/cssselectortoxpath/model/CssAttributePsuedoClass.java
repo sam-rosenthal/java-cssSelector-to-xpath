@@ -3,15 +3,18 @@ package org.sam.rosenthal.cssselectortoxpath.model;
 public class CssAttributePsuedoClass extends CssAttribute
 {
 	private CssPsuedoClassType psuedoClassType;
-
-	public CssAttributePsuedoClass(CssPsuedoClassType psuedoClassTypeIn)
+	private String element;
+	
+	public CssAttributePsuedoClass(CssPsuedoClassType psuedoClassTypeIn, String elementIn)
 	{
 		super(null,null,(String) null);
 		psuedoClassType = psuedoClassTypeIn;
+		element = elementIn;
 	}
+	
 	public String getXPath()
 	{
-		return psuedoClassType.getXpath();
+		return psuedoClassType.getXpath(element);
 	}
 	
 	@Override

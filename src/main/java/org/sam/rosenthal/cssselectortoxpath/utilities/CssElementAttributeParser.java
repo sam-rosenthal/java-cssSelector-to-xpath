@@ -119,13 +119,13 @@ public class CssElementAttributeParser
 			{
 				CssPsuedoClassType psuedoClassType;
 				try {
-					psuedoClassType = CssPsuedoClassType.psuedoClassTypeString(psuedoClass);
+					psuedoClassType = CssPsuedoClassType.psuedoClassTypeString(psuedoClass,element);
 				}
 				catch(IllegalArgumentException e)
 				{
 					throw new CssSelectorToXPathConverterUnsupportedPseudoClassException(psuedoClass);
 				}
-				attributeList.add(new CssAttributePsuedoClass(psuedoClassType));
+				attributeList.add(new CssAttributePsuedoClass(psuedoClassType, element));
 			}
 			else
 			{

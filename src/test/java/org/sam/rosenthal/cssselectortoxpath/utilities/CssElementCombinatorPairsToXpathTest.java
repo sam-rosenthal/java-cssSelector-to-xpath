@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +62,6 @@ public class CssElementCombinatorPairsToXpathTest
 		testCssElementCombinatorPairListListToXpath(asList(asList(new CssElementCombinatorPair(null, "A")), asList(new CssElementCombinatorPair(null, "B")), asList(new CssElementCombinatorPair(null, "C"))),"(//A)|(//B)|(//C)");
 		testCssElementCombinatorPairListListToXpath(asList(asList(new CssElementCombinatorPair(null, "A"), new CssElementCombinatorPair(CssCombinatorType.SPACE, "B")),asList(new CssElementCombinatorPair(null, "A"), new CssElementCombinatorPair(CssCombinatorType.PLUS, "B"))),"(//A//B)|(//A/following-sibling::*[1]/self::B)");
 		testCssElementCombinatorPairListListToXpath(asList(asList(new CssElementCombinatorPair(null, "A"), new CssElementCombinatorPair(CssCombinatorType.SPACE, "B")),asList(new CssElementCombinatorPair(null, "A"), new CssElementCombinatorPair(CssCombinatorType.PLUS, "B"))),"(//A//B)|(//A/following-sibling::*[1]/self::B)");
-
 	}
 	
 	public void testCssElementCombinatorPairListListToXpath(List<List<CssElementCombinatorPair>> elementCombinatorPairListInput, String expectedOutput) throws CssSelectorToXPathConverterException  {
@@ -94,6 +94,35 @@ public class CssElementCombinatorPairsToXpathTest
 	}
 	
 	private void testCssToXpathBasicException(String cssSelector, String expectedErrorMessage) {
+		try {
+			String xpath=elementCombinatorPair.convertCssSelectorStringToXpathString(cssSelector);
+			fail("CssSelector="+cssSelector+", should have been invalid, but xpath string return value="+xpath);
+		} catch (CssSelectorToXPathConverterException e) {
+			assertEquals(expectedErrorMessage,e.getMessage());
+			//success
+		}		
+	}
+	
+	@Test
+	public void testCssToXpathFirstLastOfTypeBasicException() {
+		Map<String,String> cases = new HashMap<String, String>();
+		cases.put("*:first-of-type", CssSelectorToXPathConverterInvalidFirstLastChild.FIRST_LAST_CHILD_UNSUPPORTED_ERROR_FORMAT);
+		cases.put(":first-of-type", CssSelectorToXPathConverterInvalidFirstLastChild.FIRST_LAST_CHILD_UNSUPPORTED_ERROR_FORMAT);
+		cases.put("*:last-of-type", CssSelectorToXPathConverterInvalidFirstLastChild.FIRST_LAST_CHILD_UNSUPPORTED_ERROR_FORMAT);
+		cases.put(":last-of-type", CssSelectorToXPathConverterInvalidFirstLastChild.FIRST_LAST_CHILD_UNSUPPORTED_ERROR_FORMAT);
+		cases.put("x:first-of-type *:first-of-type", CssSelectorToXPathConverterInvalidFirstLastChild.FIRST_LAST_CHILD_UNSUPPORTED_ERROR_FORMAT);
+		cases.put("x:last-of-type y :last-of-type", CssSelectorToXPathConverterInvalidFirstLastChild.FIRST_LAST_CHILD_UNSUPPORTED_ERROR_FORMAT);
+
+		for(Map.Entry<String,String> exceptionCase:cases.entrySet())
+		{
+			String cssSelector=exceptionCase.getKey();
+			String expectedErrorMessage=exceptionCase.getValue();
+			System.out.println(expectedErrorMessage);
+			testCssToXpathFirstLastOfTypeBasicException(cssSelector, expectedErrorMessage);
+		}
+	}
+	
+	private void testCssToXpathFirstLastOfTypeBasicException(String cssSelector, String expectedErrorMessage) {
 		try {
 			String xpath=elementCombinatorPair.convertCssSelectorStringToXpathString(cssSelector);
 			fail("CssSelector="+cssSelector+", should have been invalid, but xpath string return value="+xpath);
@@ -174,11 +203,36 @@ public class CssElementCombinatorPairsToXpathTest
 
 		testConvertCssStringToXpathString("[B][C]","//*[@B][@C]");	
 		
+		testConvertCssStringToXpathString(":empty","//*[not(*) and .=\"\"]");
+		testConvertCssStringToXpathString("x:empty","//x[not(*) and .=\"\"]");
+		testConvertCssStringToXpathString("*:empty","//*[not(*) and .=\"\"]");
 		testConvertCssStringToXpathString(":empty:empty","//*[not(*) and .=\"\"][not(*) and .=\"\"]");
 		testConvertCssStringToXpathString("a:empty b:empty","//a[not(*) and .=\"\"]//b[not(*) and .=\"\"]");
 		testConvertCssStringToXpathString("div:empty","//div[not(*) and .=\"\"]");
 		testConvertCssStringToXpathString("div:empty:empty","//div[not(*) and .=\"\"][not(*) and .=\"\"]");
 		testConvertCssStringToXpathString(":empty[id=\"6\"]","//*[not(*) and .=\"\"][@id=\"6\"]");
+		testConvertCssStringToXpathString("x y:empty[id=\"6\"]","//x//y[not(*) and .=\"\"][@id=\"6\"]");
+		testConvertCssStringToXpathString("x:empty>y[id=\"6\"]","//x[not(*) and .=\"\"]/y[@id=\"6\"]");
+		testConvertCssStringToXpathString("x:empty+y:empty","//x[not(*) and .=\"\"]/following-sibling::*[1]/self::y[not(*) and .=\"\"]");
+		
+		testConvertCssStringToXpathString(":only-child","//*[count(preceding-sibling::*)=0 and count(following-sibling::*)=0]");
+		testConvertCssStringToXpathString("XXX:only-child","//XXX[count(preceding-sibling::*)=0 and count(following-sibling::*)=0]");
+
+		testConvertCssStringToXpathString("a:first-of-type","//a[1]");
+		testConvertCssStringToXpathString("x:first-of-type y:first-of-type","//x[1]//y[1]");
+		testConvertCssStringToXpathString("a:last-of-type","//a[last()]");
+		testConvertCssStringToXpathString("x:last-of-type:first-of-type","//x[last()][1]");
+		testConvertCssStringToXpathString("x:first-of-type:last-of-type","//x[1][last()]");
+		testConvertCssStringToXpathString("x:last-of-type y:last-of-type","//x[last()]//y[last()]");	
+		
+		testConvertCssStringToXpathString(":first-child","//*[1]");
+		testConvertCssStringToXpathString("*:first-child","//*[1]");
+		testConvertCssStringToXpathString(":last-child","//*[last()]");
+		testConvertCssStringToXpathString("*:last-child","//*[last()]");
+		testConvertCssStringToXpathString("x:first-child","//x[1][../x[1]=../*[1]]");
+		testConvertCssStringToXpathString("x:first-child y:first-child","//x[1][../x[1]=../*[1]]//y[1][../y[1]=../*[1]]");
+		testConvertCssStringToXpathString("x:first-child :first-child","//x[1][../x[1]=../*[1]]//*[1]");
+		testConvertCssStringToXpathString("*:first-child x:first-child","//*[1]//x[1][../x[1]=../*[1]]");
 
 	}
 
