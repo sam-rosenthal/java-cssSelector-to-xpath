@@ -14,7 +14,7 @@ public class CssSelectorToXpathExceptionTest extends AbstractCssSelectorToXpathT
 	@Test
 	public void testBasicExceptionCasesWithSelenium() throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
 	{
-		setupTest(BrowserType.CHROME);
+		setupTest(BrowserType.FIREFOX);
 		Map<String,String> baseCases=BaseCssSelectorToXpathTestCase.getBaseCssSelectorToXpathExceptionTestCases();
 
 		for(Map.Entry<String,String> baseExceptionCase:baseCases.entrySet())
