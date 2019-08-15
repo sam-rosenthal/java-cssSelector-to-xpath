@@ -217,22 +217,27 @@ public class CssElementCombinatorPairsToXpathTest
 		
 		testConvertCssStringToXpathString(":only-child","//*[count(preceding-sibling::*)=0 and count(following-sibling::*)=0]");
 		testConvertCssStringToXpathString("XXX:only-child","//XXX[count(preceding-sibling::*)=0 and count(following-sibling::*)=0]");
+		testConvertCssStringToXpathString("div:only-child+[class^='abc']", "//div[count(preceding-sibling::*)=0 and count(following-sibling::*)=0]/following-sibling::*[1]/self::*[starts-with(@class,\"abc\")]");
+		testConvertCssStringToXpathString("div:only-child>[id^='samm']", "//div[count(preceding-sibling::*)=0 and count(following-sibling::*)=0]/*[starts-with(@id,\"samm\")]");
 
-		testConvertCssStringToXpathString("a:first-of-type","//a[1]");
-		testConvertCssStringToXpathString("x:first-of-type y:first-of-type","//x[1]//y[1]");
-		testConvertCssStringToXpathString("a:last-of-type","//a[last()]");
-		testConvertCssStringToXpathString("x:last-of-type:first-of-type","//x[last()][1]");
-		testConvertCssStringToXpathString("x:first-of-type:last-of-type","//x[1][last()]");
-		testConvertCssStringToXpathString("x:last-of-type y:last-of-type","//x[last()]//y[last()]");	
+
+		testConvertCssStringToXpathString("a:first-of-type","//a[count(preceding-sibling::a)=0]");
+		testConvertCssStringToXpathString("x:first-of-type y:first-of-type","//x[count(preceding-sibling::x)=0]//y[count(preceding-sibling::y)=0]");
+		testConvertCssStringToXpathString("a:last-of-type","//a[count(following-sibling::a)=0]");
+		testConvertCssStringToXpathString("x:last-of-type:first-of-type","//x[count(following-sibling::x)=0][count(preceding-sibling::x)=0]");
+		testConvertCssStringToXpathString("x:first-of-type:last-of-type","//x[count(preceding-sibling::x)=0][count(following-sibling::x)=0]");
+		testConvertCssStringToXpathString("x:last-of-type y:last-of-type","//x[count(following-sibling::x)=0]//y[count(following-sibling::y)=0]");	
 		
-		testConvertCssStringToXpathString(":first-child","//*[1]");
-		testConvertCssStringToXpathString("*:first-child","//*[1]");
-		testConvertCssStringToXpathString(":last-child","//*[last()]");
-		testConvertCssStringToXpathString("*:last-child","//*[last()]");
-		testConvertCssStringToXpathString("x:first-child","//x[1][../x[1]=../*[1]]");
-		testConvertCssStringToXpathString("x:first-child y:first-child","//x[1][../x[1]=../*[1]]//y[1][../y[1]=../*[1]]");
-		testConvertCssStringToXpathString("x:first-child :first-child","//x[1][../x[1]=../*[1]]//*[1]");
-		testConvertCssStringToXpathString("*:first-child x:first-child","//*[1]//x[1][../x[1]=../*[1]]");
+		testConvertCssStringToXpathString(":first-child","//*[count(preceding-sibling::*)=0]");
+		testConvertCssStringToXpathString("*:first-child","//*[count(preceding-sibling::*)=0]");
+		testConvertCssStringToXpathString(":last-child","//*[count(following-sibling::*)=0]");
+		testConvertCssStringToXpathString("*:last-child","//*[count(following-sibling::*)=0]");
+		testConvertCssStringToXpathString("x:first-child","//x[count(preceding-sibling::*)=0]");
+		testConvertCssStringToXpathString("x:first-child y:first-child","//x[count(preceding-sibling::*)=0]//y[count(preceding-sibling::*)=0]");
+		testConvertCssStringToXpathString("x:first-child :first-child","//x[count(preceding-sibling::*)=0]//*[count(preceding-sibling::*)=0]");
+		testConvertCssStringToXpathString("x:first-child y:last-child","//x[count(preceding-sibling::*)=0]//y[count(following-sibling::*)=0]");
+		testConvertCssStringToXpathString("x:last-child y:first-child","//x[count(following-sibling::*)=0]//y[count(preceding-sibling::*)=0]");
+
 
 	}
 

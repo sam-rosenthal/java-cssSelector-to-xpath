@@ -5,10 +5,10 @@ import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorToXPathConverte
 public enum CssPsuedoClassType {
 	EMPTY(":empty","[not(*) and .=\"\"]"),
 	ONLY_CHILD(":only-child","[count(preceding-sibling::*)=0 and count(following-sibling::*)=0]"),
-	FIRST_OF_TYPE(":first-of-type","[1]"),
-	LAST_OF_TYPE(":last-of-type", "[last()]"),
-	FIRST_CHILD(":first-child","_FIRST_CHILD_PLACEHOLDER_"),
-	LAST_CHILD(":last-child","_LAST_CHILD_PLACEHOLDER_");
+	FIRST_OF_TYPE(":first-of-type","_FIRST_OF_TYPE_PLACEHOLDER_"),
+	LAST_OF_TYPE(":last-of-type", "_LAST_OF_TYPE_PLACEHOLDER_"),
+	FIRST_CHILD(":first-child","[count(preceding-sibling::*)=0]"),
+	LAST_CHILD(":last-child","[count(following-sibling::*)=0]");
 
 	
 	private String typeString;
@@ -27,23 +27,13 @@ public enum CssPsuedoClassType {
 
 	public String getXpath(String element)
 	{
-		if (xpath.equals("_FIRST_CHILD_PLACEHOLDER_"))
+		if (xpath.equals("_FIRST_OF_TYPE_PLACEHOLDER_"))
 		{
-			if (element==null || element.equals("*")) {
-				return "[1]";
-			}
-			else {
-				return "[1][../"+element+"[1]=../*[1]]";
-			}
+			return "[count(preceding-sibling::" + element + ")=0]";
 		}
-		else if (xpath.equals("_LAST_CHILD_PLACEHOLDER_"))
+		else if (xpath.equals("_LAST_OF_TYPE_PLACEHOLDER_"))
 		{
-			if (element==null || element.equals("*")) {
-				return "[last()]";
-			}
-			else {
-				return "[last()][../"+element+"[last()]=../*[last()]]";
-			}
+			return "[count(following-sibling::" + element + ")=0]";
 		}
 		return xpath;
 	}
