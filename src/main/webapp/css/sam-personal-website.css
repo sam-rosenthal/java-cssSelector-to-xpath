@@ -43,6 +43,8 @@ body{
 	//background-color:#ffff99;
 	background-image: url("Background.jpg");
     background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
 }
 ul.icons{
 	padding-left:0px;
@@ -117,4 +119,14 @@ ul#about-me-list li p{
 }
 div#about-me-info p{
 	font-size:20px;
+}
+div.jumbotron{
+    margin-right: 60px;
+    margin-top: 30px;
+}
+nav[id="sam-navbar"]{
+	border-bottom-style:double;
+	background-image:url(Nav_Background.jpg);
+	background-attachment: fixed;
+    background-size: cover;
 }
