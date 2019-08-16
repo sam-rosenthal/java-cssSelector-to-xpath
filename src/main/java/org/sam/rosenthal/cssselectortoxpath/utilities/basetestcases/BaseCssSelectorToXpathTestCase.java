@@ -134,7 +134,7 @@ public class BaseCssSelectorToXpathTestCase {
 				":nth-last-of-type(A)",
 				":nth-of-type(A)",
 //				":only-child",
-				":only-of-type",
+//				":only-of-type",
 				":optional",
 				":out-of-range",
 				":placeholder-shown",

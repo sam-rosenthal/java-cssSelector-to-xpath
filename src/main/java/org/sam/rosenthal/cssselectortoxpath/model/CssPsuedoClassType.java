@@ -1,15 +1,16 @@
 package org.sam.rosenthal.cssselectortoxpath.model;
 
-import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorToXPathConverterInvalidFirstLastChild;
+import org.sam.rosenthal.cssselectortoxpath.utilities.CssSelectorToXPathConverterInvalidFirstLastOnlyOfType;
 
 public enum CssPsuedoClassType {
+		
 	EMPTY(":empty","[not(*) and .=\"\"]"),
-	ONLY_CHILD(":only-child","[count(preceding-sibling::*)=0 and count(following-sibling::*)=0]"),
 	FIRST_OF_TYPE(":first-of-type","_FIRST_OF_TYPE_PLACEHOLDER_"),
 	LAST_OF_TYPE(":last-of-type", "_LAST_OF_TYPE_PLACEHOLDER_"),
+	ONLY_OF_TYPE(":only-of-type", "_ONLY_OF_TYPE_PLACEHOLDER_"), 
 	FIRST_CHILD(":first-child","[count(preceding-sibling::*)=0]"),
-	LAST_CHILD(":last-child","[count(following-sibling::*)=0]");
-
+	LAST_CHILD(":last-child","[count(following-sibling::*)=0]"),
+	ONLY_CHILD(":only-child",FIRST_CHILD.getXpath("") + LAST_CHILD.getXpath(""));
 	
 	private String typeString;
 	private String xpath;
@@ -35,10 +36,14 @@ public enum CssPsuedoClassType {
 		{
 			return "[count(following-sibling::" + element + ")=0]";
 		}
+		else if (xpath.equals("_ONLY_OF_TYPE_PLACEHOLDER_"))
+		{
+			return FIRST_OF_TYPE.getXpath(element) + LAST_OF_TYPE.getXpath(element);
+		}
 		return xpath;
 	}
 	
-	public static CssPsuedoClassType psuedoClassTypeString(String unknownString, String element) throws CssSelectorToXPathConverterInvalidFirstLastChild {
+	public static CssPsuedoClassType psuedoClassTypeString(String unknownString, String element) throws CssSelectorToXPathConverterInvalidFirstLastOnlyOfType {
 		if(unknownString==null)
 		{
 			return null;
@@ -47,28 +52,29 @@ public enum CssPsuedoClassType {
 		{
 			case ":empty": 
                 return EMPTY;
-			case ":only-child":
-				return ONLY_CHILD; 
-			case ":first-of-type":
-				if (element==null ||element.equals("*")) {
-					throw new CssSelectorToXPathConverterInvalidFirstLastChild();
-				}
-				else {
-					return FIRST_OF_TYPE;
-				}
+			case ":first-of-type": 
+				return getOfType(FIRST_OF_TYPE, element);
 			case ":last-of-type":
-				if (element==null ||element.equals("*")) {
-					throw new CssSelectorToXPathConverterInvalidFirstLastChild();
-				}
-				else {
-					return LAST_OF_TYPE;
-				}
+				return getOfType(LAST_OF_TYPE, element);
+			case ":only-of-type":
+				return getOfType(ONLY_OF_TYPE, element);
 			case ":first-child":
 				return FIRST_CHILD;
 			case ":last-child":
 				return LAST_CHILD;
+			case ":only-child":
+				return ONLY_CHILD; 		
 			default:
         		throw new IllegalArgumentException(unknownString);
 		}
+	}
+	
+	private static CssPsuedoClassType getOfType(CssPsuedoClassType ofType, String element) throws CssSelectorToXPathConverterInvalidFirstLastOnlyOfType {
+		if (element==null ||element.equals("*")) {
+			throw new CssSelectorToXPathConverterInvalidFirstLastOnlyOfType();
+		}
+		else {
+			return ofType;
+		}	
 	}
 }

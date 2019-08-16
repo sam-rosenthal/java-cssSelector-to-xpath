@@ -17,10 +17,26 @@ public class CssAttributePsuedoClass extends CssAttribute
 		return psuedoClassType.getXpath(element);
 	}
 	
+	public CssPsuedoClassType getCssPsuedoClassType()
+	{
+		return psuedoClassType;
+	}
+	
 	@Override
 	public String toString()
 	{
-		return "Psuedo Class = "+ psuedoClassType;
+		String val = "Psuedo Class = "+ psuedoClassType;
+//		switch(psuedoClassType) {
+//		case FIRST_OF_TYPE: 
+//		case LAST_OF_TYPE:
+//		case ONLY_OF_TYPE: 
+//			val += ", Element = " + element;
+//			break;
+//		default:
+//			//empty
+//			break;
+//		}
+		return val;
 	}
 	
 }

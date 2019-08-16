@@ -1,10 +1,13 @@
 package org.sam.rosenthal.cssselectortoxpath.utilities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.sam.rosenthal.cssselectortoxpath.model.CssAttribute;
 import org.sam.rosenthal.cssselectortoxpath.model.CssAttributePsuedoClass;
 import org.sam.rosenthal.cssselectortoxpath.model.CssAttributeValueType;
@@ -136,10 +139,53 @@ public class CssElementAttributeParser
 					match.group(reIndexAttributeType)));
 			}
 		}	
-		
+		attributeList = trimDuplicateAttributes(attributeList);
 		CssElementAttributes cssElementAttribute = new CssElementAttributes(element,attributeList);
 		//System.out.println(cssElementAttribute);
 		return cssElementAttribute;
+	}
+
+	public List<CssAttribute> trimDuplicateAttributes(List<CssAttribute> attributeList) {
+		LinkedHashSet<CssAttribute> attributeSet = new LinkedHashSet<>(attributeList);
+		trimChildOfType(attributeSet, CssPsuedoClassType.FIRST_CHILD, CssPsuedoClassType.ONLY_CHILD, CssPsuedoClassType.FIRST_OF_TYPE);
+		trimChildOfType(attributeSet, CssPsuedoClassType.LAST_CHILD, CssPsuedoClassType.ONLY_CHILD, CssPsuedoClassType.LAST_OF_TYPE);
+		trimChildOfType(attributeSet, CssPsuedoClassType.FIRST_OF_TYPE, CssPsuedoClassType.ONLY_OF_TYPE, null);
+		trimChildOfType(attributeSet, CssPsuedoClassType.LAST_OF_TYPE, CssPsuedoClassType.ONLY_OF_TYPE, null);
+		trimChildOfType(attributeSet, CssPsuedoClassType.ONLY_OF_TYPE, CssPsuedoClassType.ONLY_CHILD, null);
+
+
+		return new ArrayList<>(attributeSet);
+	}
+
+	private void trimChildOfType(LinkedHashSet<CssAttribute> attributeSet, CssPsuedoClassType child, CssPsuedoClassType onlyChild, CssPsuedoClassType ofType ) {
+		CssAttributePsuedoClass found = null;
+		CssAttributePsuedoClass foundOnly = null;
+		CssAttributePsuedoClass foundOfType = null;
+		for(CssAttribute attribute : attributeSet)
+		{
+			if(attribute instanceof CssAttributePsuedoClass){
+				CssAttributePsuedoClass cssAttributePsuedoClass = (CssAttributePsuedoClass) attribute;
+				if(cssAttributePsuedoClass.getCssPsuedoClassType().equals(child)) {
+					found = cssAttributePsuedoClass;
+				}
+				else if(cssAttributePsuedoClass.getCssPsuedoClassType().equals(onlyChild)){
+					foundOnly = cssAttributePsuedoClass;
+				}
+				else if(cssAttributePsuedoClass.getCssPsuedoClassType().equals(ofType)){
+					foundOfType = cssAttributePsuedoClass;
+				}
+				if(found != null && foundOnly != null && foundOfType != null)
+				{
+					break;
+				}
+			}
+		}
+		if((found != null || foundOnly != null) && foundOfType != null) {
+			attributeSet.remove(foundOfType);
+		}
+		if(found != null && foundOnly != null) {
+			attributeSet.remove(found);
+		}
 	}	
 
 }
