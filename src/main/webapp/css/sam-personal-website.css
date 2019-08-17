@@ -41,10 +41,12 @@ div.sambox{
 }
 body{
 	//background-color:#ffff99;
-	background-image: url("Background.jpg");
+	background-image: url("Nav_Background.jpg");
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
+    background-color: #013243;
+    background-blend-mode: hard-light;
 }
 ul.icons{
 	padding-left:0px;
@@ -83,7 +85,8 @@ table.skillsTable th.col-md-6, table.skillsTable td.col-md-3{
 table.skillsTable tr{
 	border-top:2px solid black;
 	border-right:2px solid black;
-	
+	margin-right: 0px; 
+	margin-left: 0px;
 }
 table.skillsTable th[scope="row"]~td{
 	padding:0px;
@@ -123,6 +126,7 @@ div#about-me-info p{
 div.jumbotron{
     margin-right: 60px;
     margin-top: 30px;
+    border: double;
 }
 nav[id="sam-navbar"]{
 	border-bottom-style:double;

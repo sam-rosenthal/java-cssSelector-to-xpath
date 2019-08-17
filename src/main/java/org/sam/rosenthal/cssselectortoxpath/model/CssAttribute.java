@@ -15,15 +15,7 @@ public class CssAttribute
 		this.name=nameIn;
 		this.value=valueIn;
 		this.type=typeIn;
-		Integer j=null;
-		
-		if (test()!=null) {
-			System.out.println("XXX");
-		}
-		//int i=1/test();
-		//System.out.println(i);
 	}
-	
 	public String getName() {
 		return name;
 	}
@@ -33,9 +25,7 @@ public class CssAttribute
 	public CssAttributeValueType getType() {
 		return type;
 	}
-	private Integer test() {
-		return null;
-	}
+
 	@Override
 	public String toString()
 	{

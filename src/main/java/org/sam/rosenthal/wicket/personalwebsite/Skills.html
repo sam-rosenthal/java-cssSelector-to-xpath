@@ -14,14 +14,14 @@
 			function pageSpecificAfterLoad(){
 				$('ul.navbar-nav #skills').addClass("active");
 			}
-		</script>		
+		</script>	
 	</head>
 	<body>
 		<div class="sam-navigation"></div>
 		<div class="flex-container">
 			<div class="sam-card"></div>
 			<div class="container skill-matrix">
-				<h1>Technology Matrix</h1>
+				<h1 id="blinkText" class = "display-4">Technology Matrix</h1>
 				<h3>This is a matrix to describe my level of understanding of technologies listed in my <a href="Projects">Project/Experience</a> page.</h3>
 				<hr>
 				<table class="skillsTable">
@@ -33,46 +33,54 @@
 				      	</div>	
 				      </th>
 				      <td class="col-md-3">
-				      	<ul class="list-group">
-							<li class="skill-icon"><img src="techicons/CSS3.svg" width="28.3" height="40" alt="CSS3" data-toggle="tooltip" title="CSS3"></li>
-							<li class="skill-icon"><img src="techicons/Eclipse.png" width="43" height="40" alt="Eclipse IDE" data-toggle="tooltip" title="Eclipse IDE"></li>
-							<li class="skill-icon"><img src="techicons/Git.png" width="40" height="40" alt="Git" data-toggle="tooltip" title="Git"></li> 
-							<li class="skill-icon"><img src="techicons/Github.png" width="40" height="40" alt="GitHub" data-toggle="tooltip" title="GitHub"></li> 
-							<li class="skill-icon"><img src="techicons/HTML5.svg" width="43" height="40" alt="HTML5 Powered with CSS3 / Styling" data-toggle="tooltip" title="HTML5"></li> 
-							<li class="skill-icon"><img src="https://img.shields.io/badge/jdk-8-lightgray.svg" alt="Java JDK 8" width="44" height="20" data-toggle="tooltip" title="Java JDK 8"></li>
-							<li class="skill-icon"><img src="techicons/JUnit.png" width="54" height="40" alt="JUnit Test" data-toggle="tooltip" title="JUnit"></li>
-							<li class="skill-icon"><img src="techicons/Matlab.png" width="170" height="40" alt="Matlab" data-toggle="tooltip" title="Matlab"> </li> 	
-							<li class="skill-icon"><img src="techicons/Microworlds.ico" width="40" height="40" alt="Microworlds EX" data-toggle="tooltip" title="Microworlds EX"></li> 	
-							<li class="skill-icon"><img src="techicons/OCaml.png" width="146" height="40" alt="OCaml" data-toggle="tooltip" title="OCaml"></li>
-							<li class="skill-icon"><img src="https://i.vimeocdn.com/portrait/10124081_300x300.webp" width="40" height="40" alt="Processing" data-toggle="tooltip" title="Processing"></li>
-					 	 	<li class="skill-icon"><img src="techicons/Python.png" width="170" height="40" alt="Python 3.3" data-toggle="tooltip" title="Python 3.3"></li> 	
-							<li class="skill-icon"><img src="https://img.shields.io/badge/Regular%20Expressions-Java-yellow.svg" width="156" height="20" alt="Regular Expressions" data-toggle="tooltip" title="Regular Expressions"></li>	
-							<li class="skill-icon"><img src="techicons/Selenium.png" width="45" height="40" alt="Selenium" data-toggle="tooltip" title="Selenium"></li>      
-							<li class="skill-icon"><img src="https://img.shields.io/badge/Semantic%20Versioning-%202.0.0-red.svg" width="166" height="20" alt="Semantic Versioning 2.0.0" data-toggle="tooltip" title="Semantic Versioning 2.0.0"></li> 
-							<li class="skill-icon"><img src="techicons/TortoiseGit.png" width="72" height="40" alt="Tortoise Git" data-toggle="tooltip" title="Tortoise Git"></li> 
-							<li class="skill-icon"><img src="https://img.shields.io/badge/Terrapin%20Logo-%20-yellowgreen.svg" alt="Terrapin Logo" data-toggle="tooltip" title="Terrapin Logo"></li>
-					 	 </ul>	
-				      </td>
-				      <td class="col-md-3">			      	
-				     	 <ul class="list-group">
-							<li class="skill-name"><h5>CSS 3</h5></li>  
-				      		<li class="skill-name"><h5>Eclipse</h5></li>  					
-							<li class="skill-name"><h5>Git</h5></li>  
-							<li class="skill-name"><h5>Github</h5></li>  
-				      		<li class="skill-name"><h5>HTML 5</h5></li>  					
-							<li class="skill-name"><h5>Java</h5></li>  
-							<li class="skill-name"><h5>JUnit</h5></li>  
-				      		<li class="skill-name"><h5>Matlab</h5></li>  					
-							<li class="skill-name"><h5>Microworlds</h5></li>  
-							<li class="skill-name"><h5>OCaml</h5></li>  
-							<li class="skill-name"><h5>Processing</h5></li>  
-							<li class="skill-name"><h5>Python</h5></li> 
-							<li class="skill-name"><h5>Regular Expressions</h5></li>  
-							<li class="skill-name"><h5>Selenium</h5></li>  
-							<li class="skill-name"><h5>Semantic Versioning</h5></li>  
-							<li class="skill-name"><h5>Tortoise Git</h5></li>  
-							<li class="skill-name"><h5>Terrapin Logo</h5></li>  
-					 	 </ul>
+			            <ul class="list-group">
+							      <li class="skill-icon"><img src="techicons/CSS3.svg" width="28.3" height="40" alt="Bitbucket" data-toggle="tooltip" title="Bitbucket"></li>
+										<li class="skill-icon"><img src="techicons/CSS3.svg" width="28.3" height="40" alt="CSS3" data-toggle="tooltip" title="CSS3"></li>
+										<li class="skill-icon"><img src="techicons/Eclipse.png" width="43" height="40" alt="Eclipse IDE" data-toggle="tooltip" title="Eclipse IDE"></li>
+										<li class="skill-icon"><img src="techicons/Git.png" width="40" height="40" alt="Git" data-toggle="tooltip" title="Git"></li> 
+										<li class="skill-icon"><img src="techicons/Github.png" width="40" height="40" alt="GitHub" data-toggle="tooltip" title="GitHub"></li> 
+										<li class="skill-icon"><img src="techicons/Github.png" width="40" height="40" alt="Groovy" data-toggle="tooltip" title="Groovy"></li> 
+										<li class="skill-icon"><img src="techicons/HTML5.svg" width="43" height="40" alt="HTML5 Powered with CSS3 / Styling" data-toggle="tooltip" title="HTML5"></li> 
+										<li class="skill-icon"><img src="https://img.shields.io/badge/jdk-8-lightgray.svg" alt="Java JDK 8" width="44" height="20" data-toggle="tooltip" title="Java JDK 8"></li>
+										<li class="skill-icon"><img src="techicons/JUnit.png" width="54" height="40" alt="JUnit Test" data-toggle="tooltip" title="JUnit"></li>
+										<li class="skill-icon"><img src="techicons/Matlab.png" width="170" height="40" alt="Matlab" data-toggle="tooltip" title="Matlab"> </li> 	
+										<li class="skill-icon"><img src="techicons/Microworlds.ico" width="40" height="40" alt="Microworlds EX" data-toggle="tooltip" title="Microworlds EX"></li> 	
+										<li class="skill-icon"><img src="techicons/OCaml.png" width="146" height="40" alt="OCaml" data-toggle="tooltip" title="OCaml"></li>
+										<li class="skill-icon"><img src="https://i.vimeocdn.com/portrait/10124081_300x300.webp" width="40" height="40" alt="Processing" data-toggle="tooltip" title="Processing"></li>
+								 	 	<li class="skill-icon"><img src="techicons/Python.png" width="170" height="40" alt="Python 3.3" data-toggle="tooltip" title="Python 3.3"></li> 	
+										<li class="skill-icon"><img src="https://img.shields.io/badge/Regular%20Expressions-Java-yellow.svg" width="156" height="20" alt="Regular Expressions" data-toggle="tooltip" title="Regular Expressions"></li>	
+										<li class="skill-icon"><img src="https://img.shields.io/badge/Regular%20Expressions-Java-yellow.svg" width="156" height="20" alt="ReadyAPI" data-toggle="tooltip" title="ReadyAPI"></li>	
+										<li class="skill-icon"><img src="techicons/Selenium.png" width="45" height="40" alt="Selenium" data-toggle="tooltip" title="Selenium"></li>      
+										<li class="skill-icon"><img src="https://img.shields.io/badge/Semantic%20Versioning-%202.0.0-red.svg" width="166" height="20" alt="Semantic Versioning 2.0.0" data-toggle="tooltip" title="Semantic Versioning 2.0.0"></li> 
+										<li class="skill-icon"><img src="techicons/TortoiseGit.png" width="72" height="40" alt="Tortoise Git" data-toggle="tooltip" title="Tortoise Git"></li> 
+										<li class="skill-icon"><img src="https://img.shields.io/badge/Terrapin%20Logo-%20-yellowgreen.svg" alt="Terrapin Logo" data-toggle="tooltip" title="Terrapin Logo"></li>
+										<li class="skill-icon"><img src="https://img.shields.io/badge/Terrapin%20Logo-%20-yellowgreen.svg" alt="Visual Studio Code" data-toggle="tooltip" title="Visual Studio Code"></li>
+			            </ul>	
+			          </td>
+			          <td class="col-md-3">			      	
+			            <ul class="list-group">
+							     	<li class="skill-name"><h5>BitBucket</h5></li>  
+										<li class="skill-name"><h5>CSS 3</h5></li>  
+							      <li class="skill-name"><h5>Eclipse</h5></li>  					
+										<li class="skill-name"><h5>Git</h5></li>  
+										<li class="skill-name"><h5>Github</h5></li>  
+										<li class="skill-name"><h5>Groovy</h5></li>  
+							      <li class="skill-name"><h5>HTML 5</h5></li>
+										<li class="skill-name"><h5>Java</h5></li>  
+										<li class="skill-name"><h5>JUnit</h5></li>  
+							      <li class="skill-name"><h5>Matlab</h5></li>  		
+										<li class="skill-name"><h5>Microworlds</h5></li>  
+										<li class="skill-name"><h5>OCaml</h5></li>  
+										<li class="skill-name"><h5>Processing</h5></li>  
+										<li class="skill-name"><h5>Python</h5></li> 
+										<li class="skill-name"><h5>Regular Expressions</h5></li>  
+										<li class="skill-name"><h5>ReadyAPI</h5></li>  
+										<li class="skill-name"><h5>Selenium</h5></li>  
+										<li class="skill-name"><h5>Semantic Versioning</h5></li>  
+										<li class="skill-name"><h5>Tortoise Git</h5></li>  
+										<li class="skill-name"><h5>Terrapin Logo</h5></li> 
+										<li class="skill-name"><h5>Visual Studio Code</h5></li>  
+			            </ul>
 					  </td>
 				    </tr>
 				    <tr id="medium" class="row">
@@ -81,30 +89,36 @@
 				      			<h3><b>Knowledge Level Medium</b></h3><h5> Requires some google searches.</h5>
 				      		</div>
 				      	</th>
-				      <td class="col-md-3">
-				      	<ul class="list-group">
-							<li class="skill-icon"><img src="https://img.shields.io/maven-central/v/org.apache.maven/apache-maven.svg" alt="Apache Maven" width="134" height="20" data-toggle="tooltip" title="Apache Maven" ></li>		
-							<li class="skill-icon"><img src="techicons/Bootstrap.svg" width="35" height="35" alt="Bootstrap" data-toggle="tooltip" title="Bootstrap"></li> 
-							<li class="skill-icon"><img src="techicons/GAnalytics.png" width="53" height="40" alt="GoogleAnalytics" data-toggle="tooltip" title="GoogleAnalytics"></li>
-							<li class="skill-icon"><img src="techicons/jquery.png" width="42" height="40" alt="jQuery" data-toggle="tooltip" title="jQuery"></li>
-							<li class="skill-icon"><img src="techicons/Linux.png" width="33" height="40" alt="Linux" data-toggle="tooltip" title="Linux"></li>
-							<li class="skill-icon"><img src="techicons/R.png" width="40" height="40" alt="R" data-toggle="tooltip" title="R"></li>  
-							<li class="skill-icon"><img src="techicons/SQL.png" width="85" height="40" alt="SQL" data-toggle="tooltip" title="SQL"></li>  
-							<li class="skill-icon"><img src="techicons/Travis.png" width="40" height="40" alt="Travis CI" data-toggle="tooltip" title="Travis CI"></li> 
-					 	 </ul>	
+					  <td class="col-md-3">
+				  	    <ul class="list-group">
+		                  <li class="skill-icon"><img src="https://img.shields.io/maven-central/v/org.apache.maven/apache-maven.svg" alt="Apache Maven" width="134" height="20" data-toggle="tooltip" title="Apache Maven" ></li>		
+		                  <li class="skill-icon"><img src="techicons/Bootstrap.svg" width="35" height="35" alt="Bootstrap" data-toggle="tooltip" title="Bootstrap"></li> 
+		                  <li class="skill-icon"><img src="techicons/Bootstrap.svg" width="35" height="35" alt="Confluence" data-toggle="tooltip" title="Confluence"></li> 
+		                  <li class="skill-icon"><img src="techicons/GAnalytics.png" width="53" height="40" alt="GoogleAnalytics" data-toggle="tooltip" title="GoogleAnalytics"></li>
+		                  <li class="skill-icon"><img src="techicons/jquery.png" width="42" height="40" alt="jQuery" data-toggle="tooltip" title="jQuery"></li>
+		                  <li class="skill-icon"><img src="techicons/jquery.png" width="42" height="40" alt="Jira" data-toggle="tooltip" title="Jira"></li>
+		                  <li class="skill-icon"><img src="techicons/Linux.png" width="33" height="40" alt="Linux" data-toggle="tooltip" title="Linux"></li>
+		                  <li class="skill-icon"><img src="techicons/Linux.png" width="33" height="40" alt="Microsoft SQL Server Management" data-toggle="tooltip" title="Microsoft SQL Server Management"></li>
+		                  <li class="skill-icon"><img src="techicons/R.png" width="40" height="40" alt="R" data-toggle="tooltip" title="R"></li>  
+		                  <li class="skill-icon"><img src="techicons/SQL.png" width="85" height="40" alt="SQL" data-toggle="tooltip" title="SQL"></li>  
+		                  <li class="skill-icon"><img src="techicons/Travis.png" width="40" height="40" alt="Travis CI" data-toggle="tooltip" title="Travis CI"></li> 
+					    </ul>	
 					  </td>
-				      <td class="col-md-3">			      	
-				      	<ul class="list-group">
-							<li class="skill-name"><h5>Apache Maven</h5></li>  
-				      		<li class="skill-name"><h5>Bootstrap</h5></li>  					
-							<li class="skill-name"><h5>Google Analyics</h5></li>
-							<li class="skill-name"><h5>jQuery</h5></li>
-							<li class="skill-name"><h5>Linux</h5></li>  
-							<li class="skill-name"><h5>R</h5></li>  
-							<li class="skill-name"><h5>SQL</h5></li>  
-							<li class="skill-name"><h5>Travis CI</h5></li>  
-					 	 </ul>
-					   </td>
+					  <td class="col-md-3">			      	
+		                <ul class="list-group">
+		                  <li class="skill-name"><h5>Apache Maven</h5></li>
+		                  <li class="skill-name"><h5>Bootstrap</h5></li>  					
+		                  <li class="skill-name"><h5>Confluence</h5></li>  
+		                  <li class="skill-name"><h5>Google Analyics</h5></li>
+		                  <li class="skill-name"><h5>Jira</h5></li>  
+		                  <li class="skill-name"><h5>jQuery</h5></li>
+		                  <li class="skill-name"><h5>Linux</h5></li>  
+		                  <li class="skill-name"><h5>Microsoft SQL Server Management</h5></li>  
+		                  <li class="skill-name"><h5>R</h5></li>  
+		                  <li class="skill-name"><h5>SQL</h5></li>  
+		                  <li class="skill-name"><h5>Travis CI</h5></li>  
+					 	</ul>
+					  </td>
 				    </tr>
 				    <tr id="low" class="row" style="border-bottom:2px solid black;">
 				      <th class="col-md-6" scope="row">
@@ -137,5 +151,41 @@
 				</div>
 
 			</div>
+			<script type="text/javascript">
+  var i = 0;
+  var txt = 'Technology Matrix';
+  var speed = 60;
+  let hasBlinker = true;
+  document.getElementById("blinkText").innerHTML = "|";
+  function typeWriter() {
+    if (i < txt.length) {
+      let x = document.getElementById("blinkText");
+      let len = x.innerHTML.length;
+      x.innerHTML = x.innerHTML.substring(0, len - 1) + txt.charAt(i) + "|";
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+    let x = document.getElementById("blinkText");
+  }
+
+  function blink() {
+    let x = document.getElementById("blinkText");
+    let len = x.innerHTML.length;
+    if (x.innerHTML.includes('Technology Matrix')) {
+      if (hasBlinker) {
+        x.innerHTML = x.innerHTML.substring(0, len - 1);
+        hasBlinker = false;
+      }
+      else {
+        x.innerHTML += "|";
+        hasBlinker = true;
+      }
+    }
+  }
+
+  typeWriter();
+  setInterval(blink, 500); 
+</script>
+			
 	</body>
 </html>
