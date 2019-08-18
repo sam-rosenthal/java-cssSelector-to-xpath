@@ -150,7 +150,11 @@ public abstract class AbstractCssSelectorToXpathTest {
 		    	//not a dup and remove
 		    	urlToPageTitleMap.remove(linkUrl);
 		    }
-		    
+		    if(linkUrl.startsWith("mailto"))
+		    {
+		    	System.out.println("linkUrl = "+linkUrl+", title ="+title);
+		    	continue;
+		    }
 		    assertNotNull(title);
 		    
 		    //this is a workaround for firefox with a link surrounding an image not being clickable
@@ -206,7 +210,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 		assertTrue(expectedXpath.length()>0);
 		assertNotEquals(expectedXpath, cssSelector);
 	    assertTrue(wait.until(getWaitforExpectedText(expectedXpath,getBy("table#inputOutputTable tr#xpathOutputRow>td#xpathOutputString>span"))));
-	    assertTrue(cssSelector.equals(driver.findElement(getBy("table#inputOutputTable tr#cssInputRow>td#cssInputString>span")).getText()));
+	    assertTrue(wait.until(getWaitforExpectedText(cssSelector,getBy("table#inputOutputTable tr#cssInputRow>td#cssInputString>span"))));
 	}
 	
 	private ExpectedCondition<Boolean> getWaitforExpectedText(String expectedText,By by) {
@@ -294,6 +298,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath/tree/samdev/src/test/java/org/sam/rosenthal/cssselectortoxpath/utilities","java-cssSelector-to-xpath/src/test/java/org/sam/rosenthal/cssselectortoxpath/utilities at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
 		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath/tree/samdev/src/test/java/org/sam/rosenthal/selenium","java-cssSelector-to-xpath/src/test/java/org/sam/rosenthal/selenium at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
 		urlToPageTitleMap.put(cssToXpathUrl+"/css-selector-to-xpath-reference-cases","CSS Selector Reference Cases Test Page");
+		urlToPageTitleMap.put("mailto:ser259@cornell.edu",null); //this link is to email, doesn't correspond to a webpage
 
 		return urlToPageTitleMap;
 	}
