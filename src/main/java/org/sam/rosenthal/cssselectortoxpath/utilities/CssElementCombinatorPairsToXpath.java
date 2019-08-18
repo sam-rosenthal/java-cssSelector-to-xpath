@@ -228,9 +228,9 @@ public class CssElementCombinatorPairsToXpath
 		return "\r\nUsage:\r\n\r\n" +
 				"    java -cp org.sam.rosenthal.java-cssSelector-to-xpath-<version number> org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath <CSS Selector String>\r\n" + 
 				"    -	Converts a CSS Sector String to a Xpath String\r\n" + 
-				"    java –cp org.sam.rosenthal.java-cssSelector-to-xpath-<version number> org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath -v{ersion}\r\n" + 
+				"    java -cp org.sam.rosenthal.java-cssSelector-to-xpath-<version number> org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath -v{ersion}\r\n" + 
 				"    -	Displays  the version number of java-cssSlector-to-xpath\r\n" + 
-				"    Java –cp org.sam.rosenthal.java-cssSelector-to-xpath-<version number> org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath -h{elp}\r\n" + 
+				"    Java -cp org.sam.rosenthal.java-cssSelector-to-xpath-<version number> org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath -h{elp}\r\n" + 
 				"    -	Displays this help usage text \r\n" ;
 	}
 	public String getVersionNumber() {
