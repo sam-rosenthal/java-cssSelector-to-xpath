@@ -1,13 +1,11 @@
 package org.sam.rosenthal.cssselectortoxpath.utilities;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.collections4.map.HashedMap;
 import org.sam.rosenthal.cssselectortoxpath.model.CssAttribute;
 import org.sam.rosenthal.cssselectortoxpath.model.CssAttributePsuedoClass;
 import org.sam.rosenthal.cssselectortoxpath.model.CssAttributeValueType;
@@ -139,52 +137,54 @@ public class CssElementAttributeParser
 					match.group(reIndexAttributeType)));
 			}
 		}	
-		attributeList = trimDuplicateAttributes(attributeList);
+		attributeList = cleanUpAttributes(attributeList);
 		CssElementAttributes cssElementAttribute = new CssElementAttributes(element,attributeList);
 		//System.out.println(cssElementAttribute);
 		return cssElementAttribute;
 	}
 
-	public List<CssAttribute> trimDuplicateAttributes(List<CssAttribute> attributeList) {
+	public List<CssAttribute> cleanUpAttributes(List<CssAttribute> attributeList) {
+		//Sets will guarantee no duplicate attributes and hashlinkset preserves order
 		LinkedHashSet<CssAttribute> attributeSet = new LinkedHashSet<>(attributeList);
-		trimChildOfType(attributeSet, CssPsuedoClassType.FIRST_CHILD, CssPsuedoClassType.ONLY_CHILD, CssPsuedoClassType.FIRST_OF_TYPE);
-		trimChildOfType(attributeSet, CssPsuedoClassType.LAST_CHILD, CssPsuedoClassType.ONLY_CHILD, CssPsuedoClassType.LAST_OF_TYPE);
-		trimChildOfType(attributeSet, CssPsuedoClassType.FIRST_OF_TYPE, CssPsuedoClassType.ONLY_OF_TYPE, null);
-		trimChildOfType(attributeSet, CssPsuedoClassType.LAST_OF_TYPE, CssPsuedoClassType.ONLY_OF_TYPE, null);
-		trimChildOfType(attributeSet, CssPsuedoClassType.ONLY_OF_TYPE, CssPsuedoClassType.ONLY_CHILD, null);
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.FIRST_CHILD, CssPsuedoClassType.ONLY_CHILD);
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.FIRST_OF_TYPE, CssPsuedoClassType.FIRST_CHILD);
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.FIRST_OF_TYPE, CssPsuedoClassType.ONLY_CHILD);
 
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.LAST_CHILD, CssPsuedoClassType.ONLY_CHILD);
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.LAST_OF_TYPE, CssPsuedoClassType.LAST_CHILD);
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.LAST_OF_TYPE, CssPsuedoClassType.ONLY_CHILD);
+
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.FIRST_OF_TYPE, CssPsuedoClassType.ONLY_OF_TYPE);
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.LAST_OF_TYPE, CssPsuedoClassType.ONLY_OF_TYPE);
+		
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.ONLY_OF_TYPE, CssPsuedoClassType.ONLY_CHILD);
 
 		return new ArrayList<>(attributeSet);
 	}
 
-	private void trimChildOfType(LinkedHashSet<CssAttribute> attributeSet, CssPsuedoClassType child, CssPsuedoClassType onlyChild, CssPsuedoClassType ofType ) {
-		CssAttributePsuedoClass found = null;
-		CssAttributePsuedoClass foundOnly = null;
-		CssAttributePsuedoClass foundOfType = null;
+	private void cleanUpChildOfType(LinkedHashSet<CssAttribute> attributeSet, CssPsuedoClassType candidateToRemove, CssPsuedoClassType reasonToRemove) {
+		CssAttributePsuedoClass foundCandidateToRemove = null;
+		CssAttributePsuedoClass foundReasonToRemove = null;
 		for(CssAttribute attribute : attributeSet)
 		{
 			if(attribute instanceof CssAttributePsuedoClass){
 				CssAttributePsuedoClass cssAttributePsuedoClass = (CssAttributePsuedoClass) attribute;
-				if(cssAttributePsuedoClass.getCssPsuedoClassType().equals(child)) {
-					found = cssAttributePsuedoClass;
+				if(cssAttributePsuedoClass.getCssPsuedoClassType().equals(candidateToRemove)) {
+					foundCandidateToRemove = cssAttributePsuedoClass;
 				}
-				else if(cssAttributePsuedoClass.getCssPsuedoClassType().equals(onlyChild)){
-					foundOnly = cssAttributePsuedoClass;
+				else if(cssAttributePsuedoClass.getCssPsuedoClassType().equals(reasonToRemove)){
+					foundReasonToRemove = cssAttributePsuedoClass;
 				}
-				else if(cssAttributePsuedoClass.getCssPsuedoClassType().equals(ofType)){
-					foundOfType = cssAttributePsuedoClass;
-				}
-				if(found != null && foundOnly != null && foundOfType != null)
+
+				if(foundCandidateToRemove != null && foundReasonToRemove != null)
 				{
 					break;
 				}
 			}
 		}
-		if((found != null || foundOnly != null) && foundOfType != null) {
-			attributeSet.remove(foundOfType);
-		}
-		if(found != null && foundOnly != null) {
-			attributeSet.remove(found);
+		
+		if(foundCandidateToRemove != null && foundReasonToRemove != null) {
+			attributeSet.remove(foundCandidateToRemove);
 		}
 	}	
 

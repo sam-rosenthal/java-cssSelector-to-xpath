@@ -7,7 +7,7 @@ public class CssAttributePsuedoClass extends CssAttribute
 	
 	public CssAttributePsuedoClass(CssPsuedoClassType psuedoClassTypeIn, String elementIn)
 	{
-		super(null,null,(String) null);
+		super(null,null,(CssAttributeValueType) null);
 		psuedoClassType = psuedoClassTypeIn;
 		element = elementIn;
 	}

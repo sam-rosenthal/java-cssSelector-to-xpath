@@ -111,10 +111,6 @@ public class CssSelectorStringSplitter
 		boolean found=false;
 		StringBuffer stringBuffer = new StringBuffer();
 		while(match.find()) {
-			//System.out.println("1="+match.group(1));
-			//System.out.println("2="+match.group(2));
-			//System.out.println("22="+match.group(2).replaceAll(classOrIdCharacterRE,PLACE_HOLDER));
-			
 			stringBuffer.append(match.group(1));
 			stringBuffer.append(match.group(2).replaceAll(classOrIdCharacterRE,PLACE_HOLDER));
 

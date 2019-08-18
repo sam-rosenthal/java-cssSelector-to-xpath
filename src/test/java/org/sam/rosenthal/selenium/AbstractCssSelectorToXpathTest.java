@@ -209,7 +209,6 @@ public abstract class AbstractCssSelectorToXpathTest {
 	    assertTrue(cssSelector.equals(driver.findElement(getBy("table#inputOutputTable tr#cssInputRow>td#cssInputString>span")).getText()));
 	}
 	
-	
 	private ExpectedCondition<Boolean> getWaitforExpectedText(String expectedText,By by) {
     	return  new ExpectedCondition<Boolean>() {
 	        public Boolean apply(WebDriver d) {
@@ -299,40 +298,4 @@ public abstract class AbstractCssSelectorToXpathTest {
 		return urlToPageTitleMap;
 	}
 	
-	protected void testEquivalence(String websiteUrl, String cssSelector) throws CssSelectorToXPathConverterException {
-		testConverterOutput(cssSelector);
-		String xpath = converter.convertCssSelectorStringToXpathString(cssSelector);
-		System.out.println("XPATH = "+xpath);
-		driver.findElement(By.linkText("XPath-Wiki")).click();
-		String winHandleBefore = driver.getWindowHandle();
-		assertTrue(wait.until((new ExpectedCondition<Boolean>() {
-	        public Boolean apply(WebDriver d) {
-	        	return 2==driver.getWindowHandles().size();
-	        }
-	    })));
-		for(String winHandle : driver.getWindowHandles())
-		{
-			if(!winHandleBefore.equals(winHandle)) {
-				driver.switchTo().window(winHandle);		
-		        break;
-			}
-		}
-		driver.get(websiteUrl);
-
-		List<WebElement> cssResults = driver.findElements(By.cssSelector(cssSelector));
-		List<WebElement> xpathResults = driver.findElements(By.xpath(xpath));
-		System.out.println("Css Elements Found:" + cssResults.size() + "XPath elements found:" + xpathResults.size());
-		assertEquals(cssResults.size(), xpathResults.size()); 
-		for(int i = 0; i<cssResults.size(); i++)
-		{
-			WebElement cssElement = cssResults.get(i);
-			WebElement xpathElement = xpathResults.get(i);
-
-			System.out.println("CSS:"+cssElement.getLocation() +"  XPATH:" + xpathElement.getLocation());
-			assertEquals(cssElement, xpathElement);
-		}
-	    driver.close();
-	    driver.switchTo().window(winHandleBefore);
-	}
-
 }

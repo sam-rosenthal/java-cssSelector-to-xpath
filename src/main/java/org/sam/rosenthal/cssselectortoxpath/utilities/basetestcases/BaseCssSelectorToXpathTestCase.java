@@ -54,6 +54,12 @@ public class BaseCssSelectorToXpathTestCase {
 		
 		//Implemented psuedo classes
 		addBaseCaseToXPath(baseCases,"empty","span:empty","//span[not(*) and .=\"\"]");	
+		addBaseCaseToXPath(baseCases,"first-child","div:first-child","//div[count(preceding-sibling::*)=0]");	
+		addBaseCaseToXPath(baseCases,"last-child","span:last-child","//span[count(following-sibling::*)=0]");	
+		addBaseCaseToXPath(baseCases,"only-child","form:only-child","//form[count(preceding-sibling::*)=0][count(following-sibling::*)=0]");	
+		addBaseCaseToXPath(baseCases,"first-of-type","p:first-of-type","//p[count(preceding-sibling::p)=0]");	
+		addBaseCaseToXPath(baseCases,"last-of-type","h:last-of-type","//h[count(following-sibling::h)=0]");	
+		addBaseCaseToXPath(baseCases,"only-of-type","span:only-of-type","//span[count(preceding-sibling::span)=0][count(following-sibling::span)=0]");	
 
 		return baseCases;
 	}
@@ -107,11 +113,11 @@ public class BaseCssSelectorToXpathTestCase {
 				":defined",
 				":dir(A)",
 				":disabled",
-//				":empty",   implemented
+//implemented	":empty",
 				":enabled",
 				":first",
-//				":first-child",
-//				":first-of-type",
+//implemented	":first-child",
+//implemented	":first-of-type",
 				":fullscreen",
 				":focus",
 				":focus-visible",
@@ -124,8 +130,8 @@ public class BaseCssSelectorToXpathTestCase {
 				":in-range",
 				":invalid",
 				":lang(A)",
-//				":last-child",
-//				":last-of-type",
+//implemented	":last-child",
+//implemented	":last-of-type",
 				":left",
 				":link",
 				":not(A)",
@@ -133,8 +139,8 @@ public class BaseCssSelectorToXpathTestCase {
 				":nth-last-child(A)",
 				":nth-last-of-type(A)",
 				":nth-of-type(A)",
-//				":only-child",
-//				":only-of-type",
+//implemented	":only-child",
+//implemented	":only-of-type",
 				":optional",
 				":out-of-range",
 				":placeholder-shown",

@@ -50,10 +50,9 @@ public class CssSelectorToXpathBaseWebpageContentTest extends AbstractCssSelecto
 			System.out.println("cssSelector="+cssSelectorWithDivId);
 			String xpathWithDivId="//div[@id=\""+name+"\"]"+ cssSelectorToXpathCase.getExpectedXpath();
 			System.out.println("xpath="+xpathWithDivId);
-			if(!name.equals("empty")) {
-				assertEquals(name,driver.findElement(getBy(cssSelectorWithDivId)).getText().trim());
-				assertEquals(name,driver.findElement(By.xpath(xpathWithDivId)).getText().trim());
-			}
+			String expectedName=name.equals("empty")?"":name;
+			assertEquals(expectedName,driver.findElement(getBy(cssSelectorWithDivId)).getText().trim());
+			assertEquals(expectedName,driver.findElement(By.xpath(xpathWithDivId)).getText().trim());
 			assertEquals(xpathWithDivId, converter.convertCssSelectorStringToXpathString(cssSelectorWithDivId));
 			
 		}
