@@ -20,6 +20,12 @@
 </head>
 <body> 
 	<style>
+		body {
+			background-image: url("website-background.jpg");
+			background-size: cover;
+			background-attachment: fixed;
+			background-position: center;
+		}
 		h1 {
 			color:#013243;
 			font-weight:bold;
@@ -48,7 +54,8 @@
 			border: 1px solid;
 	    	padding: 5px;
 	    	box-shadow: 5px 10px;
-	    	margin-bottom: 35px;
+	    	margin-top: 75px;
+	    	margin-bottom: 75px;
 		}
 		div#footer ul{
 			margin: 0px;
@@ -79,7 +86,7 @@
 		input[name="cssSelectorInput"]::selection{
 			background-color:lightblue;
 			color:black;
-			}
+		}
 		div.error{
 		    display: inline;
 		    padding-left:3px;
@@ -95,6 +102,9 @@
 		table {
 			table-layout: fixed;
 			border-collapse: collapse;
+		}
+		table td {
+			font-size: medium;
 		}
 		form:not([invalid-xpath]) td{
 			display:none;
@@ -113,8 +123,8 @@
 			(Powered by: <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md" target="_blank">java-cssSelector-to-xpath</a> <label wicket:id="version"/>)
 		</h2>
 		<form class="form" wicket:id="form">
-			<div style="display: flex" >
-				<input type="text" wicket:id="cssSelectorInput" style="flex:1" onfocus="this.select()" placeholder="Enter a CSS Selector to convert to XPath"/> 
+			<div style="display: flex;">
+				<input type="text" wicket:id="cssSelectorInput" style="flex:1; font-size:medium" onfocus="this.select()" placeholder="Enter a CSS Selector to convert to XPath"/> 
 				<input type="submit" wicket:id="convert" value="Convert"/>
 			</div>
 			<div style="clear:both; padding-bottom:15px"/> 
@@ -147,21 +157,27 @@
 		<fieldset class="assumptions">
 		 <legend>Implementation Notes</legend>
 			<ul>
-				<li>CSS Selector To XPath has been implemented for all 
+				<li>CSS Selector To XPath have been implemented for all 
 					<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Simple_selectors" target="_blank">Simple Selectors </a>
-					<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Combinators" target="_blank"> and Combinators. </a>
-					<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Pseudo-classes" target="_blank">Pseudo-Classes</a>
-					have not been implemented.  </li>
-				<ul>
-					<li> Not all Pseudo-Class CSS Selectors can be converted to XPaths. </li>
-					<li> A possible future enhancement is to implement a partial subset of CSS Selector Pseudo-Classes. </li>
-				</ul>
-				<li>Chrome Browser was used as reference implementation.</li>
-				<ul> 
-					<li>All base CSS Selectors and corresponding XPaths were tested cases using 
-						<a href="https://yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/" target="_blank">Chrome Browser's Developer Tools.</a>
-					</li>
-				 </ul>
+					<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Combinators" target="_blank"> and Combinators.</a>
+				</li>
+				<li>
+					<label style="color:red; font-style: italic">*NEW* </label>The following 
+					<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Pseudo-classes" target="_blank"> Pseudo-Classes</a>
+					have been implemented. 
+					<ul>
+						<li>:empty, :first-child, :last-child, :only-child, :first-of-type, :last-of-type, :only-of-type </li>
+
+					</ul>
+				</li>
+					<li>Future enhancements will be to implement additional CSS Selector Pseudo-Classes. </li>
+					<ul><li> Note: not all Pseudo-Class CSS Selectors can be converted to XPaths </li> </ul>
+					<li>Chrome Browser was used as reference implementation.</li>
+					<ul> 
+						<li>All base CSS Selectors and corresponding XPaths were tested cases using 
+							<a href="https://yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/" target="_blank">Chrome Browser's Developer Tools.</a>
+						</li>
+					 </ul>
 				<li>Additional restrictions</li>
 					<ul> 		
 						<li>All names and values (Elements and Attributes) are case sensitive</li>
@@ -172,12 +188,14 @@
 		</fieldset>		
 	</div>
 	<div style="float: left; width: 33%;">
-			<p class="developedBy">
+			<p class="developedBy" style= "margin-top:0px">
 			Developed by <a href="https://github.com/sam-rosenthal" target="_blank">Sam Rosenthal</a> 
 			<br/>
 			<label wicket:id="webversion"/>
 			<br/><br/> 
-			<a style="font-size:24px" href="https://sam-rosenthal.github.io" target="_blank"> Need a 2019 summer intern? </a>		
+			<a style="font-size:24px" href="https://sam-rosenthal.github.io" target="_blank"> Need a 2020 summer intern? </a>	
+			<br/><br/> 
+			If you have any suggestions, questions, or feedback feel free to email me at: <a href="mailto:ser259@cornell.edu">ser259@cornell.edu</a>
 		</p>
 	</div>
 	<div style="float: right; width: 33%;">

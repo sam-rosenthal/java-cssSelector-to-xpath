@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +62,6 @@ public class CssElementCombinatorPairsToXpathTest
 		testCssElementCombinatorPairListListToXpath(asList(asList(new CssElementCombinatorPair(null, "A")), asList(new CssElementCombinatorPair(null, "B")), asList(new CssElementCombinatorPair(null, "C"))),"(//A)|(//B)|(//C)");
 		testCssElementCombinatorPairListListToXpath(asList(asList(new CssElementCombinatorPair(null, "A"), new CssElementCombinatorPair(CssCombinatorType.SPACE, "B")),asList(new CssElementCombinatorPair(null, "A"), new CssElementCombinatorPair(CssCombinatorType.PLUS, "B"))),"(//A//B)|(//A/following-sibling::*[1]/self::B)");
 		testCssElementCombinatorPairListListToXpath(asList(asList(new CssElementCombinatorPair(null, "A"), new CssElementCombinatorPair(CssCombinatorType.SPACE, "B")),asList(new CssElementCombinatorPair(null, "A"), new CssElementCombinatorPair(CssCombinatorType.PLUS, "B"))),"(//A//B)|(//A/following-sibling::*[1]/self::B)");
-
 	}
 	
 	public void testCssElementCombinatorPairListListToXpath(List<List<CssElementCombinatorPair>> elementCombinatorPairListInput, String expectedOutput) throws CssSelectorToXPathConverterException  {
@@ -94,6 +94,38 @@ public class CssElementCombinatorPairsToXpathTest
 	}
 	
 	private void testCssToXpathBasicException(String cssSelector, String expectedErrorMessage) {
+		try {
+			String xpath=elementCombinatorPair.convertCssSelectorStringToXpathString(cssSelector);
+			fail("CssSelector="+cssSelector+", should have been invalid, but xpath string return value="+xpath);
+		} catch (CssSelectorToXPathConverterException e) {
+			assertEquals(expectedErrorMessage,e.getMessage());
+			//success
+		}		
+	}
+	
+	@Test
+	public void testCssToXpathFirstLastOfTypeBasicException() {
+		Map<String,String> cases = new HashMap<String, String>();
+		cases.put("*:first-of-type", CssSelectorToXPathConverterInvalidFirstLastOnlyOfType.FIRST_LAST_ONLY_OF_TYPE_UNSUPPORTED_ERROR_FORMAT);
+		cases.put(":first-of-type", CssSelectorToXPathConverterInvalidFirstLastOnlyOfType.FIRST_LAST_ONLY_OF_TYPE_UNSUPPORTED_ERROR_FORMAT);
+		cases.put("*:last-of-type", CssSelectorToXPathConverterInvalidFirstLastOnlyOfType.FIRST_LAST_ONLY_OF_TYPE_UNSUPPORTED_ERROR_FORMAT);
+		cases.put(":last-of-type", CssSelectorToXPathConverterInvalidFirstLastOnlyOfType.FIRST_LAST_ONLY_OF_TYPE_UNSUPPORTED_ERROR_FORMAT);
+		cases.put("x:first-of-type *:first-of-type", CssSelectorToXPathConverterInvalidFirstLastOnlyOfType.FIRST_LAST_ONLY_OF_TYPE_UNSUPPORTED_ERROR_FORMAT);
+		cases.put("x:last-of-type y :last-of-type", CssSelectorToXPathConverterInvalidFirstLastOnlyOfType.FIRST_LAST_ONLY_OF_TYPE_UNSUPPORTED_ERROR_FORMAT);
+		cases.put("*:only-of-type", CssSelectorToXPathConverterInvalidFirstLastOnlyOfType.FIRST_LAST_ONLY_OF_TYPE_UNSUPPORTED_ERROR_FORMAT);
+		cases.put(":only-of-type", CssSelectorToXPathConverterInvalidFirstLastOnlyOfType.FIRST_LAST_ONLY_OF_TYPE_UNSUPPORTED_ERROR_FORMAT);
+		cases.put("x.a:only-of-type *:only-of-type", CssSelectorToXPathConverterInvalidFirstLastOnlyOfType.FIRST_LAST_ONLY_OF_TYPE_UNSUPPORTED_ERROR_FORMAT);
+
+		for(Map.Entry<String,String> exceptionCase:cases.entrySet())
+		{
+			String cssSelector=exceptionCase.getKey();
+			String expectedErrorMessage=exceptionCase.getValue();
+			System.out.println(expectedErrorMessage);
+			testCssToXpathFirstLastOfTypeBasicException(cssSelector, expectedErrorMessage);
+		}
+	}
+	
+	private void testCssToXpathFirstLastOfTypeBasicException(String cssSelector, String expectedErrorMessage) {
 		try {
 			String xpath=elementCombinatorPair.convertCssSelectorStringToXpathString(cssSelector);
 			fail("CssSelector="+cssSelector+", should have been invalid, but xpath string return value="+xpath);
@@ -172,8 +204,63 @@ public class CssElementCombinatorPairsToXpathTest
 		
 		testConvertCssStringToXpathString("a#b.c[d$='e.#f'], g[h='i...j'], k[l='m###n']","(//a[@id=\"b\"][contains(concat(\" \",normalize-space(@class),\" \"),\" c \")][substring(@d,string-length(@d)-string-length(\"e.#f\")+1)=\"e.#f\"])|(//g[@h=\"i...j\"])|(//k[@l=\"m###n\"])");	
 
-		
 		testConvertCssStringToXpathString("[B][C]","//*[@B][@C]");	
+		
+		testConvertCssStringToXpathString(":empty","//*[not(*) and .=\"\"]");
+		testConvertCssStringToXpathString("x:empty","//x[not(*) and .=\"\"]");
+		testConvertCssStringToXpathString("*:empty","//*[not(*) and .=\"\"]");
+		testConvertCssStringToXpathString("a:empty b:empty","//a[not(*) and .=\"\"]//b[not(*) and .=\"\"]");
+		testConvertCssStringToXpathString("div:empty","//div[not(*) and .=\"\"]");
+		testConvertCssStringToXpathString("div:empty:empty","//div[not(*) and .=\"\"]");
+	 	testConvertCssStringToXpathString(":empty[id=\"6\"]","//*[not(*) and .=\"\"][@id=\"6\"]");
+		testConvertCssStringToXpathString("x y:empty[id=\"6\"]","//x//y[not(*) and .=\"\"][@id=\"6\"]");
+		testConvertCssStringToXpathString("x:empty>y[id='6']","//x[not(*) and .=\"\"]/y[@id=\"6\"]");
+		testConvertCssStringToXpathString("x:empty+y:empty","//x[not(*) and .=\"\"]/following-sibling::*[1]/self::y[not(*) and .=\"\"]");
+		
+		testConvertCssStringToXpathString(":only-child","//*[count(preceding-sibling::*)=0][count(following-sibling::*)=0]");
+		testConvertCssStringToXpathString("XXX:only-child","//XXX[count(preceding-sibling::*)=0][count(following-sibling::*)=0]");
+		testConvertCssStringToXpathString("div:only-child+[class^='abc']", "//div[count(preceding-sibling::*)=0][count(following-sibling::*)=0]/following-sibling::*[1]/self::*[starts-with(@class,\"abc\")]");
+		testConvertCssStringToXpathString("div:only-child>[id^='samm']", "//div[count(preceding-sibling::*)=0][count(following-sibling::*)=0]/*[starts-with(@id,\"samm\")]");
+
+		testConvertCssStringToXpathString("a:first-of-type","//a[count(preceding-sibling::a)=0]");
+		testConvertCssStringToXpathString("x:first-of-type y:first-of-type","//x[count(preceding-sibling::x)=0]//y[count(preceding-sibling::y)=0]");
+		testConvertCssStringToXpathString("a:last-of-type","//a[count(following-sibling::a)=0]");
+		testConvertCssStringToXpathString("x:last-of-type:first-of-type","//x[count(following-sibling::x)=0][count(preceding-sibling::x)=0]");
+		testConvertCssStringToXpathString("x:first-of-type:last-of-type","//x[count(preceding-sibling::x)=0][count(following-sibling::x)=0]");
+		testConvertCssStringToXpathString("x:last-of-type y:last-of-type","//x[count(following-sibling::x)=0]//y[count(following-sibling::y)=0]");	
+		testConvertCssStringToXpathString("a:only-of-type","//a[count(preceding-sibling::a)=0][count(following-sibling::a)=0]");
+		testConvertCssStringToXpathString("x:only-of-type>y:only-of-type","//x[count(preceding-sibling::x)=0][count(following-sibling::x)=0]/y[count(preceding-sibling::y)=0][count(following-sibling::y)=0]");
+		testConvertCssStringToXpathString("div div[class^=\"score\"]:only-of-type","//div//div[starts-with(@class,\"score\")][count(preceding-sibling::div)=0][count(following-sibling::div)=0]");
+
+		
+		testConvertCssStringToXpathString(":first-child","//*[count(preceding-sibling::*)=0]");
+		testConvertCssStringToXpathString("*:first-child","//*[count(preceding-sibling::*)=0]");
+		testConvertCssStringToXpathString(":last-child","//*[count(following-sibling::*)=0]");
+		testConvertCssStringToXpathString("*:last-child","//*[count(following-sibling::*)=0]");
+		testConvertCssStringToXpathString("x:first-child","//x[count(preceding-sibling::*)=0]");
+		testConvertCssStringToXpathString("x:first-child y:first-child","//x[count(preceding-sibling::*)=0]//y[count(preceding-sibling::*)=0]");
+		testConvertCssStringToXpathString("x:first-child :first-child","//x[count(preceding-sibling::*)=0]//*[count(preceding-sibling::*)=0]");
+		testConvertCssStringToXpathString("x:first-child y:last-child","//x[count(preceding-sibling::*)=0]//y[count(following-sibling::*)=0]");
+		testConvertCssStringToXpathString("x:last-child y:first-child","//x[count(following-sibling::*)=0]//y[count(preceding-sibling::*)=0]");
+
+		//Test for trimming
+		testConvertCssStringToXpathString("div.x.x","//div[contains(concat(\" \",normalize-space(@class),\" \"),\" x \")]");
+		testConvertCssStringToXpathString("div#x#x","//div[@id=\"x\"]");
+		testConvertCssStringToXpathString("div#x.y#x.z","//div[@id=\"x\"][contains(concat(\" \",normalize-space(@class),\" \"),\" y \")][contains(concat(\" \",normalize-space(@class),\" \"),\" z \")]");
+		testConvertCssStringToXpathString("div>span[class='sam'][class='sam']","//div/span[@class=\"sam\"]");
+		testConvertCssStringToXpathString(":empty:empty+:first-child:empty:first-child","//*[not(*) and .=\"\"]/following-sibling::*[1]/self::*[count(preceding-sibling::*)=0][not(*) and .=\"\"]");
+
+		
+		//Tests for trimming/simplifying of psuedo classes
+		testConvertCssStringToXpathString("div:first-child:first-of-type","//div[count(preceding-sibling::*)=0]");
+		testConvertCssStringToXpathString("div:only-child:first-of-type","//div[count(preceding-sibling::*)=0][count(following-sibling::*)=0]");
+		testConvertCssStringToXpathString("div:first-child:first-of-type","//div[count(preceding-sibling::*)=0]");
+		testConvertCssStringToXpathString("div:last-child:last-of-type","//div[count(following-sibling::*)=0]");
+		testConvertCssStringToXpathString("div:only-child:last-of-type","//div[count(preceding-sibling::*)=0][count(following-sibling::*)=0]");
+		testConvertCssStringToXpathString("div:last-child:last-of-type","//div[count(following-sibling::*)=0]");		
+		testConvertCssStringToXpathString("div:first-of-type:only-of-type","//div[count(preceding-sibling::div)=0][count(following-sibling::div)=0]");
+		testConvertCssStringToXpathString("div:last-of-type:only-of-type","//div[count(preceding-sibling::div)=0][count(following-sibling::div)=0]");
+		testConvertCssStringToXpathString("div:only-child:only-of-type","//div[count(preceding-sibling::*)=0][count(following-sibling::*)=0]");
 
 	}
 

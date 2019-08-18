@@ -18,17 +18,19 @@ public class CssSelectorToXpathBaseWebpageContentTest extends AbstractCssSelecto
 	}
 
 	@Test
-	public void testBasicExceptionCasesWithSeleniumChrome()  throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+	public void testBasicExceptionCasesWithSeleniumChrome() throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
 	{
 		testBasicExceptionCasesWithSelenium(BrowserType.CHROME);
 	}
+	
 	@Test
-	public void testBasicExceptionCasesWithSeleniumFirefox()  throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+	public void testBasicExceptionCasesWithSeleniumFirefox() throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
 	{
 		testBasicExceptionCasesWithSelenium(BrowserType.FIREFOX);
 	}
+	
 	@Test
-	public void testBasicExceptionCasesWithSeleniumEdge()  throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+	public void testBasicExceptionCasesWithSeleniumEdge() throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
 	{
 		testBasicExceptionCasesWithSelenium(BrowserType.EDGE);
 	}
@@ -46,11 +48,11 @@ public class CssSelectorToXpathBaseWebpageContentTest extends AbstractCssSelecto
 
 			String cssSelectorWithDivId="div#"+name+" "+cssSelectorToXpathCase.getCssSelector();
 			System.out.println("cssSelector="+cssSelectorWithDivId);
-			assertEquals(name,driver.findElement(getBy(cssSelectorWithDivId)).getText().trim());
 			String xpathWithDivId="//div[@id=\""+name+"\"]"+ cssSelectorToXpathCase.getExpectedXpath();
 			System.out.println("xpath="+xpathWithDivId);
-
-			assertEquals(name,driver.findElement(By.xpath(xpathWithDivId)).getText().trim());
+			String expectedName=name.equals("empty")?"":name;
+			assertEquals(expectedName,driver.findElement(getBy(cssSelectorWithDivId)).getText().trim());
+			assertEquals(expectedName,driver.findElement(By.xpath(xpathWithDivId)).getText().trim());
 			assertEquals(xpathWithDivId, converter.convertCssSelectorStringToXpathString(cssSelectorWithDivId));
 			
 		}

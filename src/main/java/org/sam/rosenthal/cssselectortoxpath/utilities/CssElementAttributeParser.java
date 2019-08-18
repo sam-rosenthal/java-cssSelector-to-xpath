@@ -1,13 +1,16 @@
 package org.sam.rosenthal.cssselectortoxpath.utilities;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.sam.rosenthal.cssselectortoxpath.model.CssAttribute;
+import org.sam.rosenthal.cssselectortoxpath.model.CssAttributePsuedoClass;
 import org.sam.rosenthal.cssselectortoxpath.model.CssAttributeValueType;
 import org.sam.rosenthal.cssselectortoxpath.model.CssElementAttributes;
+import org.sam.rosenthal.cssselectortoxpath.model.CssPsuedoClassType;
 
 
 public class CssElementAttributeParser 
@@ -22,7 +25,7 @@ public class CssElementAttributeParser
 	private static final String ATTRIBUTE_TYPE_RE = createElementAttributeNameRegularExpression();
 	private static final String ELEMENT_ATTRIBUTE_NAME_RE="(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)";
 	private static final String STARTING_ELEMENT_RE = "^("+ELEMENT_ATTRIBUTE_NAME_RE+"|([*]))?";
-	private static final String PSUEDO_RE = "(:[a-z][a-z\\-]*([(][^)]+[)])?)";
+	public static final String PSUEDO_RE = "(:[a-z][a-z\\-]*([(][^)]+[)])?)";
 	private static final String ATTRIBUTE_RE = "("+PSUEDO_RE+"|(\\["+"\\s*"+ELEMENT_ATTRIBUTE_NAME_RE+"\\s*"+ATTRIBUTE_TYPE_RE+"\\s*"+"(("+QUOTES_RE+ATTRIBUTE_VALUE_RE+QUOTES_RE+")|("+ATTRIBUTE_VALUE_RE_NO_SPACES+"))?"+"\\s*"+"\\]))"; 
 	
 	
@@ -115,18 +118,74 @@ public class CssElementAttributeParser
 			String psuedoClass=match.group(rePseudoClass);
 			if(psuedoClass!=null)
 			{
-				throw new CssSelectorToXPathConverterUnsupportedPseudoClassException(psuedoClass);
+				CssPsuedoClassType psuedoClassType;
+				try {
+					psuedoClassType = CssPsuedoClassType.psuedoClassTypeString(psuedoClass,element);
+				}
+				catch(IllegalArgumentException e)
+				{
+					throw new CssSelectorToXPathConverterUnsupportedPseudoClassException(psuedoClass);
+				}
+				attributeList.add(new CssAttributePsuedoClass(psuedoClassType, element));
 			}
-			boolean attributeValueHasQuotes = match.group(reIndexAttributeValueWithQuotes)!=null;
-			attributeList.add(new CssAttribute(
+			else
+			{
+				boolean attributeValueHasQuotes = match.group(reIndexAttributeValueWithQuotes)!=null;
+				attributeList.add(new CssAttribute(
 					match.group(reIndexAttributeName),
 					match.group(attributeValueHasQuotes?reIndexAttributeValueWithinQuotes:reIndexAttributeValueWithoutQuotes),
 					match.group(reIndexAttributeType)));
+			}
 		}	
-		
+		attributeList = cleanUpAttributes(attributeList);
 		CssElementAttributes cssElementAttribute = new CssElementAttributes(element,attributeList);
 		//System.out.println(cssElementAttribute);
 		return cssElementAttribute;
+	}
+
+	public List<CssAttribute> cleanUpAttributes(List<CssAttribute> attributeList) {
+		//Sets will guarantee no duplicate attributes and hashlinkset preserves order
+		LinkedHashSet<CssAttribute> attributeSet = new LinkedHashSet<>(attributeList);
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.FIRST_CHILD, CssPsuedoClassType.ONLY_CHILD);
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.FIRST_OF_TYPE, CssPsuedoClassType.FIRST_CHILD);
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.FIRST_OF_TYPE, CssPsuedoClassType.ONLY_CHILD);
+
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.LAST_CHILD, CssPsuedoClassType.ONLY_CHILD);
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.LAST_OF_TYPE, CssPsuedoClassType.LAST_CHILD);
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.LAST_OF_TYPE, CssPsuedoClassType.ONLY_CHILD);
+
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.FIRST_OF_TYPE, CssPsuedoClassType.ONLY_OF_TYPE);
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.LAST_OF_TYPE, CssPsuedoClassType.ONLY_OF_TYPE);
+		
+		cleanUpChildOfType(attributeSet, CssPsuedoClassType.ONLY_OF_TYPE, CssPsuedoClassType.ONLY_CHILD);
+
+		return new ArrayList<>(attributeSet);
+	}
+
+	private void cleanUpChildOfType(LinkedHashSet<CssAttribute> attributeSet, CssPsuedoClassType candidateToRemove, CssPsuedoClassType reasonToRemove) {
+		CssAttributePsuedoClass foundCandidateToRemove = null;
+		CssAttributePsuedoClass foundReasonToRemove = null;
+		for(CssAttribute attribute : attributeSet)
+		{
+			if(attribute instanceof CssAttributePsuedoClass){
+				CssAttributePsuedoClass cssAttributePsuedoClass = (CssAttributePsuedoClass) attribute;
+				if(cssAttributePsuedoClass.getCssPsuedoClassType().equals(candidateToRemove)) {
+					foundCandidateToRemove = cssAttributePsuedoClass;
+				}
+				else if(cssAttributePsuedoClass.getCssPsuedoClassType().equals(reasonToRemove)){
+					foundReasonToRemove = cssAttributePsuedoClass;
+				}
+
+				if(foundCandidateToRemove != null && foundReasonToRemove != null)
+				{
+					break;
+				}
+			}
+		}
+		
+		if(foundCandidateToRemove != null && foundReasonToRemove != null) {
+			attributeSet.remove(foundCandidateToRemove);
+		}
 	}	
 
 }

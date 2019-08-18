@@ -51,6 +51,16 @@ public class BaseCssSelectorToXpathTestCase {
 		addBaseCaseToXPath(baseCases,"childCombinator","div>span","//div/span");
 		addBaseCaseToXPath(baseCases,"adjacentSiblingCombinator","div+span","//div/following-sibling::*[1]/self::span");
 		addBaseCaseToXPath(baseCases,"generalSiblingCombinator","div~h1","//div/following-sibling::h1");
+		
+		//Implemented psuedo classes
+		addBaseCaseToXPath(baseCases,"empty","span:empty","//span[not(*) and .=\"\"]");	
+		addBaseCaseToXPath(baseCases,"first-child","div:first-child","//div[count(preceding-sibling::*)=0]");	
+		addBaseCaseToXPath(baseCases,"last-child","span:last-child","//span[count(following-sibling::*)=0]");	
+		addBaseCaseToXPath(baseCases,"only-child","form:only-child","//form[count(preceding-sibling::*)=0][count(following-sibling::*)=0]");	
+		addBaseCaseToXPath(baseCases,"first-of-type","p:first-of-type","//p[count(preceding-sibling::p)=0]");	
+		addBaseCaseToXPath(baseCases,"last-of-type","h:last-of-type","//h[count(following-sibling::h)=0]");	
+		addBaseCaseToXPath(baseCases,"only-of-type","span:only-of-type","//span[count(preceding-sibling::span)=0][count(following-sibling::span)=0]");	
+
 		return baseCases;
 	}
 	private static void addBaseCaseToXPath(List<BaseCssSelectorToXpathTestCase> baseCases,String name,String cssSelector, String expectedXpath) {
@@ -81,7 +91,7 @@ public class BaseCssSelectorToXpathTestCase {
 		baseCases.put("A[B=]",CssElementAttributeParser.ERROR_INVALID_ATTRIBUTE_VALUE);
 		baseCases.put("A[B'C']",CssElementAttributeParser.ERROR_INVALID_ATTRIBUTE_VALUE);
 
-		String[] pseudoClasses=getPseudoClasses();
+		String[] pseudoClasses=getUnimplementedPseudoClasses();
 		for(String pseudoClass:pseudoClasses)
 		{
 			baseCases.put(pseudoClass,CssSelectorToXPathConverterUnsupportedPseudoClassException.getPseudoClassUnsupportedError(pseudoClass));
@@ -90,7 +100,7 @@ public class BaseCssSelectorToXpathTestCase {
 		return baseCases;
 	}
 	
-	public static String[] getPseudoClasses()
+	public static String[] getUnimplementedPseudoClasses()
 	{
 		//listing every pseudo class in: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors
 		//so that in the future there will be some we can't handle
@@ -103,11 +113,11 @@ public class BaseCssSelectorToXpathTestCase {
 				":defined",
 				":dir(A)",
 				":disabled",
-				":empty",
+//implemented	":empty",
 				":enabled",
 				":first",
-				":first-child",
-				":first-of-type",
+//implemented	":first-child",
+//implemented	":first-of-type",
 				":fullscreen",
 				":focus",
 				":focus-visible",
@@ -120,8 +130,8 @@ public class BaseCssSelectorToXpathTestCase {
 				":in-range",
 				":invalid",
 				":lang(A)",
-				":last-child",
-				":last-of-type",
+//implemented	":last-child",
+//implemented	":last-of-type",
 				":left",
 				":link",
 				":not(A)",
@@ -129,8 +139,8 @@ public class BaseCssSelectorToXpathTestCase {
 				":nth-last-child(A)",
 				":nth-last-of-type(A)",
 				":nth-of-type(A)",
-				":only-child",
-				":only-of-type",
+//implemented	":only-child",
+//implemented	":only-of-type",
 				":optional",
 				":out-of-range",
 				":placeholder-shown",

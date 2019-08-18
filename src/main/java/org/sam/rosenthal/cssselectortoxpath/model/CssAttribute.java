@@ -16,7 +16,6 @@ public class CssAttribute
 		this.value=valueIn;
 		this.type=typeIn;
 	}
-	
 	public String getName() {
 		return name;
 	}
@@ -26,13 +25,11 @@ public class CssAttribute
 	public CssAttributeValueType getType() {
 		return type;
 	}
-	
 	@Override
 	public String toString()
 	{
 		return "Name="+this.name+"; Value="+this.value+"; Type="+this.type;
-	}
-	
+	}	
 	@Override
 	public boolean equals(Object cssAttribute)
 	{
@@ -46,5 +43,4 @@ public class CssAttribute
 	public int hashCode() {
 		return toString().hashCode();
 	}
-
 }

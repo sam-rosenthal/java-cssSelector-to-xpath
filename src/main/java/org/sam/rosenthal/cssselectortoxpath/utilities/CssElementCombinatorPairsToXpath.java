@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.sam.rosenthal.cssselectortoxpath.model.CssAttribute;
+import org.sam.rosenthal.cssselectortoxpath.model.CssAttributePsuedoClass;
 import org.sam.rosenthal.cssselectortoxpath.model.CssAttributeValueType;
 import org.sam.rosenthal.cssselectortoxpath.model.CssElementCombinatorPair;
 
@@ -126,6 +127,10 @@ public class CssElementCombinatorPairsToXpath
 				xpathBuilder.append(value);
 				xpathBuilder.append("\",\"-\")) or ");
 				exactMatchXpath(xpathBuilder, name, value);
+			}
+			else if(cssAttribute instanceof CssAttributePsuedoClass)
+			{
+				xpathBuilder.append(((CssAttributePsuedoClass) cssAttribute).getXPath());
 			}
 			else if(cssAttribute.getType()==null)
 			{

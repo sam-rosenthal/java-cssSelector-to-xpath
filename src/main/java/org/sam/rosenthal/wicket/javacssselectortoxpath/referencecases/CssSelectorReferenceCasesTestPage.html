@@ -218,6 +218,81 @@
 			</h1>
 		</div>	
 	</div>
+	
+	<hr>
+	
+	<div class="testcase"> 
+		<label wicket:id="empty"/>
+		<div id="empty">
+			<span></span>
+		</div>
+	</div>
+	
+	<hr>
+	
+	<div class="testcase"> 
+		<label wicket:id="first-child"/>
+		<div id="first-child">
+			<div>first-child</div>
+			<label>goodbye</label>
+			<div> goodbye2 </div>
+		</div>
+	</div>
+	
+	<hr>
+	
+	<div class="testcase"> 
+		<label wicket:id="last-child"/>
+		<div id="last-child"> 
+			<div>aaabbbccc</div>
+			<label>eeefff</label>
+			<span>last-child</span>
+		</div>
 		
+	</div>
+	
+	<hr>
+	
+	<div class="testcase"> 
+		<label wicket:id="only-child"/>
+		<div id="only-child"> 
+			<form>only-child</form>
+		</div>
+	</div>	
+	
+	<hr>
+	
+	<div class="testcase"> 
+		<label wicket:id="first-of-type"/>
+		<div id="first-of-type">
+			<form>aaa</form>
+			<p>first-of-type</p>
+			<p>bbb</p>
+			<p>ccc</p>
+		 </div>
+	</div>	
+	
+	<hr>
+	
+	<div class="testcase"> 
+		<label wicket:id="last-of-type"/>
+		<div id="last-of-type">
+			<h>aaa</h>
+			<p>bbb</p>
+			<h>last-of-type</h>		
+		</div>
+	</div>	
+
+	<hr>
+	
+	<div class="testcase"> 
+		<label wicket:id="only-of-type"/>
+		<div id="only-of-type">
+			<h>aaa</h>
+			<span>only-of-type</span>
+			<p>bbb</p>			
+		</div>
+	</div>	
+
 </body>
 </html>
