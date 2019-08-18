@@ -228,7 +228,7 @@ public class CssElementCombinatorPairsToXpathTest
 		testConvertCssStringToXpathString("x:last-of-type:first-of-type","//x[count(following-sibling::x)=0][count(preceding-sibling::x)=0]");
 		testConvertCssStringToXpathString("x:first-of-type:last-of-type","//x[count(preceding-sibling::x)=0][count(following-sibling::x)=0]");
 		testConvertCssStringToXpathString("x:last-of-type y:last-of-type","//x[count(following-sibling::x)=0]//y[count(following-sibling::y)=0]");	
-		testConvertCssStringToXpathString("a:only-of-type","//a[count(preceding-sibling::a)=0][count(preceding-sibling::a)=0]");
+		testConvertCssStringToXpathString("a:only-of-type","//a[count(preceding-sibling::a)=0][count(following-sibling::a)=0]");
 		testConvertCssStringToXpathString("x:only-of-type>y:only-of-type","//x[count(preceding-sibling::x)=0][count(following-sibling::x)=0]/y[count(preceding-sibling::y)=0][count(following-sibling::y)=0]");
 		testConvertCssStringToXpathString("div div[class^=\"score\"]:only-of-type","//div//div[starts-with(@class,\"score\")][count(preceding-sibling::div)=0][count(following-sibling::div)=0]");
 
