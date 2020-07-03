@@ -1,4 +1,4 @@
-package org.sam.rosenthal.cssselectortoxpath.utilities;
+ package org.sam.rosenthal.cssselectortoxpath.utilities;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -82,7 +82,7 @@ public class CssSelectorStringSplitterTest {
 	@Test //(expected=CssSelectorStringSplitterException.class)
 	public void whitespacesErrorTester() 
 	{	
-		testWhitespacesException(null,CssSelectorStringSplitter.ERROR_SELECTOR_STRING_IS_NULL);
+		testWhitespacesException(null,CssSelectorStringSplitter.ERROR_EMPTY_CSS_SELECTOR);
 
 		testWhitespacesException("#[a]",CssSelectorStringSplitter.ERROR_INVALID_ID_CSS_SELECTOR);
 		testWhitespacesException("#.",CssSelectorStringSplitter.ERROR_INVALID_ID_CSS_SELECTOR);
@@ -335,5 +335,6 @@ public class CssSelectorStringSplitterTest {
 			//success
 		}
 	}
+		
 
 }

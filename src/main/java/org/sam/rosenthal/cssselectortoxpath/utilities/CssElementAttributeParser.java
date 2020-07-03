@@ -55,7 +55,6 @@ public class CssElementAttributeParser
 		int reIndexAttributeValue=16;
 		int reIndexStartingQuote=reIndexAttributeValue+2;
 		int reIndexEndingQuote=reIndexStartingQuote+2;
-		
 		//System.out.println("checkValid: "+elementWithAttributesString+" ,re="+STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Pattern cssElementAtributePattern = Pattern.compile(STARTING_ELEMENT_RE+ATTRIBUTE_RE+"*$");
 		Matcher match = cssElementAtributePattern.matcher(elementWithAttributesString);
@@ -119,14 +118,29 @@ public class CssElementAttributeParser
 			if(psuedoClass!=null)
 			{
 				CssPsuedoClassType psuedoClassType;
+				String parenthesisExpression = null;
 				try {
-					psuedoClassType = CssPsuedoClassType.psuedoClassTypeString(psuedoClass,element);
+					Pattern psuedoClassWithParenethesisExpression = Pattern.compile("(:[a-z][a-z\\-]*)(\\()([^)]+)(\\))");
+					Matcher psuedoClassWithParenethesisExpressionMatch = psuedoClassWithParenethesisExpression.matcher(psuedoClass);
+					if(psuedoClassWithParenethesisExpressionMatch.find())
+					{
+						parenthesisExpression = psuedoClassWithParenethesisExpressionMatch.group(3).replaceAll(CssSelectorStringSplitter.NTH_OF_TYPE_PLACEHOLDER, "+");
+						psuedoClass = psuedoClassWithParenethesisExpressionMatch.group(1);
+//						System.out.println("psuedoClass="+psuedoClass + ", parenthesisExpression="+parenthesisExpression);
+					}
+					
+					psuedoClassType = CssPsuedoClassType.psuedoClassTypeString(psuedoClass,element, parenthesisExpression);
 				}
 				catch(IllegalArgumentException e)
 				{
-					throw new CssSelectorToXPathConverterUnsupportedPseudoClassException(psuedoClass);
+					String output = psuedoClass;
+					if(parenthesisExpression!=null)
+					{
+						output = psuedoClass+"("+parenthesisExpression+")";
+					}
+					throw new CssSelectorToXPathConverterUnsupportedPseudoClassException(output);
 				}
-				attributeList.add(new CssAttributePsuedoClass(psuedoClassType, element));
+				attributeList.add(new CssAttributePsuedoClass(psuedoClassType, element, parenthesisExpression));
 			}
 			else
 			{
