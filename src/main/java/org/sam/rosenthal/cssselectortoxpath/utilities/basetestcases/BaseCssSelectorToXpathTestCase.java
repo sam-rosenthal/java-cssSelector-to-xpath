@@ -36,12 +36,12 @@ public class BaseCssSelectorToXpathTestCase {
 		
 		//Atribute(simple) selectors
 		addBaseCaseToXPath(baseCases,"attribute", "a[href]","//a[@href]");
-		addBaseCaseToXPath(baseCases,"attributeValueWithoutQuotes", "li[type=text]","//li[@type=\"text\"]");
+		addBaseCaseToXPath(baseCases,"attributeValueWithoutQuotes", "li","//li");
 
-		addBaseCaseToXPath(baseCases,"carrotEqualAttribute", "a[alt^=\"art\"]","//a[starts-with(@alt,\"art\")]");
-		addBaseCaseToXPath(baseCases,"starEqualAttribute", "a[alt*=\"art\"]","//a[contains(@alt,\"art\")]");
+		addBaseCaseToXPath(baseCases,"carrotEqualAttribute", "a[data-alt^=\"sam\"]","//a[starts-with(@data-alt,\"sam\")]");
+		addBaseCaseToXPath(baseCases,"starEqualAttribute", "a[data-alt*=\"css\"]","//a[contains(@data-alt,\"css\")]");
 		addBaseCaseToXPath(baseCases,"moneySignEqualAttribute", "a[href$=\"pdf\"]","//a[substring(@href,string-length(@href)-string-length(\"pdf\")+1)=\"pdf\"]");
-		addBaseCaseToXPath(baseCases,"tildaEqualAttribute", "a[alt~=\"art\"]","//a[contains(concat(\" \",normalize-space(@alt),\" \"),\" art \")]");
+		addBaseCaseToXPath(baseCases,"tildaEqualAttribute", "a[data-alt~=\"converter\"]","//a[contains(concat(\" \",normalize-space(@data-alt),\" \"),\" converter \")]");
 		addBaseCaseToXPath(baseCases,"pipeEqualAttribute","li[data-years|=\"1900\"]","//li[starts-with(@data-years,concat(\"1900\",\"-\")) or @data-years=\"1900\"]");
 		//moving this test so it it does not immediately follow similar test without quotes because in selenium test we did not want to put a sleep to prevent stale element from occuring
 		addBaseCaseToXPath(baseCases,"equalAttribute", "a[href=\"https://css-selector-to-xpath.appspot.com\"]","//a[@href=\"https://css-selector-to-xpath.appspot.com\"]");
@@ -57,9 +57,18 @@ public class BaseCssSelectorToXpathTestCase {
 		addBaseCaseToXPath(baseCases,"first-child","div:first-child","//div[count(preceding-sibling::*)=0]");	
 		addBaseCaseToXPath(baseCases,"last-child","span:last-child","//span[count(following-sibling::*)=0]");	
 		addBaseCaseToXPath(baseCases,"only-child","form:only-child","//form[count(preceding-sibling::*)=0][count(following-sibling::*)=0]");	
-		addBaseCaseToXPath(baseCases,"first-of-type","p:first-of-type","//p[count(preceding-sibling::p)=0]");	
-		addBaseCaseToXPath(baseCases,"last-of-type","h:last-of-type","//h[count(following-sibling::h)=0]");	
-		addBaseCaseToXPath(baseCases,"only-of-type","span:only-of-type","//span[count(preceding-sibling::span)=0][count(following-sibling::span)=0]");	
+		addBaseCaseToXPath(baseCases,"first-of-type","p:first-of-type","//p[1]");	
+		addBaseCaseToXPath(baseCases,"last-of-type","h1:last-of-type","//h1[count(following-sibling::h1)=0]");	
+		addBaseCaseToXPath(baseCases,"only-of-type","span:only-of-type","//span[1][count(following-sibling::span)=0]");	
+		addBaseCaseToXPath(baseCases,"nth-child_3n","li:nth-child(3n)","//li[((count(preceding-sibling::*)+1) mod 3)=0]");
+		addBaseCaseToXPath(baseCases,"nth-child_even","li:nth-child(even)","//li[((count(preceding-sibling::*)+1) mod 2)=0]");
+		addBaseCaseToXPath(baseCases,"nth-last-child_odd","li:nth-last-child(odd)","//li[(count(following-sibling::*)=0) or (((count(following-sibling::*)-0) mod 2)=0)]");
+		addBaseCaseToXPath(baseCases,"nth-last-child_3","li:nth-last-child(3)","//li[count(following-sibling::*)=2]");
+		addBaseCaseToXPath(baseCases,"nth-of-type_n_2","span:nth-of-type(n+2)","//span[(count(preceding-sibling::span)=1) or (((count(preceding-sibling::span)>2) and (((count(preceding-sibling::span)-1) mod 1)=0)))]");
+		addBaseCaseToXPath(baseCases,"nth-of-type_3n_1","span:nth-of-type(3n+1)","//span[(count(preceding-sibling::span)=0) or (((count(preceding-sibling::span)-0) mod 3)=0)]");
+		addBaseCaseToXPath(baseCases,"nth-of-type_-5n_1","span:nth-of-type(-5n+1)","//span[1]");
+		addBaseCaseToXPath(baseCases,"nth-last-of-type_3n-1","span:nth-last-of-type(3n-1)","//span[(count(following-sibling::span)=1) or (((count(following-sibling::span)-1) mod 3)=0)]");
+		addBaseCaseToXPath(baseCases,"nth-last-of-type_-3n_7","span:nth-last-of-type(3n+7)","//span[(count(following-sibling::span)=6) or (((count(following-sibling::span)>7) and (((count(following-sibling::span)-6) mod 3)=0)))]");
 
 		return baseCases;
 	}
@@ -70,7 +79,7 @@ public class BaseCssSelectorToXpathTestCase {
 	public static Map<String,String> getBaseCssSelectorToXpathExceptionTestCases()
 	{
 		HashMap<String,String> baseCases=new HashMap<>();
-		baseCases.put(null,CssSelectorStringSplitter.ERROR_SELECTOR_STRING_IS_NULL);
+		baseCases.put(null,CssSelectorStringSplitter.ERROR_EMPTY_CSS_SELECTOR);
 		
 		baseCases.put("",CssSelectorStringSplitter.ERROR_EMPTY_CSS_SELECTOR);
 		baseCases.put(" ",CssSelectorStringSplitter.ERROR_EMPTY_CSS_SELECTOR);
@@ -90,7 +99,17 @@ public class BaseCssSelectorToXpathTestCase {
 		
 		baseCases.put("A[B=]",CssElementAttributeParser.ERROR_INVALID_ATTRIBUTE_VALUE);
 		baseCases.put("A[B'C']",CssElementAttributeParser.ERROR_INVALID_ATTRIBUTE_VALUE);
+		baseCases.put("A[b b]",CssElementAttributeParser.ERROR_INVALID_ATTRIBUTE_VALUE);
+		
+		baseCases.put("A[]",CssSelectorStringSplitter.ERROR_INVALID_SELECTOR);
 
+		baseCases.put("A]b",CssSelectorStringSplitter.ERROR_INVALID_CSS_SELECTOR_INCONSISTENT_BRACKETS);
+		baseCases.put("A[b",CssSelectorStringSplitter.ERROR_INVALID_CSS_SELECTOR_INCONSISTENT_BRACKETS);
+		baseCases.put("Ab[",CssSelectorStringSplitter.ERROR_INVALID_CSS_SELECTOR_INCONSISTENT_BRACKETS);
+		baseCases.put("Ab]",CssSelectorStringSplitter.ERROR_INVALID_CSS_SELECTOR_INCONSISTENT_BRACKETS);
+		baseCases.put("Ab][c",CssSelectorStringSplitter.ERROR_INVALID_CSS_SELECTOR_INCONSISTENT_BRACKETS);
+
+		
 		String[] pseudoClasses=getUnimplementedPseudoClasses();
 		for(String pseudoClass:pseudoClasses)
 		{
@@ -105,7 +124,6 @@ public class BaseCssSelectorToXpathTestCase {
 		//listing every pseudo class in: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors
 		//so that in the future there will be some we can't handle
 		String[] pseudoClasses= {
-				":active",
 				":active",
 				":any-link",
 				":checked",
@@ -135,10 +153,10 @@ public class BaseCssSelectorToXpathTestCase {
 				":left",
 				":link",
 				":not(A)",
-				":nth-child(A)",
-				":nth-last-child(A)",
-				":nth-last-of-type(A)",
-				":nth-of-type(A)",
+//implemented	":nth-child(A)",
+//implemented	":nth-last-child(A)",
+//implemented	":nth-last-of-type(A)",
+//implemented	":nth-of-type(A)",
 //implemented	":only-child",
 //implemented	":only-of-type",
 				":optional",

@@ -30,11 +30,11 @@ public class CssSelectorToXpathTestUsingXpath extends AbstractCssSelectorToXpath
 	{
 		test(BrowserType.FIREFOX);
 	}
-	@Test
-	public void testUsingXpathWithEdge() throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
-	{
-		test(BrowserType.EDGE);
-	}
+//	@Test
+//	public void testUsingXpathWithEdge() throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+//	{
+//		test(BrowserType.EDGE);
+//	}
 	
 
 }

@@ -14,10 +14,12 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -45,9 +47,10 @@ public abstract class AbstractCssSelectorToXpathTest {
 	private String cssToXpathUrl;
 
 	public static Properties getProperties() {
-		WebDriverManager.firefoxdriver().setup();
-		WebDriverManager.edgedriver().setup();
 		WebDriverManager.chromedriver().setup();
+		WebDriverManager.firefoxdriver().setup();
+//		WebDriverManager.edgedriver().setup();
+
 		Properties prop=new Properties();
 		
 		try {
@@ -65,6 +68,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 			driver = new ChromeDriver();
 			break;
 		case EDGE:
+			EdgeOptions options = new EdgeOptions();
 			driver= new EdgeDriver();
 			break;
 		case FIREFOX:
@@ -75,8 +79,8 @@ public abstract class AbstractCssSelectorToXpathTest {
 		}
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);				
 		wait = new WebDriverWait(driver, 10);
-		forkMeBy = getBy("div#forkme a img");
-	    errorMessageBy = getBy("div.content form div.error");
+		forkMeBy = getBy("span#forkongithub a");
+	    errorMessageBy = getBy("form b#errorMessage");
 
 	    cssToXpathUrl = PROPERTIES.getProperty("selenium.CSS_TO_XPATH_URL");
 		goToWebpage(cssToXpathUrl,"CSS Selector to XPath");
@@ -97,12 +101,9 @@ public abstract class AbstractCssSelectorToXpathTest {
 	protected void test(BrowserType browserType) throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException {
 		setupTest(browserType);
 		testText();
-
-		testWebLinks(browserType);
-
 		testConverterOutput();
-		
 		testErrorOutput();
+		testWebLinks(browserType);
 	}
 
 	private void testErrorOutput() throws NiceCssSelectorStringForOutputException {
@@ -121,12 +122,12 @@ public abstract class AbstractCssSelectorToXpathTest {
 	}
 
 	private void testText() {
-		assertEquals("CSS Selector to XPath Converter",driver.findElement(getBy("div.content h1")).getText());
-		assertEquals("Fork me on GitHub",driver.findElement(forkMeBy).getAttribute("alt"));
-		assertEquals("Implementation Notes",driver.findElement(getBy("div#footer fieldset.assumptions legend")).getText());
-		assertEquals("Helpful Links/More Info",driver.findElement(getBy("div#footer fieldset.links legend")).getText());
-		assertEquals("Testing Notes",driver.findElement(getBy("div#footer fieldset.Testing legend")).getText());
-
+		assertEquals("CSS Selector to XPath Converter",driver.findElement(getBy("div.container form h1")).getText());
+		assertEquals("Fork me on GitHub",driver.findElement(forkMeBy).getText());
+		assertEquals("Developed by Sam Rosenthal",driver.findElement(getBy("div#footer legend#bySamRosenthal")).getText());
+		assertEquals("Implementation notes",driver.findElement(getBy("div#footer legend#ImplementationNotes")).getText());
+		assertEquals("Helpful links",driver.findElement(getBy("div#footer legend#HelpfulLinks")).getText());
+		assertEquals("Testing notes",driver.findElement(getBy("div#footer legend#TestingNotes")).getText());
 	}
 
 	protected By getBy(String cssSelector) {
@@ -135,14 +136,21 @@ public abstract class AbstractCssSelectorToXpathTest {
 
 	private void testWebLinks(BrowserType browserType) {
 		//didnt do the css selector "body a[href]" due to wicket ajax debug
-		List<WebElement> webLinks=driver.findElements(getBy("div#footer a, div.content a, div#forkme a"));
+		List<WebElement> webLinks=driver.findElements(getBy("div a"));
 		Map<String,String> urlToPageTitleMap = getUrlToPageTitleMap();
-		assertEquals(urlToPageTitleMap.keySet().size(),webLinks.size());
+		validateLinksHelper(webLinks, urlToPageTitleMap, browserType);
+		System.out.println(urlToPageTitleMap);
+		assertTrue(urlToPageTitleMap.isEmpty());
+	}
+
+	private void validateLinksHelper(List<WebElement> webLinks, Map<String, String> urlToPageTitleMap, BrowserType browserType) {
+		assertEquals(webLinks.size(),urlToPageTitleMap.size());
 		for(WebElement element: webLinks)
 		{
 			String linkUrl = element.getAttribute("href");
 			System.out.println(linkUrl);
 		    String title = urlToPageTitleMap.get(linkUrl);
+		    System.out.println("title="+title);
 		    //special handling for duplicate links
 		    String dupLinkUrl="1:"+linkUrl;
 		    if(urlToPageTitleMap.remove(dupLinkUrl)==null)
@@ -159,14 +167,26 @@ public abstract class AbstractCssSelectorToXpathTest {
 		    
 		    //this is a workaround for firefox with a link surrounding an image not being clickable
 		    //https://sqa.stackexchange.com/questions/32697/webdriver-firefox-element-could-not-be-scrolled-into-view
-		    if(BrowserType.FIREFOX.equals(browserType)) {
+		    if(element.getAttribute("href").equals("https://github.com/sam-rosenthal/java-cssSelector-to-xpath"))
+		    {
+		    	element=driver.findElement(forkMeBy);
+		    }
+		    try {
+		    	element.click();
+		    }
+		    catch(Exception e)
+		    {
 		    	if(element.getAttribute("href").equals("https://github.com/sam-rosenthal/java-cssSelector-to-xpath"))
 		    	{
-		    		element=driver.findElement(forkMeBy);
+			    	System.out.println("Handling clicking selenium isssue with url: "+element.getAttribute("href"));
+					((JavascriptExecutor) driver).executeScript("window.open(arguments[0])", linkUrl);
+		    	}
+		    	else
+		    	{
+		    		e.printStackTrace();
 		    	}
 		    }
-		    element.click();
-			
+
 			String winHandleBefore = driver.getWindowHandle();
 			assertTrue(wait.until((new ExpectedCondition<Boolean>() {
 		        public Boolean apply(WebDriver d) {
@@ -189,19 +209,13 @@ public abstract class AbstractCssSelectorToXpathTest {
 		        	return title.equals(driver.getTitle());
 		        }
 		    })));
-			int index=linkUrl.indexOf("#");
-			if(index>-1)
-			{
-				//Some links contain an id that directs the link to go directly to a specific text on the the page corresponding to
-				//the element withh that id.
-				String cssSelector=linkUrl.substring(index);
-				assertNotNull(driver.findElement(getBy(cssSelector)));
-			}
+
 			driver.close();
 			driver.switchTo().window(winHandleBefore);
 		}
 		assertTrue(urlToPageTitleMap.isEmpty());
 	}
+
 
 	protected void testConverterOutput(String cssSelector) throws CssSelectorToXPathConverterException 
 	{
@@ -209,8 +223,8 @@ public abstract class AbstractCssSelectorToXpathTest {
 		String expectedXpath= converter.convertCssSelectorStringToXpathString(cssSelector);
 		assertTrue(expectedXpath.length()>0);
 		assertNotEquals(expectedXpath, cssSelector);
-	    assertTrue(wait.until(getWaitforExpectedText(expectedXpath,getBy("table#inputOutputTable tr#xpathOutputRow>td#xpathOutputString>span"))));
-	    assertTrue(wait.until(getWaitforExpectedText(cssSelector,getBy("table#inputOutputTable tr#cssInputRow>td#cssInputString>span"))));
+	    assertTrue(wait.until(getWaitforExpectedText(expectedXpath,getBy("div#xpathOutputGridText"))));
+	    assertTrue(wait.until(getWaitforExpectedText(cssSelector,getBy("div#cssInputGridText"))));
 	}
 	
 	private ExpectedCondition<Boolean> getWaitforExpectedText(String expectedText,By by) {
@@ -235,9 +249,13 @@ public abstract class AbstractCssSelectorToXpathTest {
 
 	protected void submitCssSelector(String cssSelector) {
 		System.out.println(cssSelector);
-		driver.findElement(getBy("div.content form input[type='text']")).sendKeys(cssSelector);
-		By submitButtonBy = getBy("div.content form input[type='submit']");
+		driver.findElement(getBy("div.container form input[type='text']")).sendKeys(cssSelector);
+		System.out.println("AAAA");
+		By submitButtonBy = getBy("div.container form button#submitButton");
+		System.out.println("BBBB");
 		wait.until(ExpectedConditions.elementToBeClickable(submitButtonBy));
+		System.out.println("CCCC");
+
 		driver.findElement(submitButtonBy).click();
 	}
 	
@@ -259,11 +277,10 @@ public abstract class AbstractCssSelectorToXpathTest {
 		{
 			err=e.getMessage();
 		}
-
 		assertTrue(wait.until(getWaitforExpectedText(err,errorMessageBy)));
 		//System.out.println(driver.findElement(errorMessageBy).getText());
 
-	    String cssInputRowString = driver.findElement(getBy("table#inputOutputTable tr#cssInputRow>td#cssInputString>span")).getText();
+	    String cssInputRowString = driver.findElement(getBy("div#cssInputGridText")).getText();
 		System.out.println("cssInputRowString="+cssInputRowString);
       	if(adjustedCssSelector!=null)
       	{
@@ -273,7 +290,7 @@ public abstract class AbstractCssSelectorToXpathTest {
       	{
       		assertTrue(cssInputRowString.isEmpty());
       	}
-		assertTrue(driver.findElement(getBy("div.content form i[class='fa fa-times-circle']")).isDisplayed());
+//		assertTrue(driver.findElement(getBy("div.content form i[class='fa fa-times-circle']")).isDisplayed());
 	}
 	
 	private Map<String,String> getUrlToPageTitleMap() {
@@ -297,7 +314,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/README.md","java-cssSelector-to-xpath/README.md at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
 		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath/tree/samdev/src/test/java/org/sam/rosenthal/cssselectortoxpath/utilities","java-cssSelector-to-xpath/src/test/java/org/sam/rosenthal/cssselectortoxpath/utilities at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
 		urlToPageTitleMap.put("https://github.com/sam-rosenthal/java-cssSelector-to-xpath/tree/samdev/src/test/java/org/sam/rosenthal/selenium","java-cssSelector-to-xpath/src/test/java/org/sam/rosenthal/selenium at samdev · sam-rosenthal/java-cssSelector-to-xpath · GitHub");
-		urlToPageTitleMap.put(cssToXpathUrl+"/css-selector-to-xpath-reference-cases","CSS Selector Reference Cases Test Page");
+		urlToPageTitleMap.put(cssToXpathUrl+"/TestPage","CSS Selector to XPath");
 		urlToPageTitleMap.put("mailto:ser259@cornell.edu",null); //this link is to email, doesn't correspond to a webpage
 
 		return urlToPageTitleMap;

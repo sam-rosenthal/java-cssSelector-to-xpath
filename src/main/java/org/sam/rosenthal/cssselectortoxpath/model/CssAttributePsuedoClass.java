@@ -4,17 +4,20 @@ public class CssAttributePsuedoClass extends CssAttribute
 {
 	private CssPsuedoClassType psuedoClassType;
 	private String element;
+	private String parenthesisExpression;
 	
-	public CssAttributePsuedoClass(CssPsuedoClassType psuedoClassTypeIn, String elementIn)
+	public CssAttributePsuedoClass(CssPsuedoClassType psuedoClassTypeIn, String elementIn, String parenthesisExpressionIn)
 	{
 		super(null,null,(CssAttributeValueType) null);
 		psuedoClassType = psuedoClassTypeIn;
 		element = elementIn;
+		parenthesisExpression = parenthesisExpressionIn;
 	}
 	
 	public String getXPath()
 	{
-		return psuedoClassType.getXpath(element);
+		return psuedoClassType.getXpath(element, parenthesisExpression);
+
 	}
 	
 	public CssPsuedoClassType getCssPsuedoClassType()
@@ -26,17 +29,34 @@ public class CssAttributePsuedoClass extends CssAttribute
 	public String toString()
 	{
 		String val = "Psuedo Class = "+ psuedoClassType;
-//		switch(psuedoClassType) {
-//		case FIRST_OF_TYPE: 
-//		case LAST_OF_TYPE:
-//		case ONLY_OF_TYPE: 
-//			val += ", Element = " + element;
-//			break;
-//		default:
-//			//empty
-//			break;
-//		}
+
 		return val;
+	}
+	
+	 @Override
+	 public boolean equals(Object o) 
+	 {
+		 if(o == null)
+		 {
+			 return false;
+		 }
+		 if(!(o instanceof CssAttributePsuedoClass))
+		 {
+			 return false;
+		 }
+		 CssAttributePsuedoClass obj = (CssAttributePsuedoClass) o;
+		 if(this.parenthesisExpression == null)
+		 {
+			 if( obj.parenthesisExpression != null)
+			 {
+				 return false;
+			 }
+		 }
+		 else if(!this.parenthesisExpression.equals(obj.parenthesisExpression))
+		 {
+			 return false;
+		 }
+	    return this.psuedoClassType.equals(obj.psuedoClassType);
 	}
 	
 }

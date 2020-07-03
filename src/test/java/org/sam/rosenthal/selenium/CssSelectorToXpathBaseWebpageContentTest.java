@@ -14,7 +14,7 @@ public class CssSelectorToXpathBaseWebpageContentTest extends AbstractCssSelecto
 	
 	@Override
 	protected void goToWebpage(String cssToXpathUrl, String expectedTitle) {
-		super.goToWebpage(cssToXpathUrl+"/css-selector-to-xpath-reference-cases", "CSS Selector Reference Cases Test Page");
+		super.goToWebpage(cssToXpathUrl+"/TestPage", "CSS Selector to XPath");
 	}
 
 	@Test
@@ -29,11 +29,11 @@ public class CssSelectorToXpathBaseWebpageContentTest extends AbstractCssSelecto
 		testBasicExceptionCasesWithSelenium(BrowserType.FIREFOX);
 	}
 	
-	@Test
-	public void testBasicExceptionCasesWithSeleniumEdge() throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
-	{
-		testBasicExceptionCasesWithSelenium(BrowserType.EDGE);
-	}
+//	@Test
+//	public void testBasicExceptionCasesWithSeleniumEdge() throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
+//	{
+//		testBasicExceptionCasesWithSelenium(BrowserType.EDGE);
+//	}
 	protected void testBasicExceptionCasesWithSelenium(BrowserType browserType) throws CssSelectorToXPathConverterException, NiceCssSelectorStringForOutputException
 	{
 		setupTest(browserType);
@@ -46,7 +46,7 @@ public class CssSelectorToXpathBaseWebpageContentTest extends AbstractCssSelecto
 			String name = cssSelectorToXpathCase.getName();
 			System.out.println("Starting Test Case "+i+" "+name);
 
-			String cssSelectorWithDivId="div#"+name+" "+cssSelectorToXpathCase.getCssSelector();
+			String cssSelectorWithDivId="div[id=\""+name+"\"] "+cssSelectorToXpathCase.getCssSelector();
 			System.out.println("cssSelector="+cssSelectorWithDivId);
 			String xpathWithDivId="//div[@id=\""+name+"\"]"+ cssSelectorToXpathCase.getExpectedXpath();
 			System.out.println("xpath="+xpathWithDivId);

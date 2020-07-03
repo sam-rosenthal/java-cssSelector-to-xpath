@@ -11,7 +11,7 @@ public class CssSelectorToXpathBasicCaseTest extends AbstractCssSelectorToXpathT
 	@Test
 	public void testBasicCasesWithSelenium() throws CssSelectorToXPathConverterException
 	{
-		setupTest(BrowserType.EDGE);
+		setupTest(BrowserType.CHROME);
 		List<BaseCssSelectorToXpathTestCase> baseCases=BaseCssSelectorToXpathTestCase.getBaseCssSelectorToXpathTestCases(true);
 		for(BaseCssSelectorToXpathTestCase cssSelectorToXpathCase: baseCases)
 		{
