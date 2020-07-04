@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +19,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -68,9 +67,10 @@ public abstract class AbstractCssSelectorToXpathTest {
 			driver = new ChromeDriver();
 			break;
 		case EDGE:
-			EdgeOptions options = new EdgeOptions();
-			driver= new EdgeDriver();
-			break;
+//			EdgeOptions options = new EdgeOptions();
+//			driver= new EdgeDriver();
+//			break;
+			throw new RuntimeException("TODO fix issue with running latest Edge webdriver");
 		case FIREFOX:
 			driver= new FirefoxDriver();
 			break;
@@ -78,7 +78,7 @@ public abstract class AbstractCssSelectorToXpathTest {
 			throw new IllegalArgumentException(""+browserType);
 		}
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);				
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		forkMeBy = getBy("span#forkongithub a");
 	    errorMessageBy = getBy("form b#errorMessage");
 

@@ -9,7 +9,7 @@
 	<description>java-cssSelector-to-xpath</description>
 
 	<properties>
-		<webpage.version>v1.1.0.${git.commit.time}.${git.commit.id.abbrev}(webpage)</webpage.version>
+		<webpage.version>v1.2.0.${git.commit.time}.${git.commit.id.abbrev}(webpage)</webpage.version>
 		<!--<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
 		<appengine.app.version>1</appengine.app.version>
 		<appengine.target.version>1.9.64</appengine.target.version>
@@ -22,21 +22,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-core</artifactId>
-			<version>8.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
-			<version>${jetty-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-jmx</artifactId>
-			<version>${jetty-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -72,6 +57,43 @@
 		    <artifactId>webdrivermanager</artifactId>
 		    <version>4.0.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-client -->
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-client</artifactId>
+		    <version>9.4.30.v20200611</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.8.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>2.3.1.RELEASE</version>
+	       <exclusions>
+	            <exclusion>
+	                <groupId>org.springframework.boot</groupId>
+	                <artifactId>spring-boot-starter-logging</artifactId>
+	            </exclusion>
+	        </exclusions>
+		</dependency>
+<!-- 
+# 		<dependency>
+#			<groupId>org.springframework.boot</groupId>
+#			<artifactId>spring-boot-starter-test</artifactId>
+#			<version>2.3.1.RELEASE</version>
+#			<scope>test</scope>
+#			<exclusions>
+#				<exclusion>
+#					<groupId>org.junit.vintage</groupId>
+#					<artifactId>junit-vintage-engine</artifactId>
+#				</exclusion>
+#			</exclusions>
+#		</dependency>	
+ -->
 	</dependencies>
 	<build>
 
@@ -97,20 +119,6 @@
 			
 		</resources>
 		<plugins>
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.4.7.v20170914</version>
-				<configuration>
-					<systemProperties>
-						<systemProperty>
-							<name>maven.project.build.directory.test-classes</name>
-							<value>${project.build.directory}/test-classes</value>
-						</systemProperty>
-					</systemProperties>
-					<jettyXml>${project.basedir}/src/test/jetty/jetty.xml,${project.basedir}/src/test/jetty/jetty-ssl.xml,${project.basedir}/src/test/jetty/jetty-http.xml,${project.basedir}/src/test/jetty/jetty-https.xml</jettyXml>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -186,6 +194,10 @@
 	          		<include>**/selenium/**</include>
 	          	</includes>	
 	          </configuration>		  
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
