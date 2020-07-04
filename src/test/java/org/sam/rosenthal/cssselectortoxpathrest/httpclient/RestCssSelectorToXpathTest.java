@@ -37,26 +37,18 @@ public class RestCssSelectorToXpathTest {
 	@BeforeClass
 	public static void startRestApplicationProcess() throws IOException
 	{
-		System.out.println("IN BEEFORE CLASS");
 		String classPath = System.getProperty("java.class.path");
 		String javaHome = System.getProperty("java.home")+"/bin/java";
-		System.out.println("classPath="+classPath+" javaHome="+javaHome);
-
 		ProcessBuilder builder = new ProcessBuilder(new String[]{javaHome,"-cp",classPath,"org.sam.rosenthal.cssselectortoxpathrest.CssSelectorToXpathRestApplication"});
 		builder.redirectOutput(Redirect.INHERIT);
 		builder.redirectError(Redirect.INHERIT);
 		restAppProcess = builder.start();
-		for(int i=0; i<10; ++i)
-		{
-			try {
-				Thread.sleep(1000L);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println(i+" restAppProcess="+restAppProcess+" isAlive="+restAppProcess.isAlive());
+		//Since linux doesn't wait when services aren't up, adding sleep to ensure tests work on windows and linux
+		try {
+			Thread.sleep(10000L);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
 		}
-		System.out.println("OUT BEFORE CLASS");
 	}
 	
 	@AfterClass
@@ -71,7 +63,6 @@ public class RestCssSelectorToXpathTest {
 	
 	@Test
 	public void testBasicTestCases() throws CssSelectorToXPathConverterException, IOException, InterruptedException {
-		System.out.println("In test basic");
 		List<BaseCssSelectorToXpathTestCase> baseCases=BaseCssSelectorToXpathTestCase.getBaseCssSelectorToXpathTestCases(true);
 		test(true, baseCases, BaseCssSelectorToXpathTestCase::getCssSelector, BaseCssSelectorToXpathTestCase::getExpectedXpath, 200, this::getXpathFromXpathOutJsonString );
 	}
@@ -141,12 +132,11 @@ public class RestCssSelectorToXpathTest {
 	}
 	 
 	protected void assertJsonAndStatus(String cssSelector, String expectedXpath, int expectedStatusCode, Function<String, String> jsonToXpath ) {
-		System.out.println(cssSelector+" Expected="+expectedXpath);
 		ContentResponse response = postResponse(cssSelector);
 		String jsonXml = response.getContentAsString();
 		int actualStatusCode = response.getStatus();
 		String actualXpath = jsonToXpath.apply(jsonXml);
-		System.out.println(cssSelector+" Actual="+ actualXpath);
+		System.out.println(cssSelector+" "+ actualXpath);
 		assertEquals(expectedStatusCode, actualStatusCode);
 		assertEquals("CSS Selector="+cssSelector, expectedXpath, actualXpath);		
 	}
