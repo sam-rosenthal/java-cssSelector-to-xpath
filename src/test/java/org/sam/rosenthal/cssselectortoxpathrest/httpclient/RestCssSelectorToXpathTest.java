@@ -46,7 +46,16 @@ public class RestCssSelectorToXpathTest {
 		builder.redirectOutput(Redirect.INHERIT);
 		builder.redirectError(Redirect.INHERIT);
 		restAppProcess = builder.start();
-		System.out.println("restAppProcess="+restAppProcess+" isAlive="+restAppProcess.isAlive());
+		for(int i=0; i<10; ++i)
+		{
+			try {
+				Thread.sleep(1000L);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(i+" restAppProcess="+restAppProcess+" isAlive="+restAppProcess.isAlive());
+		}
 		System.out.println("OUT BEFORE CLASS");
 	}
 	
