@@ -9,7 +9,7 @@ public class CssSelectorToXPathConverterUnsupportedPseudoClassException extends 
 	}
 	public static String getPseudoClassUnsupportedError(String pseudoClass)
 	{
-		System.out.println(pseudoClass);
+//		System.out.println(pseudoClass);
 		return String.format(PSEUDO_CLASS_UNSUPPORTED_ERROR_FORMAT, pseudoClass);
 		
 	}

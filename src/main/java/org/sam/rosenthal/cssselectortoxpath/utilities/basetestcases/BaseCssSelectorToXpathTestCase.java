@@ -84,7 +84,6 @@ public class BaseCssSelectorToXpathTestCase {
 		baseCases.put("",CssSelectorStringSplitter.ERROR_EMPTY_CSS_SELECTOR);
 		baseCases.put(" ",CssSelectorStringSplitter.ERROR_EMPTY_CSS_SELECTOR);
 		baseCases.put("A,,B",CssSelectorStringSplitter.ERROR_EMPTY_CSS_SELECTOR);
-
 		
 		baseCases.put("A..B",CssSelectorStringSplitter.ERROR_INVALID_CLASS_CSS_SELECTOR);
 		
