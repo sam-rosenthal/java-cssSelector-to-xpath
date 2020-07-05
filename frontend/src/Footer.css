@@ -1,0 +1,46 @@
+div#footer fieldset {
+  border-color: black;
+  display: block;
+  margin-inline-start: 2px;
+  margin-inline-end: 2px;
+  padding-block-start: 0.35em;
+  padding-inline-start: 0.75em;
+  padding-inline-end: 0.75em;
+  padding-block-end: 0.625em;
+  min-inline-size: min-content;
+  border-width: 2px;
+  border-style: groove;
+  border-image: initial;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+div#footer legend {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0px 2px 0px 2px;
+  margin-bottom: 0rem;
+  font-size: 1.5rem;
+  line-height: inherit;
+  color: inherit;
+  white-space: normal;
+}
+
+div#footer ul {
+  padding-left: 20px;
+}
+
+h3#developedBy {
+  color: rgb(41, 101, 241);
+  font-weight: 800;
+  text-shadow: 1px 2px 2px black;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+li h4 {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 0px;
+}

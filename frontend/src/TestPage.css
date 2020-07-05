@@ -1,0 +1,17 @@
+.testcase:nth-of-type(odd) {
+  background: yellow;
+}
+
+.testcase:nth-of-type(even) {
+  background: lightgreen;
+}
+
+* {
+  margin: 0px;
+}
+
+p,
+h1,
+ul {
+  margin-bottom: 0px;
+}

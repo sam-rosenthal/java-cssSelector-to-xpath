@@ -29,6 +29,8 @@ import org.sam.rosenthal.cssselectortoxpathrest.restservice.XpathOut;
 import com.google.appengine.repackaged.com.google.gson.Gson;
 
 public class RestCssSelectorToXpathTest {
+	private static final int REST_PORT = 8080;
+	private static final String BASE_REST_URL = "http://localhost:"+REST_PORT+"/cssSelectorToXpath/";
 	private static Process restAppProcess;
 	private Gson gson = new Gson();
 	private	HttpClient httpClient;
@@ -97,7 +99,7 @@ public class RestCssSelectorToXpathTest {
 	protected ContentResponse postResponse(String cssSelector) {
 		return sendRequest(()->{
 			String cssJson = gson.toJson(new CssSelectorIn(cssSelector));
-			Request request = httpClient.newRequest("http://localhost:8888/cssSelectorToXpath/convert");
+			Request request = httpClient.newRequest(BASE_REST_URL+"convert");
 			request.content(new StringContentProvider(cssJson), "application/json");
 			request.method(HttpMethod.POST);
 			return request;
@@ -105,7 +107,7 @@ public class RestCssSelectorToXpathTest {
 	}
 	
 	protected ContentResponse getResponse(String endpoint) {
-		return sendRequest(()->httpClient.newRequest("http://localhost:8888/cssSelectorToXpath/"+endpoint));
+		return sendRequest(()->httpClient.newRequest(BASE_REST_URL+endpoint));
 	}
 	
 	protected ContentResponse sendRequest(Supplier<Request> requestSupplier) {
