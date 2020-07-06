@@ -39,11 +39,14 @@ public class RestCssSelectorToXpathTest {
 	@BeforeClass
 	public static void startRestApplicationProcess() throws IOException
 	{
+		System.out.println("In @BeforeClass startRestApplicationProcess");
 		String classPath = System.getProperty("java.class.path");
-		String javaHome = System.getProperty("java.home")+"/bin/java";
-		ProcessBuilder builder = new ProcessBuilder(new String[]{javaHome,"-cp",classPath,"org.sam.rosenthal.cssselectortoxpathrest.CssSelectorToXpathRestApplication"});
+		String javaExe = System.getProperty("java.home")+"/bin/java";
+		System.out.println("java exe="+javaExe);
+		ProcessBuilder builder = new ProcessBuilder(new String[]{javaExe,"-cp",classPath,"org.sam.rosenthal.cssselectortoxpathrest.CssSelectorToXpathRestApplication"});
 		builder.redirectOutput(Redirect.INHERIT);
 		builder.redirectError(Redirect.INHERIT);
+		System.out.println("Before start process startRestApplicationProcess");
 		restAppProcess = builder.start();
 		//Since linux doesn't wait when services aren't up, adding sleep to ensure tests work on windows and linux
 		try {
@@ -51,6 +54,7 @@ public class RestCssSelectorToXpathTest {
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}
+		System.out.println("out startRestApplicationProcess");
 	}
 	
 	@AfterClass
