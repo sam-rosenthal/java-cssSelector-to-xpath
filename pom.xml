@@ -7,7 +7,6 @@
 	<version>v1.2.0</version>
 	<name>java-cssSelector-to-xpath</name>
 	<description>java-cssSelector-to-xpath</description>
-    <packaging>war</packaging>
 
 	<properties>
 		<webpage.version>v1.2.0.${git.commit.time}.${git.commit.id.abbrev}(webpage)</webpage.version>
