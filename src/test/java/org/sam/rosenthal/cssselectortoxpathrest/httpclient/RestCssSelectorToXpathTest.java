@@ -29,6 +29,8 @@ import org.sam.rosenthal.cssselectortoxpathrest.restservice.XpathOut;
 import com.google.appengine.repackaged.com.google.gson.Gson;
 
 public class RestCssSelectorToXpathTest {
+	private static final int REST_PORT = 8080;
+	private static final String BASE_REST_URL = "http://localhost:"+REST_PORT+"/cssSelectorToXpath/";
 	private static Process restAppProcess;
 	private Gson gson = new Gson();
 	private	HttpClient httpClient;
@@ -37,11 +39,14 @@ public class RestCssSelectorToXpathTest {
 	@BeforeClass
 	public static void startRestApplicationProcess() throws IOException
 	{
+		System.out.println("In @BeforeClass startRestApplicationProcess");
 		String classPath = System.getProperty("java.class.path");
-		String javaHome = System.getProperty("java.home")+"/bin/java";
-		ProcessBuilder builder = new ProcessBuilder(new String[]{javaHome,"-cp",classPath,"org.sam.rosenthal.cssselectortoxpathrest.CssSelectorToXpathRestApplication"});
+		String javaExe = System.getProperty("java.home")+"/bin/java";
+		System.out.println("java exe="+javaExe);
+		ProcessBuilder builder = new ProcessBuilder(new String[]{javaExe,"-cp",classPath,"org.sam.rosenthal.cssselectortoxpathrest.CssSelectorToXpathRestApplication"});
 		builder.redirectOutput(Redirect.INHERIT);
 		builder.redirectError(Redirect.INHERIT);
+		System.out.println("Before start process startRestApplicationProcess");
 		restAppProcess = builder.start();
 		//Since linux doesn't wait when services aren't up, adding sleep to ensure tests work on windows and linux
 		try {
@@ -49,6 +54,7 @@ public class RestCssSelectorToXpathTest {
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}
+		System.out.println("out startRestApplicationProcess");
 	}
 	
 	@AfterClass
@@ -97,7 +103,7 @@ public class RestCssSelectorToXpathTest {
 	protected ContentResponse postResponse(String cssSelector) {
 		return sendRequest(()->{
 			String cssJson = gson.toJson(new CssSelectorIn(cssSelector));
-			Request request = httpClient.newRequest("http://localhost:8888/cssSelectorToXpath/convert");
+			Request request = httpClient.newRequest(BASE_REST_URL+"convert");
 			request.content(new StringContentProvider(cssJson), "application/json");
 			request.method(HttpMethod.POST);
 			return request;
@@ -105,7 +111,7 @@ public class RestCssSelectorToXpathTest {
 	}
 	
 	protected ContentResponse getResponse(String endpoint) {
-		return sendRequest(()->httpClient.newRequest("http://localhost:8888/cssSelectorToXpath/"+endpoint));
+		return sendRequest(()->httpClient.newRequest(BASE_REST_URL+endpoint));
 	}
 	
 	protected ContentResponse sendRequest(Supplier<Request> requestSupplier) {
