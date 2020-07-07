@@ -1,4 +1,5 @@
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+    <property name="java.util.logging.config.file" value="WEB-INF/classes/logging.properties"/>
     <threadsafe>true</threadsafe>
     <runtime>java8</runtime>
      <sessions-enabled>true</sessions-enabled>
