@@ -16,7 +16,7 @@
 <b><a style="font-size:24px" href="https://sam-rosenthal.github.io" target="_blank"> Need a 2019 summer intern? </a></b>
 <h3> Table of Contents
   <ul>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Implementation" target="_blank"> CSS Selector to XPath Conversion Implementation Notes</a>     </li>
+    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Implementation" target="_blank"> CSS Selector to XPath Conversion Implementation Notes</a> <ul>    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#PsuedoClasses" target="_blank"> Pseudo Classes</a>	     </li></ul></li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Dependencies" target="_blank"> Dependencies</a>	     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Installation" target="_blank"> Installation </a>     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Usage" target="_blank"> Usage</a>	     </li>
@@ -28,29 +28,31 @@
 </h3>
 
 <h2 id="Implementation"> CSS Selector to XPath Conversion Implementation Notes  </h2>
-			<ul>
-				<li>CSS Selector To XPath has been implemented for all 
-					<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Simple_selectors" target="_blank">Simple Selectors </a>
-					<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Combinators" target="_blank"> and Combinators. </a>
-					<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Pseudo-classes" target="_blank">Pseudo-Classes</a>
-					have not been implemented.  </li>
-				<ul>
-					<li> Not all Pseudo-Class CSS Selectors can be converted to XPaths. </li>
-					<li> A possible future enhancement is to implement a partial subset of CSS Selector Pseudo-Classes. </li>
-				</ul>
-				<li>Chrome Browser was used as reference implementation.</li>
-				<ul> 
-					<li>All base CSS Selectors and corresponding XPaths were tested cases using 
-						<a href="https://yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/" target="_blank">Chrome Browser's Developer Tools.</a>
-					</li>
-				 </ul>
-				<li>Additional restrictions</li>
-					<ul> 		
-						<li>All names and values (Elements and Attributes) are case sensitive</li>
-						<li>Element names and Attribute names are restricted to the following regular expression: -?[_a-zA-Z]+[_a-zA-Z0-9-]*</li>
-						<li>Attribute values are restricted to the following regular expression: [-_.#a-zA-Z0-9:\\/ ]+ </li>
-					</ul>
-			</ul>
+<ul>
+	<li>CSS Selector To XPath has been implemented for all <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Simple_selectors" target="_blank">Simple Selectors </a> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Combinators" target="_blank"> and Combinators. </a>
+	</li>
+	<li class="PsuedoClasses">The following subset of CSS Selector <b><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Pseudo-classes" target="_blank">Pseudo-Classes</a></b> have been implemented:
+		<ul>
+			<li>:empty, :first-child, :last-child, :only-child, :first-of-type, :last-of-type, :only-of-type</li>
+			<li><b>(*NEW*)</b> :nth-child(<i>expr</i>), :nth-last-child(<i>expr</i>), :nth-of-type(<i>expr</i>), :nth-last-of-type(<i>expr</i>) <br>expr = {odd | even | xn+y, where x and y are integers}</li>
+		</ul>
+	</li>
+	<li> Not all Pseudo-Class CSS Selectors can be converted to XPaths. </li>
+	<li> A possible future enhancement is to implement more Pseudo-Classes. </li>
+	<li>Chrome Browser was used as reference implementation.
+		<ul> 
+			<li>All base CSS Selectors and corresponding XPaths were tested cases using <a href="https://yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/" target="_blank">Chrome Browser's Developer Tools.</a></li>
+		</ul>
+	</li>
+	<li>Additional restrictions
+		<ul> 		
+			<li>All names and values (Elements and Attributes) are case sensitive</li>
+			<li>Element names and Attribute names are restricted to the following regular expression: -?[_a-zA-Z]+[_a-zA-Z0-9-]*</li>
+			<li>Attribute values are restricted to the following regular expression: [-_.#a-zA-Z0-9:\\/ ]+ </li>
+		</ul>
+	</li>
+</ul>
+
 
 <h2 id="Dependencies"> Dependencies </h2>
 <p> This project is a pure jave applicication/API. It requries Java JDK 8 and no external jars. Within this project's baseline, there is a <a href="https://css-selector-to-xpath.appspot.com" target="_blank"> web-based implementation</a> that depends on <a href="https://wicket.apache.org">  Wicket 8.0. </a> I consider the webpage an example implementation of this project. As a result I don' consider the dependencies for the websitess a requirement for the OSS.</p>
@@ -86,8 +88,7 @@
 </pre>
 </li> 
 </ul>
-<h2><a id="PsuedoClasses></a>Psuedo Classes</h2>
-<h4>The following <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Pseudo-classes" rel="noopener noreferrer" target="_blank">Pseudo-Classes</a> have been implemented.<ul><li><b>:empty, :first-child, :last-child, :only-child, :first-of-type, :last-of-type, :only-of-type </b></li><li><span style="color: red; font-style: italic;">(*NEW*)</span> <b>:nth-child</b>(<i>expr</i>), <b>:nth-last-child</b>(<i>expr</i>), <b>:nth-of-type</b>(<i>expr</i>), <b>:nth-last-of-type</b>(<i>expr</i>) <br>expr = {<i>odd | even | xn+y, where x and y are integers</i>}</li></ul></h4>
+
 
 <h2><a id="links"></a>Helpful Links/More Info</h2>
   <ul>
