@@ -1,4 +1,4 @@
-<h1><a href="https://github.com/sam-rosenthal/" target="_blank"><img src="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/src/main/webapp/fav.png" align="left" height="40" width="40"></a> java-cssSelector-to-xpath</h1>
+<h1><a href="https://github.com/sam-rosenthal/" target="_blank"><img src="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/samdev/frontend/public/favBig.png" align="left" height="40" width="40"></a> java-cssSelector-to-xpath</h1>
 
 <a href="https://travis-ci.org/sam-rosenthal/java-cssSelector-to-xpath" target="_blank"><img src="https://travis-ci.org/sam-rosenthal/java-cssSelector-to-xpath.svg?branch=master" align="left"> </a>
 
