@@ -1,9 +1,7 @@
 import React from 'react';
-import ForkMe from './ForkMe';
-import './App.css';
-import './ForkMe.css';
-import Footer from './Footer';
-import SearchForm from './SearchForm';
+import ForkMe from './components/ForkMe/ForkMe';
+import Footer from './components/Footer/Footer';
+import SearchForm from './components/SearchForm/SearchForm';
 
 export default function Home(): JSX.Element {
   return (

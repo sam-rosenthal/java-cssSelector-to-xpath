@@ -59,7 +59,7 @@
 <h2 id="Installation"> Installation </h2>
 <p> To create the project's jar file, run the following maven command: <p/>
 <pre>
-  <code>mvn install</code>
+  <code>mvn -f pom.javaCssSelectorToXpath.xml install</code>
 </pre>
 <p> The jar file will be installed in <b>target</b> subdirectory and the name will include the corresponding version number of this project <p/>
 
@@ -86,10 +86,8 @@
 </pre>
 </li> 
 </ul>
-<h2><a id="TODOs"></a>TODOs</h2>
-<ul>
-  <li>Handle Psuedo-classes</li>
-</ul>
+<h2><a id="PsuedoClasses></a>Psuedo Classes</h2>
+<h4>The following <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Pseudo-classes" rel="noopener noreferrer" target="_blank">Pseudo-Classes</a> have been implemented.<ul><li><b>:empty, :first-child, :last-child, :only-child, :first-of-type, :last-of-type, :only-of-type </b></li><li><span style="color: red; font-style: italic;">(*NEW*)</span> <b>:nth-child</b>(<i>expr</i>), <b>:nth-last-child</b>(<i>expr</i>), <b>:nth-of-type</b>(<i>expr</i>), <b>:nth-last-of-type</b>(<i>expr</i>) <br>expr = {<i>odd | even | xn+y, where x and y are integers</i>}</li></ul></h4>
 
 <h2><a id="links"></a>Helpful Links/More Info</h2>
   <ul>

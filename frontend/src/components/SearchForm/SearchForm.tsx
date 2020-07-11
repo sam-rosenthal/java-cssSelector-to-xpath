@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Output from './Output';
-import { errorDiv } from './XpathError';
+import Output from '../Output/Output';
+import { errorDiv } from '../Output/XpathError';
 import './SearchForm.css';
-import { BASE_REST_URL } from './BASE_REST_URL';
+import { BASE_REST_URL } from '../../BASE_REST_URL';
+import { Collapse } from '@material-ui/core';
 
 export default function SearchForm(): JSX.Element {
   const [cssSelector, setCssSelector] = useState('');
   const [versionNumber, setVersionNumber] = useState(null);
+  const [inProp, setInProp] = useState(false);
 
   const textInput = React.createRef<HTMLInputElement>();
   const output = React.createRef<Output>();
@@ -31,7 +33,7 @@ export default function SearchForm(): JSX.Element {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const data = { cssSelector: cssSelector };
-
+    console.log(inProp);
     axios
       .post(`${BASE_REST_URL}/convert`, data)
       .then((res) => {
@@ -39,11 +41,30 @@ export default function SearchForm(): JSX.Element {
         const xpath = res.data.xpath;
         // console.log(xpath);
         output.current?.setState({ cssSelector: cssSelector, xpath: xpath });
+        cssSelector !== '' ? setInProp(true) : setInProp(false);
       })
       .catch((error) => {
         const errorMessage = error.response.data.message;
-        // console.log(error);
-        output.current?.setState({ cssSelector: cssSelector, xpath: errorDiv(errorMessage) });
+        console.log(error.response);
+        if (error.response.status === 400) {
+          console.log('caught');
+          output.current?.setState({
+            cssSelector: cssSelector,
+            xpath: errorDiv(errorMessage),
+          });
+        } else {
+          console.log('uncaught');
+          output.current?.setState({
+            cssSelector: cssSelector,
+            xpath: errorDiv(
+              'Unexpected error, Status code = ' +
+                error.response.status +
+                ', Status text = ' +
+                error.response.statusText,
+            ),
+          });
+        }
+        cssSelector !== '' ? setInProp(true) : setInProp(false);
       });
 
     textInput.current?.select();
@@ -87,10 +108,10 @@ export default function SearchForm(): JSX.Element {
               Convert
             </button>
           </div>
-        </div>
-        <div className="d-flex" style={{ height: '250px' }}>
+        </div>{' '}
+        <Collapse in={inProp} collapsedHeight={100}>
           <Output inputTextBox={textInput} ref={output} />
-        </div>
+        </Collapse>
       </form>
     </div>
   );

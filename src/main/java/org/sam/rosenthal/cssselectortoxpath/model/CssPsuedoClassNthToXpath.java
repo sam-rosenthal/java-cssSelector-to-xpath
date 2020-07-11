@@ -118,13 +118,14 @@ public class CssPsuedoClassNthToXpath implements CssPsuedoClassToXpath {
 		}
 		else
 		{
-			return getNthXpathNoN(y);
+//			return getNthXpathNoN(y);
+			return "[count(preceding-sibling::"+element+")="+(y-1)+"]";
 		}
 	}
 
-	protected String getNthXpathNoN(int y) {
-		return "["+y+"]";
-	}
+//	protected String getNthXpathNoN(int y) {
+//		return "["+y+"]";
+//	}
 	
 	protected String getPrecedingSiblingXpathHelper(String element, String operation, int val)
 	{

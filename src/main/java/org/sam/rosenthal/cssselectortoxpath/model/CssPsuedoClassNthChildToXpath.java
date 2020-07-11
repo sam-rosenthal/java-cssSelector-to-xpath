@@ -13,9 +13,10 @@ public class CssPsuedoClassNthChildToXpath extends CssPsuedoClassNthToXpath{
 		return super.getNthToXpath("*", parenthesisExpression);
 	}
 	
-	@Override
-	protected String getNthXpathNoN(int y) {
-		return "[count(preceding-sibling::*)="+(y-1)+"]";
-	}
+//	@Override
+//	protected String getNthXpathNoN(int y) {
+//		return "[count(preceding-sibling::*)="+(y-1)+"]";
+//	}
+	
 
 }
