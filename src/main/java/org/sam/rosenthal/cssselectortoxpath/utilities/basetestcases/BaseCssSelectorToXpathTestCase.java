@@ -57,16 +57,16 @@ public class BaseCssSelectorToXpathTestCase {
 		addBaseCaseToXPath(baseCases,"first-child","div:first-child","//div[count(preceding-sibling::*)=0]");	
 		addBaseCaseToXPath(baseCases,"last-child","span:last-child","//span[count(following-sibling::*)=0]");	
 		addBaseCaseToXPath(baseCases,"only-child","form:only-child","//form[count(preceding-sibling::*)=0][count(following-sibling::*)=0]");	
-		addBaseCaseToXPath(baseCases,"first-of-type","p:first-of-type","//p[1]");	
+		addBaseCaseToXPath(baseCases,"first-of-type","p:first-of-type","//p[count(preceding-sibling::p)=0]");	
 		addBaseCaseToXPath(baseCases,"last-of-type","h1:last-of-type","//h1[count(following-sibling::h1)=0]");	
-		addBaseCaseToXPath(baseCases,"only-of-type","span:only-of-type","//span[1][count(following-sibling::span)=0]");	
+		addBaseCaseToXPath(baseCases,"only-of-type","span:only-of-type","//span[count(preceding-sibling::span)=0][count(following-sibling::span)=0]");	
 		addBaseCaseToXPath(baseCases,"nth-child_3n","li:nth-child(3n)","//li[((count(preceding-sibling::*)+1) mod 3)=0]");
 		addBaseCaseToXPath(baseCases,"nth-child_even","li:nth-child(even)","//li[((count(preceding-sibling::*)+1) mod 2)=0]");
 		addBaseCaseToXPath(baseCases,"nth-last-child_odd","li:nth-last-child(odd)","//li[(count(following-sibling::*)=0) or (((count(following-sibling::*)-0) mod 2)=0)]");
 		addBaseCaseToXPath(baseCases,"nth-last-child_3","li:nth-last-child(3)","//li[count(following-sibling::*)=2]");
 		addBaseCaseToXPath(baseCases,"nth-of-type_n_2","span:nth-of-type(n+2)","//span[(count(preceding-sibling::span)=1) or (((count(preceding-sibling::span)>2) and (((count(preceding-sibling::span)-1) mod 1)=0)))]");
 		addBaseCaseToXPath(baseCases,"nth-of-type_3n_1","span:nth-of-type(3n+1)","//span[(count(preceding-sibling::span)=0) or (((count(preceding-sibling::span)-0) mod 3)=0)]");
-		addBaseCaseToXPath(baseCases,"nth-of-type_-5n_1","span:nth-of-type(-5n+1)","//span[1]");
+		addBaseCaseToXPath(baseCases,"nth-of-type_-5n_1","span:nth-of-type(-5n+1)","//span[count(preceding-sibling::span)=0]");
 		addBaseCaseToXPath(baseCases,"nth-last-of-type_3n-1","span:nth-last-of-type(3n-1)","//span[(count(following-sibling::span)=1) or (((count(following-sibling::span)-1) mod 3)=0)]");
 		addBaseCaseToXPath(baseCases,"nth-last-of-type_-3n_7","span:nth-last-of-type(3n+7)","//span[(count(following-sibling::span)=6) or (((count(following-sibling::span)>7) and (((count(following-sibling::span)-6) mod 3)=0)))]");
 

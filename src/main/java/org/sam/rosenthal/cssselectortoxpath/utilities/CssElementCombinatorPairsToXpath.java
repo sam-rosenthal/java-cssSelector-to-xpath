@@ -67,7 +67,7 @@ public class CssElementCombinatorPairsToXpath
 	{
 		List<CssAttribute> cssAttributeList = elementCombinatorPair.getCssElementAttributes().getCssAttributeList();
 		//starts-with(@href, "abc")
-		int attributeStartIndex = xpathBuilder.length();
+//		int attributeStartIndex = xpathBuilder.length();
 		for(CssAttribute cssAttribute: cssAttributeList)
 		{
 			String name = cssAttribute.getName();
@@ -133,14 +133,14 @@ public class CssElementCombinatorPairsToXpath
 			{
 //				System.out.println("cssAttribute"+ cssAttribute);
 				String psuedoClassXpath = ((CssAttributePsuedoClass) cssAttribute).getXPath();
-				if(psuedoClassXpath.matches("^\\[[0-9]+\\]$") )
-				{
-					xpathBuilder.insert(attributeStartIndex, psuedoClassXpath);
-				}
-				else
-				{
-					xpathBuilder.append(psuedoClassXpath);
-				}
+//				if(psuedoClassXpath.matches("^\\[[0-9]+\\]$") )
+//				{
+//				xpathBuilder.insert(attributeStartIndex, psuedoClassXpath);
+//				}
+//				else
+//				{
+				xpathBuilder.append(psuedoClassXpath);
+//				}
 				
 			}
 			else if(cssAttribute.getType()==null)

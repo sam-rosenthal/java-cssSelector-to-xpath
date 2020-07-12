@@ -2,20 +2,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<!--The identifier of the parent POM-->
-    <parent>
-		<groupId>org.sam.rosenthal</groupId>
-		<artifactId>org.sam.rosenthal.java-cssSelector-to-xpath-parent</artifactId>
-		<version>v1.2.1</version>
-		<relativePath>./pom.parent.xml</relativePath>
-    </parent>
-   	<name>java-cssSelector-to-xpath-web</name>
-   	<artifactId>org.sam.rosenthal.java-cssSelector-to-xpath-web</artifactId>
-   	
-	<description>java-cssSelector-to-xpath web</description>
-    <packaging>war</packaging>
-    
-    
+	<groupId>org.sam.rosenthal</groupId>
+	<artifactId>org.sam.rosenthal.java-cssSelector-to-xpath</artifactId>
+	<version>v1.2.1</version>
+	<name>java-cssSelector-to-xpath</name>
+	<description>java-cssSelector-to-xpath</description>
+	<packaging>war</packaging>
+	
 	<properties>
 		<webpage.version>v1.2.1.${git.commit.time}.${git.commit.id.abbrev}(webpage)</webpage.version>
 		<!--<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
@@ -29,6 +22,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<version>4.12</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -112,6 +106,7 @@
 		</dependency>
 	</dependencies>
 	<build>
+
 		<resources>
 			<resource>
 				<filtering>false</filtering>
@@ -137,7 +132,23 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>			
+				<version>3.7.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		    <plugin>
+		      <groupId>org.apache.maven.plugins</groupId>
+		      <artifactId>maven-jar-plugin</artifactId>
+		      <configuration>
+		        <archive>
+		          <manifest>
+		            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+		          </manifest>
+		        </archive>
+		      </configuration>
+		    </plugin>			
 			<plugin>
 				<groupId>com.google.appengine</groupId>
 				<artifactId>appengine-maven-plugin</artifactId>
@@ -146,14 +157,17 @@
 			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.4.1.1168</version>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.1</version>
 			</plugin>			
 			<plugin>
 			    <groupId>pl.project13.maven</groupId>
 			    <artifactId>git-commit-id-plugin</artifactId>
+			    <version>2.2.1</version>
 			    <executions>
 			        <execution>
 			            <phase>validate</phase>
@@ -171,6 +185,12 @@
 	        <plugin>
 	          <groupId>org.apache.maven.plugins</groupId>
 	          <artifactId>maven-surefire-plugin</artifactId>
+	          <version>2.22.0</version>
+	          <configuration>
+		          <excludes>
+		          	<exclude>**/selenium/**</exclude>
+	    	      </excludes>
+	    	  </configuration>   
 	        </plugin>  				
 			<plugin>
 			<!-- To run selenium test, use the following command: //mvn failsafe:integration-test

@@ -2,7 +2,7 @@ import React from 'react';
 import './TestPage.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { BASE_REST_URL } from './BASE_REST_URL';
+import { BASE_REST_URL } from '../../BASE_REST_URL';
 
 interface testData {
   cssSelector: string;

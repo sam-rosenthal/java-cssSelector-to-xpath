@@ -1,7 +1,9 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import './App.css';
+
 const Home = lazy(() => import('./Home'));
-const TestPage = lazy(() => import('./TestPage'));
+const TestPage = lazy(() => import('./components/TestPage/TestPage'));
 
 export default function App(): JSX.Element {
   return (

@@ -221,15 +221,15 @@ public class CssElementCombinatorPairsToXpathTest
 		testConvertCssStringToXpathString("div:only-child+[class^='abc']", "//div[count(preceding-sibling::*)=0][count(following-sibling::*)=0]/following-sibling::*[1]/self::*[starts-with(@class,\"abc\")]");
 		testConvertCssStringToXpathString("div:only-child>[id^='samm']", "//div[count(preceding-sibling::*)=0][count(following-sibling::*)=0]/*[starts-with(@id,\"samm\")]");
 
-		testConvertCssStringToXpathString("a:first-of-type","//a[1]");
-		testConvertCssStringToXpathString("x:first-of-type y:first-of-type","//x[1]//y[1]");
+		testConvertCssStringToXpathString("a:first-of-type","//a[count(preceding-sibling::a)=0]");
+		testConvertCssStringToXpathString("x:first-of-type y:first-of-type","//x[count(preceding-sibling::x)=0]//y[count(preceding-sibling::y)=0]");
 		testConvertCssStringToXpathString("a:last-of-type","//a[count(following-sibling::a)=0]");
-		testConvertCssStringToXpathString("x:last-of-type:first-of-type","//x[1][count(following-sibling::x)=0]");
-		testConvertCssStringToXpathString("x:first-of-type:last-of-type","//x[1][count(following-sibling::x)=0]");
+		testConvertCssStringToXpathString("x:last-of-type:first-of-type","//x[count(following-sibling::x)=0][count(preceding-sibling::x)=0]");
+		testConvertCssStringToXpathString("x:first-of-type:last-of-type","//x[count(preceding-sibling::x)=0][count(following-sibling::x)=0]");
 		testConvertCssStringToXpathString("x:last-of-type y:last-of-type","//x[count(following-sibling::x)=0]//y[count(following-sibling::y)=0]");	
-		testConvertCssStringToXpathString("a:only-of-type","//a[1][count(following-sibling::a)=0]");
-		testConvertCssStringToXpathString("x:only-of-type>y:only-of-type","//x[1][count(following-sibling::x)=0]/y[1][count(following-sibling::y)=0]");
-		testConvertCssStringToXpathString("div div[class^=\"score\"]:only-of-type","//div//div[starts-with(@class,\"score\")][1][count(following-sibling::div)=0]");
+		testConvertCssStringToXpathString("a:only-of-type","//a[count(preceding-sibling::a)=0][count(following-sibling::a)=0]");
+		testConvertCssStringToXpathString("x:only-of-type>y:only-of-type","//x[count(preceding-sibling::x)=0][count(following-sibling::x)=0]/y[count(preceding-sibling::y)=0][count(following-sibling::y)=0]");
+		testConvertCssStringToXpathString("div div[class^=\"score\"]:only-of-type","//div//div[starts-with(@class,\"score\")][count(preceding-sibling::div)=0][count(following-sibling::div)=0]");
 
 		
 		testConvertCssStringToXpathString(":first-child","//*[count(preceding-sibling::*)=0]");
@@ -257,12 +257,12 @@ public class CssElementCombinatorPairsToXpathTest
 		testConvertCssStringToXpathString("div:last-child:last-of-type","//div[count(following-sibling::*)=0]");
 		testConvertCssStringToXpathString("div:only-child:last-of-type","//div[count(preceding-sibling::*)=0][count(following-sibling::*)=0]");
 		testConvertCssStringToXpathString("div:last-child:last-of-type","//div[count(following-sibling::*)=0]");		
-		testConvertCssStringToXpathString("div:first-of-type:only-of-type","//div[1][count(following-sibling::div)=0]");
-		testConvertCssStringToXpathString("div:last-of-type:only-of-type","//div[1][count(following-sibling::div)=0]");
+		testConvertCssStringToXpathString("div:first-of-type:only-of-type","//div[count(preceding-sibling::div)=0][count(following-sibling::div)=0]");
+		testConvertCssStringToXpathString("div:last-of-type:only-of-type","//div[count(preceding-sibling::div)=0][count(following-sibling::div)=0]");
 		testConvertCssStringToXpathString("div:only-child:only-of-type","//div[count(preceding-sibling::*)=0][count(following-sibling::*)=0]");
 		
 		testConvertCssStringToXpathString("div#abc:empty","//div[@id=\"abc\"][not(*) and .=\"\"]"); 	
-		testConvertCssStringToXpathString("a.test:first-of-type","//a[1][contains(concat(\" \",normalize-space(@class),\" \"),\" test \")]"); 	
+		testConvertCssStringToXpathString("a.test:first-of-type","//a[contains(concat(\" \",normalize-space(@class),\" \"),\" test \")][count(preceding-sibling::a)=0]"); 	
 		testConvertCssStringToXpathString("#test:only-child","//*[@id=\"test\"][count(preceding-sibling::*)=0][count(following-sibling::*)=0]"); 	
 		testConvertCssStringToXpathString(".sam:only-child","//*[contains(concat(\" \",normalize-space(@class),\" \"),\" sam \")][count(preceding-sibling::*)=0][count(following-sibling::*)=0]"); 
 		testConvertCssStringToXpathString(".xxx:empty #yyy:empty","//*[contains(concat(\" \",normalize-space(@class),\" \"),\" xxx \")][not(*) and .=\"\"]//*[@id=\"yyy\"][not(*) and .=\"\"]");
@@ -328,8 +328,8 @@ public class CssElementCombinatorPairsToXpathTest
 		testConvertCssStringToXpathString("p:nth-of-type(    even   )","//p[((count(preceding-sibling::p)+1) mod 2)=0]"); 	
 		testConvertCssStringToXpathString("p:nth-of-type(EVEN)","//p[((count(preceding-sibling::p)+1) mod 2)=0]"); 	
 		
-		testConvertCssStringToXpathString("div:nth-of-type(3)","//div[3]"); 	
-		testConvertCssStringToXpathString("div:nth-of-type(+12)","//div[12]"); 	
+		testConvertCssStringToXpathString("div:nth-of-type(3)","//div[count(preceding-sibling::div)=2]"); 	
+		testConvertCssStringToXpathString("div:nth-of-type(+12)","//div[count(preceding-sibling::div)=11]"); 	
 
 		testConvertCssStringToXpathString("ul:nth-of-type(N)","//ul[((count(preceding-sibling::ul)+1) mod 1)=0]"); 
 		testConvertCssStringToXpathString("ul:nth-of-type(n)","//ul[((count(preceding-sibling::ul)+1) mod 1)=0]"); 
@@ -350,31 +350,39 @@ public class CssElementCombinatorPairsToXpathTest
 		testConvertCssStringToXpathString("div:nth-of-type(3n-5)","//div[(count(preceding-sibling::div)=0) or (((count(preceding-sibling::div)-0) mod 3)=0)]"); 	
 		testConvertCssStringToXpathString("div:nth-of-type(5n-2)","//div[(count(preceding-sibling::div)=2) or (((count(preceding-sibling::div)-2) mod 5)=0)]"); 	
 
-		testConvertCssStringToXpathString("div:nth-of-type(-n+1)","//div[1]"); 	
-		testConvertCssStringToXpathString("div:nth-of-type(-2n+1)","//div[1]"); 	
-		testConvertCssStringToXpathString("div:nth-of-type(-5n + 3 )","//div[3]"); 	
+		testConvertCssStringToXpathString("div:nth-of-type(-n+1)","//div[count(preceding-sibling::div)=0]"); 	
+		testConvertCssStringToXpathString("div:nth-of-type(-2n+1)","//div[count(preceding-sibling::div)=0]"); 	
+		testConvertCssStringToXpathString("div:nth-of-type(-5n + 3 )","//div[count(preceding-sibling::div)=2]"); 	
 
 		testConvertCssStringToXpathString("div:nth-of-type(-n+2)","//div[(((count(preceding-sibling::div)+1) mod 1)=0) and (count(preceding-sibling::div)<2)]"); 	
 
 		testConvertCssStringToXpathString("div:nth-of-type(-n+012)","//div[(((count(preceding-sibling::div)+1) mod 1)=0) and (count(preceding-sibling::div)<12)]"); 	
 		testConvertCssStringToXpathString("form:nth-of-type(+  n+ 22) div","//form[(count(preceding-sibling::form)=21) or (((count(preceding-sibling::form)>22) and (((count(preceding-sibling::form)-21) mod 1)=0)))]//div"); 	
-		testConvertCssStringToXpathString("div form:nth-of-type(4)","//div//form[4]"); 	
-		testConvertCssStringToXpathString("div:empty form:nth-of-type(4)","//div[not(*) and .=\"\"]//form[4]"); 
+		testConvertCssStringToXpathString("div form:nth-of-type(4)","//div//form[count(preceding-sibling::form)=3]"); 	
+		testConvertCssStringToXpathString("div:empty form:nth-of-type(4)","//div[not(*) and .=\"\"]//form[count(preceding-sibling::form)=3]"); 
 		
-		testConvertCssStringToXpathString("div:nth-of-type(2n+2) span:nth-of-type(2)","//div[((count(preceding-sibling::div)+1) mod 2)=0]//span[2]"); 	
-		testConvertCssStringToXpathString("div:nth-of-type(4n+4) span:nth-of-type(2)","//div[((count(preceding-sibling::div)+1) mod 4)=0]//span[2]"); 	
+		testConvertCssStringToXpathString("div:nth-of-type(2n+2) span:nth-of-type(2)","//div[((count(preceding-sibling::div)+1) mod 2)=0]//span[count(preceding-sibling::span)=1]"); 	
+		testConvertCssStringToXpathString("div:nth-of-type(4n+4) span:nth-of-type(2)","//div[((count(preceding-sibling::div)+1) mod 4)=0]//span[count(preceding-sibling::span)=1]"); 	
 
-		testConvertCssStringToXpathString("div:nth-of-type(2) span:nth-of-type(4)","//div[2]//span[4]");
-		testConvertCssStringToXpathString("div:nth-of-type(2) span:nth-of-type(2)","//div[2]//span[2]"); 	
-		testConvertCssStringToXpathString("div:nth-of-type(3n+2) span:nth-of-type(2)","//div[(count(preceding-sibling::div)=1) or (((count(preceding-sibling::div)-1) mod 3)=0)]//span[2]"); 	
+		testConvertCssStringToXpathString("div:nth-of-type(2) span:nth-of-type(4)","//div[count(preceding-sibling::div)=1]//span[count(preceding-sibling::span)=3]");
+		testConvertCssStringToXpathString("div:nth-of-type(2) span:nth-of-type(2)","//div[count(preceding-sibling::div)=1]//span[count(preceding-sibling::span)=1]"); 	
+		testConvertCssStringToXpathString("div:nth-of-type(3n+2) span:nth-of-type(2)","//div[(count(preceding-sibling::div)=1) or (((count(preceding-sibling::div)-1) mod 3)=0)]//span[count(preceding-sibling::span)=1]"); 	
 		testConvertCssStringToXpathString("div:nth-of-type(n) span:nth-of-type(-n+4)","//div[((count(preceding-sibling::div)+1) mod 1)=0]//span[(((count(preceding-sibling::span)+1) mod 1)=0) and (count(preceding-sibling::span)<4)]"); 			
 	
-		testConvertCssStringToXpathString("div:nth-of-type(5):nth-of-type(5)","//div[5]");
+		testConvertCssStringToXpathString("div:nth-of-type(5):nth-of-type(5)","//div[count(preceding-sibling::div)=4]");
 		testConvertCssStringToXpathString("div:nth-of-type(n):nth-of-type(n)","//div[((count(preceding-sibling::div)+1) mod 1)=0]");
 		testConvertCssStringToXpathString("div:nth-of-type(odd):nth-of-type(odd)","//div[(count(preceding-sibling::div)=0) or (((count(preceding-sibling::div)-0) mod 2)=0)]");
 		testConvertCssStringToXpathString("div:nth-of-type(2n+5):nth-of-type(n+22)","//div[(count(preceding-sibling::div)=4) or (((count(preceding-sibling::div)>5) and (((count(preceding-sibling::div)-4) mod 2)=0)))][(count(preceding-sibling::div)=21) or (((count(preceding-sibling::div)>22) and (((count(preceding-sibling::div)-21) mod 1)=0)))]");
 		testConvertCssStringToXpathString("div:nth-of-type(2n+5):nth-of-type(2n+5)","//div[(count(preceding-sibling::div)=4) or (((count(preceding-sibling::div)>5) and (((count(preceding-sibling::div)-4) mod 2)=0)))]");
 		testConvertCssStringToXpathString("div:nth-of-type(n+5):nth-of-type(odd)","//div[(count(preceding-sibling::div)=4) or (((count(preceding-sibling::div)>5) and (((count(preceding-sibling::div)-4) mod 1)=0)))][(count(preceding-sibling::div)=0) or (((count(preceding-sibling::div)-0) mod 2)=0)]");
+		
+		testConvertCssStringToXpathString("div+div:nth-of-type(4)","//div/following-sibling::*[1]/self::div[count(preceding-sibling::div)=3]"); 
+		testConvertCssStringToXpathString("div+div~div:nth-of-type(4)","//div/following-sibling::*[1]/self::div/following-sibling::div[count(preceding-sibling::div)=3]"); 
+		
+		testConvertCssStringToXpathString("a#test+b.c:nth-of-type(4)","//a[@id=\"test\"]/following-sibling::*[1]/self::b[contains(concat(\" \",normalize-space(@class),\" \"),\" c \")][count(preceding-sibling::b)=3]"); 	
+		testConvertCssStringToXpathString("a+b:nth-of-type(2n+1)","//a/following-sibling::*[1]/self::b[(count(preceding-sibling::b)=0) or (((count(preceding-sibling::b)-0) mod 2)=0)]"); 	
+		testConvertCssStringToXpathString("a+b~c+d~e:nth-of-type(-2n+2)","//a/following-sibling::*[1]/self::b/following-sibling::c/following-sibling::*[1]/self::d/following-sibling::e[count(preceding-sibling::e)=1]"); 	
+
 	}
 	
 	@Test
