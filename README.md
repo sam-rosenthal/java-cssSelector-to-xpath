@@ -54,8 +54,7 @@
 
 
 <h2 id="Dependencies"> Dependencies </h2>
-<p> This project is a pure jave applicication/API. It requries Java JDK 8 and no external jars. The front-end of the converter website was built with <a href="https://github.com/facebook/react"> react</a> and written in <a href="https://www.typescriptlang.org/docs/handbook/jsx.html">typescript.</a> </p>
-<p>
+	<p> This project is a pure jave applicication/API. It requries Java JDK 8 and no external jars. Within this project's baseline, there is a <a href="https://css-selector-to-xpath.appspot.com" target="_blank"> web-based implementation</a> that depends on <a href="https://github.com/facebook/react"> React</a> and <a href="https://spring.io/projects/spring-boot"> Spring Boot </a>. I consider the webpage an example implementation of this project. As a result, I don't consider the dependencies for the website a requirement for the OSS.</p>
 
 <h2 id="Installation"> Installation </h2>
 <p> To create the project's jar file, run the following maven command: <p/>
