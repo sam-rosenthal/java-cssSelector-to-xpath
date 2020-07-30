@@ -1,4 +1,4 @@
-<h1><a href="https://github.com/sam-rosenthal/" target="_blank"><img src="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/src/main/webapp/fav.png" align="left" height="40" width="40"></a> java-cssSelector-to-xpath</h1>
+<h1><a href="https://github.com/sam-rosenthal/" target="_blank"><img src="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/frontend/public/favBig.png" align="left" height="40" width="40"></a> java-cssSelector-to-xpath</h1>
 
 <a href="https://travis-ci.org/sam-rosenthal/java-cssSelector-to-xpath" target="_blank"><img src="https://travis-ci.org/sam-rosenthal/java-cssSelector-to-xpath.svg?branch=master" align="left"> </a>
 
@@ -13,14 +13,13 @@
 <a href="https://css-selector-to-xpath.appspot.com" target="_blank">Visit the website that implements this tool.</a>
 
 <br/>
-<b><a style="font-size:24px" href="https://sam-rosenthal.github.io" target="_blank"> Need a 2019 summer intern? </a></b>
+<b><a style="font-size:24px" href="https://sam-rosenthal.github.io" target="_blank"> Need a 2021 Cornell University graduate? </a></b>
 <h3> Table of Contents
   <ul>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Implementation" target="_blank"> CSS Selector to XPath Conversion Implementation Notes</a> <ul>    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#PsuedoClasses" target="_blank"> Pseudo Classes</a>	     </li></ul></li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Dependencies" target="_blank"> Dependencies</a>	     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Installation" target="_blank"> Installation </a>     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Usage" target="_blank"> Usage</a>	     </li>
-    <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#Todos" target="_blank"> TODOs</a>	     </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#links" target="_blank"> Helpful Links/More Info</a>   </li>
         <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#about" target="_blank"> About me </a>   </li>
     <li> <a href="https://github.com/sam-rosenthal/java-cssSelector-to-xpath/blob/master/README.md#license" target="_blank"> License</a>   </li>
@@ -31,7 +30,7 @@
 <ul>
 	<li>CSS Selector To XPath has been implemented for all <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Simple_selectors" target="_blank">Simple Selectors </a> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Combinators" target="_blank"> and Combinators. </a>
 	</li>
-	<li class="PsuedoClasses">The following subset of CSS Selector <b><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Pseudo-classes" target="_blank">Pseudo-Classes</a></b> have been implemented:
+	<li id="PsuedoClasses">The following subset of CSS Selector <b><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors#Pseudo-classes" target="_blank">Pseudo-Classes</a></b> have been implemented:
 		<ul>
 			<li>:empty, :first-child, :last-child, :only-child, :first-of-type, :last-of-type, :only-of-type</li>
 			<li><b>(*NEW*)</b> :nth-child(<i>expr</i>), :nth-last-child(<i>expr</i>), :nth-of-type(<i>expr</i>), :nth-last-of-type(<i>expr</i>) <br>expr = {odd | even | xn+y, where x and y are integers}</li>
@@ -55,8 +54,7 @@
 
 
 <h2 id="Dependencies"> Dependencies </h2>
-<p> This project is a pure jave applicication/API. It requries Java JDK 8 and no external jars. Within this project's baseline, there is a <a href="https://css-selector-to-xpath.appspot.com" target="_blank"> web-based implementation</a> that depends on <a href="https://wicket.apache.org">  Wicket 8.0. </a> I consider the webpage an example implementation of this project. As a result I don' consider the dependencies for the websitess a requirement for the OSS.</p>
-<p>
+	<p> This project is a pure jave applicication/API. It requries Java JDK 8 and no external jars. Within this project's baseline, there is a <a href="https://css-selector-to-xpath.appspot.com" target="_blank"> web-based implementation</a> that depends on <a href="https://github.com/facebook/react"> React</a> and <a href="https://spring.io/projects/spring-boot"> Spring Boot </a>. I consider the webpage an example implementation of this project. As a result, I don't consider the dependencies for the website a requirement for the OSS.</p>
 
 <h2 id="Installation"> Installation </h2>
 <p> To create the project's jar file, run the following maven command: <p/>
