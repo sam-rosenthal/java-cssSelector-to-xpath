@@ -1,0 +1,31 @@
+//Algorithm for :nth-of-type():
+//	Given: div:nth-of-type(xn+y)   
+//	
+//	Case 1: x=0 
+//		//div[y]
+//	
+//	Case 2: x>0 and y=0 
+//		//div[((count(preceding-sibling::div)+1) mod x)=0]
+//	
+//	Case 3:	x>=1 and y==x 
+//		Equivalent to div:nth-of-type(xn)
+//
+//	Case 4:	x>=1 and y<x 
+//		//div[(count(preceding-sibling::div)=(y-1)) or (((count(preceding-sibling::div)-(y-1)) mod x)=0)]
+//	
+//	Case 5:	x>=1 and y>x 
+//		//div[(count(preceding-sibling::div)=(y-1)) or (((count(preceding-sibling::div)>y) and (((count(preceding-sibling::div)-(y-1)) mod x)=0)))]
+//
+//	Case 6:	x>0  and y<0
+//		if (abs(y)<=x) let Y=abs(y)
+//		else Y=abs(y) mod x
+//		let YY=x-Y, note this is greater or equal to zero
+//		same as  :nth-of-type(xn+(YY))
+//
+//	Case 7: x<0 and y>0
+//		let X=abs(x)
+//		if (y<=X) then //div[y]
+//		else Y= (y mod X)
+//		let YY=X-Y, note this is greater or equal to zero
+//		nth-of-type(Xn+(YY)) = div[q]
+//		then solution is div[(q) and (count(preceding-sibling::div)<y) ]
