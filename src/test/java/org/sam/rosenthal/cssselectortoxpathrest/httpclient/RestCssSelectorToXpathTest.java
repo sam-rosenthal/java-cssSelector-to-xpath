@@ -26,7 +26,8 @@ import org.sam.rosenthal.cssselectortoxpathrest.restservice.CssSelectorIn;
 import org.sam.rosenthal.cssselectortoxpathrest.restservice.InvalidCssSelector;
 import org.sam.rosenthal.cssselectortoxpathrest.restservice.XpathOut;
 
-import com.google.appengine.repackaged.com.google.gson.Gson;
+import com.google.gson.Gson;
+
 
 public class RestCssSelectorToXpathTest {
 	private static final int REST_PORT = 8080;
